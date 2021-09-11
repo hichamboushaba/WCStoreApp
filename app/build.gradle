@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -54,6 +56,8 @@ dependencies {
     implementation libs.androidx.viewmodel
     implementation libs.material
     implementation libs.bundles.compose
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test
     androidTestImplementation libs.androidx.espresso
