@@ -1,6 +1,6 @@
-package com.hicham.wpapp.di
+package com.hicham.wcstoreapp.di
 
-import com.hicham.wpapp.data.source.network.WordpressApi
+import com.hicham.wcstoreapp.data.source.network.WordpressApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.hicham.wpapp.ui.theme
+package com.hicham.wcstoreapp.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
