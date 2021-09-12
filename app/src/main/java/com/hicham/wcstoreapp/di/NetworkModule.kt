@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.di
 
-import com.hicham.wcstoreapp.data.source.network.WordpressApi
+import com.hicham.wcstoreapp.data.source.network.WooCommerceApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -26,7 +26,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun providesApi(): WordpressApi {
+    fun providesApi(): WooCommerceApi {
         TODO()
     }
 }
