@@ -1,4 +1,4 @@
-package com.hicham.wpapp
+package com.hicham.wcstoreapp
 
 import org.junit.Test
 
