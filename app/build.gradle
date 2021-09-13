@@ -57,6 +57,7 @@ dependencies {
     implementation libs.lifecycle.viewmodel.compose
     implementation libs.material
     implementation libs.bundles.compose
+    implementation libs.bundles.paging
     implementation libs.accompanist.insets.ui
     implementation libs.coil.compose
 
