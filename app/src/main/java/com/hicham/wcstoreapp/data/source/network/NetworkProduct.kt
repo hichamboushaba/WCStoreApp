@@ -1,8 +1,15 @@
 package com.hicham.wcstoreapp.data.source.network
 
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
@@ -24,12 +31,12 @@ data class NetworkProduct(
     @SerialName("date_modified_gmt")
     val dateModifiedGmt: String,
 
-    val type: String,
-    val status: String,
+    val type: Type,
+    val status: Status,
     val featured: Boolean,
 
     @SerialName("catalog_visibility")
-    val catalogVisibility: String,
+    val catalogVisibility: CatalogVisibility,
 
     val description: String,
 
@@ -46,19 +53,16 @@ data class NetworkProduct(
     val salePrice: String,
 
     @SerialName("date_on_sale_from")
-    val dateOnSaleFrom: String? = null,
+    val dateOnSaleFrom: JsonObject? = null,
 
     @SerialName("date_on_sale_from_gmt")
     val dateOnSaleFromGmt: JsonObject? = null,
 
     @SerialName("date_on_sale_to")
-    val dateOnSaleTo: String? = null,
+    val dateOnSaleTo: JsonObject? = null,
 
     @SerialName("date_on_sale_to_gmt")
-    val dateOnSaleToGmt: String? = null,
-
-    @SerialName("price_html")
-    val priceHTML: String,
+    val dateOnSaleToGmt: JsonObject? = null,
 
     @SerialName("on_sale")
     val onSale: Boolean,
@@ -70,7 +74,7 @@ data class NetworkProduct(
 
     val virtual: Boolean,
     val downloadable: Boolean,
-    val downloads: JsonArray,
+    val downloads: List<Download>,
 
     @SerialName("download_limit")
     val downloadLimit: Long,
@@ -85,7 +89,7 @@ data class NetworkProduct(
     val buttonText: String,
 
     @SerialName("tax_status")
-    val taxStatus: String,
+    val taxStatus: TaxStatus,
 
     @SerialName("tax_class")
     val taxClass: String,
@@ -96,15 +100,15 @@ data class NetworkProduct(
     @SerialName("stock_quantity")
     val stockQuantity: JsonObject? = null,
 
-    @SerialName("stock_status")
-    val stockStatus: String,
-
-    val backorders: String,
+    val backorders: Backorders,
 
     @SerialName("backorders_allowed")
     val backordersAllowed: Boolean,
 
     val backordered: Boolean,
+
+    @SerialName("low_stock_amount")
+    val lowStockAmount: JsonObject? = null,
 
     @SerialName("sold_individually")
     val soldIndividually: Boolean,
@@ -133,9 +137,6 @@ data class NetworkProduct(
     @SerialName("rating_count")
     val ratingCount: Long,
 
-    @SerialName("related_ids")
-    val relatedIDS: List<Long>,
-
     @SerialName("upsell_ids")
     val upsellIDS: JsonArray,
 
@@ -159,13 +160,34 @@ data class NetworkProduct(
     val variations: JsonArray,
 
     @SerialName("grouped_products")
-    val groupedProducts: JsonArray,
+    val groupedProducts: List<Long>,
 
     @SerialName("menu_order")
     val menuOrder: Long,
 
+    @SerialName("price_html")
+    val priceHTML: String,
+
+    @SerialName("related_ids")
+    val relatedIDS: List<Long>,
+
     @SerialName("meta_data")
-    val metaData: JsonArray,
+    val metaData: List<MetaDatum>,
+
+    @SerialName("stock_status")
+    val stockStatus: StockStatus,
+
+    @SerialName("jetpack_publicize_connections")
+    val jetpackPublicizeConnections: JsonArray,
+
+    @SerialName("jetpack_likes_enabled")
+    val jetpackLikesEnabled: Boolean,
+
+    @SerialName("jetpack_sharing_enabled")
+    val jetpackSharingEnabled: Boolean,
+
+    @SerialName("amp_enabled")
+    val ampEnabled: Boolean,
 
     @SerialName("_links")
     val links: Links
@@ -182,6 +204,18 @@ data class Attribute(
 )
 
 @Serializable
+enum class Backorders {
+    @SerialName("no") No,
+    @SerialName("yes") Yes
+}
+
+@Serializable
+enum class CatalogVisibility {
+    @SerialName("hidden") Hidden,
+    @SerialName("visible") Visible
+}
+
+@Serializable
 data class Category(
     val id: Long,
     val name: String,
@@ -193,6 +227,13 @@ data class Dimensions(
     val length: String,
     val width: String,
     val height: String
+)
+
+@Serializable
+data class Download(
+    val id: String,
+    val name: String,
+    val file: String
 )
 
 @Serializable
@@ -226,3 +267,152 @@ data class Links(
 data class Collection(
     val href: String
 )
+
+@Serializable
+data class MetaDatum(
+    val id: Long,
+    val key: String,
+    val value: JsonElement
+)
+
+@Serializable
+data class PurpleValue(
+    val name: String,
+
+    @SerialName("title_format")
+    val titleFormat: String,
+
+    @SerialName("description_enable")
+    val descriptionEnable: Long,
+
+    val description: String,
+    val type: String,
+    val display: String,
+    val position: Long,
+    val required: Long,
+    val restrictions: Long,
+
+    @SerialName("restrictions_type")
+    val restrictionsType: String,
+
+    @SerialName("adjust_price")
+    val adjustPrice: Long,
+
+    @SerialName("price_type")
+    val priceType: String,
+
+    val price: String,
+    val min: Long,
+    val max: Long,
+    val options: List<Option>
+)
+
+@Serializable
+data class Option(
+    val label: String,
+    val price: String,
+    val image: String,
+
+    @SerialName("price_type")
+    val priceType: String
+)
+
+@Serializable
+data class FluffyValue(
+    val description: String? = null,
+
+    @SerialName("hs_tariff_number")
+    val hsTariffNumber: String? = null,
+
+    @SerialName("origin_country")
+    val originCountry: String? = null,
+
+    val id: String? = null,
+    val type: String? = null,
+    val layout: Layout? = null,
+    val fields: List<Field>? = null,
+
+    @SerialName("rule_groups")
+    val ruleGroups: List<RuleGroup>? = null
+)
+
+@Serializable
+data class Field(
+    val id: String,
+    val label: String,
+    val description: JsonObject? = null,
+    val type: String,
+    val required: Boolean,
+
+    @SerialName("class")
+    val fieldClass: JsonObject? = null,
+
+    val width: JsonObject? = null,
+    val options: JsonArray,
+    val conditionals: JsonArray,
+    val pricing: Pricing
+)
+
+@Serializable
+data class Pricing(
+    val type: String,
+    val amount: Long,
+    val enabled: Boolean
+)
+
+@Serializable
+data class Layout(
+    @SerialName("labels_position")
+    val labelsPosition: String,
+
+    @SerialName("instructions_position")
+    val instructionsPosition: String,
+
+    @SerialName("mark_required")
+    val markRequired: Boolean
+)
+
+@Serializable
+data class RuleGroup(
+    val rules: List<Rule>
+)
+
+@Serializable
+data class Rule(
+    val value: List<RuleValue>,
+    val condition: String,
+    val subject: String
+)
+
+@Serializable
+data class RuleValue(
+    val id: String,
+    val text: String
+)
+
+@Serializable
+enum class Status {
+    @SerialName("publish")
+    Published
+}
+
+@Serializable
+enum class StockStatus {
+    @SerialName("instock")
+    Instock
+}
+
+@Serializable
+enum class TaxStatus {
+    @SerialName("taxable")
+    Taxable
+}
+
+@Serializable
+enum class Type(val value: String) {
+    @SerialName("grouped")
+    Grouped("grouped"),
+
+    @SerialName("simple")
+    Simple("simple")
+}

@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.di
 
+import com.hicham.wcstoreapp.data.source.network.FakeWooCommerceApi
 import com.hicham.wcstoreapp.data.source.network.WooCommerceApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -26,7 +27,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun providesApi(): WooCommerceApi {
-        TODO()
+    fun providesApi(json: Json): WooCommerceApi {
+        return FakeWooCommerceApi(json)
     }
 }
