@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hicham.wcstoreapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="com.hicham.wcstoreapp.WCStoreApp"
         android:allowBackup="true"
