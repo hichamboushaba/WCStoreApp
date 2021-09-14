@@ -22,9 +22,9 @@ kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
 retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
 retrofit-kotlinx-serialization-converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
-
 paging-runtime = "androidx.paging:paging-runtime:3.0.1"
 paging-compose = "androidx.paging:paging-compose:1.0.0-alpha12"
+okhttp-signpost = "se.akerfeldt:okhttp-signpost:1.1.0"
 
 junit = "junit:junit:4.+"
 androidx-test = "androidx.test.ext:junit:1.1.3"
