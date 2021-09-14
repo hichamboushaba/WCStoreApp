@@ -98,7 +98,7 @@ data class NetworkProduct(
     val manageStock: Boolean,
 
     @SerialName("stock_quantity")
-    val stockQuantity: JsonObject? = null,
+    val stockQuantity: Double? = null,
 
     val backorders: Backorders,
 
@@ -409,10 +409,13 @@ enum class TaxStatus {
 }
 
 @Serializable
-enum class Type(val value: String) {
+enum class Type {
     @SerialName("grouped")
-    Grouped("grouped"),
+    Grouped,
 
     @SerialName("simple")
-    Simple("simple")
+    Simple,
+
+    @SerialName("variable")
+    Variable
 }
