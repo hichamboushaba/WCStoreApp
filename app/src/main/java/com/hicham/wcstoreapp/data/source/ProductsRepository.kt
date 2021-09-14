@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-private const val DEFAULT_PRODUCT_PAGE_SIZE = 15
+private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
 
 interface ProductsRepository {
     fun getProductList(): Flow<PagingData<Product>>
