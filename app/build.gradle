@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     alias(libs.plugins.kotlin.serialization)
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -67,6 +68,7 @@ dependencies {
     implementation libs.kotlinx.coroutines.core
 
     implementation libs.retrofit
+    implementation libs.okhttp.signpost
     implementation libs.retrofit.kotlinx.serialization.converter
     implementation libs.kotlinx.serialization
 
