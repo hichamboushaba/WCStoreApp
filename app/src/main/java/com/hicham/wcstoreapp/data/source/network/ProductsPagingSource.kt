@@ -25,7 +25,7 @@ class ProductsPagingSource @Inject constructor(private val api: WooCommerceApi) 
             LoadResult.Page(
                 data = response.map { it.toProduct() },
                 prevKey = null, // Only paging forward.
-                nextKey = nextPageNumber + 1
+                nextKey = if (response.size < params.loadSize) null else nextPageNumber + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
