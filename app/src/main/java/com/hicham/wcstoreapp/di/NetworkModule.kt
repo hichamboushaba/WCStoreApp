@@ -2,8 +2,8 @@ package com.hicham.wcstoreapp.di
 
 import androidx.paging.PagingSource
 import com.hicham.wcstoreapp.BuildConfig
-import com.hicham.wcstoreapp.data.source.ProductsRepository
-import com.hicham.wcstoreapp.data.source.ProductsRepositoryImpl
+import com.hicham.wcstoreapp.data.ProductsRepository
+import com.hicham.wcstoreapp.data.ProductsRepositoryImpl
 import com.hicham.wcstoreapp.data.source.network.ProductsPagingSource
 import com.hicham.wcstoreapp.data.source.network.WooCommerceApi
 import com.hicham.wcstoreapp.models.Product
