@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.source.fake
 
 import androidx.paging.PagingData
-import com.hicham.wcstoreapp.data.source.ProductsRepository
+import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.data.source.network.NetworkProduct
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct

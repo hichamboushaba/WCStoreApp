@@ -1,12 +1,8 @@
 package com.hicham.wcstoreapp
 
 import com.hicham.wcstoreapp.data.Status
-import com.hicham.wcstoreapp.data.source.ProductsRepository
+import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.data.source.network.FakeWooCommerceApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.junit.Test
