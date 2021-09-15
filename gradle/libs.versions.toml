@@ -14,6 +14,7 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 compose-uipreview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose"}
 compose-activity = "androidx.activity:activity-compose:1.3.1"
+compose-constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
 accompanist-insets-ui = "com.google.accompanist:accompanist-insets-ui:0.18.0"
 coil-compose = "io.coil-kt:coil-compose:1.3.2"
 hilt-android = { module =  "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -32,7 +33,7 @@ androidx-espresso = "androidx.test.espresso:espresso-core:3.4.0"
 compose-uitest = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 
 [bundles]
-compose = ["compose-ui", "compose-material", "compose-uipreview", "compose-activity"]
+compose = ["compose-ui", "compose-material", "compose-uipreview", "compose-activity", "compose-constraintLayout"]
 paging = ["paging-runtime", "paging-compose"]
 
 [plugins]
