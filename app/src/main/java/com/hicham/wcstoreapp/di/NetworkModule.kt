@@ -53,10 +53,4 @@ abstract class NetworkModule {
             return retrofit.create(WooCommerceApi::class.java)
         }
     }
-
-    @Binds
-    abstract fun bindsProductsRepository(repository: ProductsRepositoryImpl): ProductsRepository
-
-    @Binds
-    abstract fun bindsPagingSource(source: ProductsPagingSource): PagingSource<Int, Product>
 }
