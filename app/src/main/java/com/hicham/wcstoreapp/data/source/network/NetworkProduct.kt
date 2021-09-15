@@ -1,16 +1,15 @@
+@file:UseSerializers(BigDecimalSerializer::class)
+
 package com.hicham.wcstoreapp.data.source.network
 
-import kotlinx.serialization.KSerializer
+import com.hicham.wcstoreapp.util.BigDecimalSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import java.math.BigDecimal
 
 @Serializable
 data class NetworkProduct(
@@ -44,7 +43,7 @@ data class NetworkProduct(
     val shortDescription: String,
 
     val sku: String,
-    val price: String,
+    val price: BigDecimal,
 
     @SerialName("regular_price")
     val regularPrice: String,
@@ -205,14 +204,20 @@ data class Attribute(
 
 @Serializable
 enum class Backorders {
-    @SerialName("no") No,
-    @SerialName("yes") Yes
+    @SerialName("no")
+    No,
+
+    @SerialName("yes")
+    Yes
 }
 
 @Serializable
 enum class CatalogVisibility {
-    @SerialName("hidden") Hidden,
-    @SerialName("visible") Visible
+    @SerialName("hidden")
+    Hidden,
+
+    @SerialName("visible")
+    Visible
 }
 
 @Serializable

@@ -4,20 +4,32 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
+import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: ProductsRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repository: ProductsRepository,
+    private val currencyFormatProvider: CurrencyFormatProvider
+) : ViewModel() {
+    private val currencyFormatter = currencyFormatProvider.formatSettings
+        .map { CurrencyFormatter(it) }
+
     val products = repository.getProductList().cachedIn(viewModelScope)
-        .map {
-            it.map { product ->
+        .combine(currencyFormatter) { pagingData, formatter ->
+            Pair(pagingData, formatter)
+        }
+        .map { (pagingData, formatter) ->
+            pagingData.map { product ->
                 ProductUiModel(
                     id = product.id,
                     name = product.name,
-                    priceFormatted = "10 USD",
+                    priceFormatted = formatter.format(product.price),
                     images = product.images
                 )
             }
