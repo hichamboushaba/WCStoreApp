@@ -3,43 +3,58 @@ package com.hicham.wcstoreapp.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import androidx.paging.map
+import com.hicham.wcstoreapp.data.Cart
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
+import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: ProductsRepository,
-    private val currencyFormatProvider: CurrencyFormatProvider
+    private val currencyFormatProvider: CurrencyFormatProvider,
+    private val cart: Cart
 ) : ViewModel() {
     private val currencyFormatter = currencyFormatProvider.formatSettings
         .map { CurrencyFormatter(it) }
 
-    val products = repository.getProductList().cachedIn(viewModelScope)
-        .combine(currencyFormatter) { pagingData, formatter ->
-            Pair(pagingData, formatter)
+    private val productPagingData = repository.getProductList().cachedIn(viewModelScope)
+
+    val products = combine(
+        productPagingData,
+        currencyFormatter,
+        cart.items
+    ) { pagingData, formatter, cartItems ->
+        Triple(pagingData, formatter, cartItems)
+    }.map { (pagingData, formatter, cartItems) ->
+        pagingData.map { product ->
+            ProductUiModel(
+                product = product,
+                priceFormatted = formatter.format(product.price),
+                quantityInCart = cartItems.filter { it == product }.size
+            )
         }
-        .map { (pagingData, formatter) ->
-            pagingData.map { product ->
-                ProductUiModel(
-                    id = product.id,
-                    name = product.name,
-                    priceFormatted = formatter.format(product.price),
-                    images = product.images
-                )
-            }
-        }
+    }
+
+    fun addItemToCart(product: Product) {
+        cart.addItem(product)
+    }
+
+    fun deleteItemFromCart(product: Product) {
+        cart.deleteItem(product)
+    }
 }
 
 data class ProductUiModel(
-    val id: Long,
-    val name: String,
+    val product: Product,
     val priceFormatted: String,
-    val images: List<String>,
     val quantityInCart: Int = 0
 )
