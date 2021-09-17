@@ -3,7 +3,9 @@ package com.hicham.wcstoreapp.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -24,10 +26,17 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberImagePainter
 import coil.size.Scale
 import com.hicham.wcstoreapp.R
+import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
+import java.math.BigDecimal
 
 @Composable
-fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
+fun ProductCard(
+    uiModel: ProductUiModel,
+    addItemToCart: (Product) -> Unit,
+    removeItemFromCart: (Product) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier
     ) {
@@ -35,7 +44,7 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
             val (image, price, title, addButton, cartQuantity, minusButton) = createRefs()
             Image(
                 painter = rememberImagePainter(
-                    data = product.images[0],
+                    data = uiModel.product.images[0],
                     builder = {
                         crossfade(true)
                         scale(Scale.FIT)
@@ -55,7 +64,7 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
                     }
             )
             Text(
-                text = product.priceFormatted,
+                text = uiModel.priceFormatted,
                 style = MaterialTheme.typography.caption,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
@@ -65,7 +74,7 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
                     }
             )
             Text(
-                text = product.name, style = MaterialTheme.typography.body1,
+                text = uiModel.product.name, style = MaterialTheme.typography.body1,
                 maxLines = 1,
                 modifier = Modifier
                     .constrainAs(title) {
@@ -78,9 +87,10 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
                     }
             )
 
-            if (product.quantityInCart > 0) {
+            if (uiModel.quantityInCart > 0) {
                 ImageButton(
                     vectorResourceId = R.drawable.ic_minus,
+                    onClicked = { removeItemFromCart(uiModel.product) },
                     modifier = Modifier
                         .constrainAs(minusButton) {
                             end.linkTo(parent.end)
@@ -96,7 +106,7 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
                 )
 
                 Text(
-                    text = product.quantityInCart.toString(),
+                    text = uiModel.quantityInCart.toString(),
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
                         .constrainAs(cartQuantity) {
@@ -111,6 +121,7 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
 
             ImageButton(
                 vectorResourceId = R.drawable.ic_add,
+                onClicked = { addItemToCart(uiModel.product) },
                 modifier = Modifier.constrainAs(addButton) {
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
@@ -123,8 +134,8 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
 @Composable
 private fun ImageButton(
     vectorResourceId: Int,
+    onClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    onClicked: () -> Unit = {}
 ) {
     Image(
         imageVector = ImageVector.vectorResource(id = vectorResourceId),
@@ -143,13 +154,18 @@ private fun ImageButton(
 fun DefaultCard() {
     WCStoreAppTheme {
         ProductCard(
-            product = ProductUiModel(
-                id = 0L,
-                name = "product",
+            uiModel = ProductUiModel(
+                product = Product(
+                    id = 0L,
+                    name = "product",
+                    images = listOf("https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1"),
+                    price = BigDecimal.TEN
+                ),
                 priceFormatted = "20 USD",
-                images = listOf("https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1"),
                 quantityInCart = 1
             ),
+            addItemToCart = {},
+            removeItemFromCart = {},
             modifier = Modifier.size(160.dp)
         )
     }

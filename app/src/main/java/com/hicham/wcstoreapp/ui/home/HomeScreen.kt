@@ -24,6 +24,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.map
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
+import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.components.InsetAwareTopAppBar
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import kotlinx.coroutines.flow.Flow
@@ -35,12 +36,19 @@ fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
-    HomeScreen(productsFlow = viewModel.products, scaffoldState = scaffoldState)
+    HomeScreen(
+        productsFlow = viewModel.products,
+        addItemToCart = viewModel::addItemToCart,
+        removeItemFromCart = viewModel::deleteItemFromCart,
+        scaffoldState = scaffoldState
+    )
 }
 
 @Composable
 fun HomeScreen(
     productsFlow: Flow<PagingData<ProductUiModel>>,
+    addItemToCart: (Product) -> Unit,
+    removeItemFromCart: (Product) -> Unit,
     scaffoldState: ScaffoldState
 ) {
 
@@ -53,7 +61,12 @@ fun HomeScreen(
             )
         }
     ) {
-        ProductsList(productsFlow = productsFlow, scaffoldState = scaffoldState)
+        ProductsList(
+            productsFlow = productsFlow,
+            addItemToCart = addItemToCart,
+            removeItemFromCart = removeItemFromCart,
+            scaffoldState = scaffoldState
+        )
     }
 }
 
@@ -62,6 +75,8 @@ private val minCardWidth = 160.dp
 @Composable
 fun ProductsList(
     productsFlow: Flow<PagingData<ProductUiModel>>,
+    addItemToCart: (Product) -> Unit,
+    removeItemFromCart: (Product) -> Unit,
     scaffoldState: ScaffoldState
 ) {
     val lazyProductList = productsFlow.collectAsLazyPagingItems()
@@ -91,6 +106,8 @@ fun ProductsList(
 
                     renderList(
                         lazyProductList = lazyProductList,
+                        addItemToCart = addItemToCart,
+                        removeItemFromCart = removeItemFromCart,
                         nbColumns = nbColumns,
                         itemsSize = size
                     )
@@ -125,6 +142,8 @@ fun ProductsList(
 
 private fun LazyListScope.renderList(
     lazyProductList: LazyPagingItems<ProductUiModel>,
+    addItemToCart: (Product) -> Unit,
+    removeItemFromCart: (Product) -> Unit,
     nbColumns: Int,
     itemsSize: Dp
 ) {
@@ -140,7 +159,12 @@ private fun LazyListScope.renderList(
             (firstIndex until firstIndex + nbColumns).forEach { itemIndex ->
                 if (itemIndex < lazyProductList.itemCount) {
                     lazyProductList[itemIndex]?.let {
-                        ProductCard(product = it, modifier = Modifier.size(itemsSize))
+                        ProductCard(
+                            uiModel = it,
+                            addItemToCart = addItemToCart,
+                            removeItemFromCart = removeItemFromCart,
+                            modifier = Modifier.size(itemsSize)
+                        )
                     }
                 } else {
                     Spacer(Modifier.size(itemsSize))
@@ -179,12 +203,14 @@ fun ErrorView(
 fun DefaultHome() {
     val productsFlow = FakeProductsRepository().getProductList()
         .map { data ->
-            data.map { ProductUiModel(it.id, it.name, "10 USD", it.images) }
+            data.map { ProductUiModel(it, "10 USD") }
         }
 
     WCStoreAppTheme {
         HomeScreen(
             productsFlow = productsFlow,
+            addItemToCart = {},
+            removeItemFromCart = {},
             scaffoldState = rememberScaffoldState()
         )
     }
