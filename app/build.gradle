@@ -61,6 +61,7 @@ dependencies {
     implementation libs.bundles.paging
     implementation libs.accompanist.insets.ui
     implementation libs.coil.compose
+    implementation libs.navigation.compose
 
     implementation libs.hilt.android
     kapt libs.hilt.compiler
