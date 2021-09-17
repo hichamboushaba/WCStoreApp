@@ -62,8 +62,10 @@ dependencies {
     implementation libs.accompanist.insets.ui
     implementation libs.coil.compose
     implementation libs.navigation.compose
+    implementation libs.font.tabler.icons
 
     implementation libs.hilt.android
+    implementation libs.hilt.navigation.compose
     kapt libs.hilt.compiler
 
     implementation libs.kotlinx.coroutines.core
