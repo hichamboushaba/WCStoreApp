@@ -20,7 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberImagePainter
+import coil.size.Scale
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 
@@ -36,6 +38,7 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
                     data = product.images[0],
                     builder = {
                         crossfade(true)
+                        scale(Scale.FIT)
                         placeholder(R.drawable.ic_product_placeholder)
                         error(R.drawable.ic_product_placeholder)
                     }
@@ -43,12 +46,13 @@ fun ProductCard(product: ProductUiModel, modifier: Modifier = Modifier) {
                 contentDescription = null,
                 modifier = Modifier
                     .constrainAs(image) {
+                        start.linkTo(parent.start, 32.dp)
                         top.linkTo(parent.top, 8.dp)
                         bottom.linkTo(price.top, 8.dp)
+                        end.linkTo(addButton.start)
+                        width = Dimension.preferredWrapContent
+                        height = Dimension.fillToConstraints
                     }
-                    .fillMaxHeight(fraction = 0.7f)
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.CenterHorizontally)
             )
             Text(
                 text = product.priceFormatted,
@@ -127,7 +131,7 @@ private fun ImageButton(
         contentDescription = "",
         colorFilter = ColorFilter.tint(MaterialTheme.colors.onPrimary),
         modifier = modifier
-            .clickable { onClicked }
+            .clickable { onClicked() }
             .size(32.dp)
             .background(MaterialTheme.colors.primary)
             .padding(8.dp)
