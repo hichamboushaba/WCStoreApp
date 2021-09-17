@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: HomeViewModel,
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     HomeScreen(
