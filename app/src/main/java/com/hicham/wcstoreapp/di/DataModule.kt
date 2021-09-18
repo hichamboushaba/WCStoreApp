@@ -1,12 +1,12 @@
 package com.hicham.wcstoreapp.di
 
 import androidx.paging.PagingSource
-import com.hicham.wcstoreapp.data.Cart
+import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.data.ProductsRepositoryImpl
 import com.hicham.wcstoreapp.data.source.fake.FakeCurrencyFormatProvider
-import com.hicham.wcstoreapp.data.source.inmemory.InMemoryCart
+import com.hicham.wcstoreapp.data.source.inmemory.InMemoryCartRepository
 import com.hicham.wcstoreapp.data.source.network.ProductsPagingSource
 import com.hicham.wcstoreapp.models.Product
 import dagger.Binds
@@ -29,5 +29,5 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindCart(cart: InMemoryCart): Cart
+    abstract fun bindCart(cart: InMemoryCartRepository): CartRepository
 }
