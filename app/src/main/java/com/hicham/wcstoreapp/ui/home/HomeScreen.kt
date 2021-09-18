@@ -51,37 +51,11 @@ fun HomeScreen(
     removeItemFromCart: (Product) -> Unit,
     scaffoldState: ScaffoldState
 ) {
-
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            InsetAwareTopAppBar(
-                title = { Text(stringResource(id = R.string.app_name)) },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    ) {
-        ProductsList(
-            productsFlow = productsFlow,
-            addItemToCart = addItemToCart,
-            removeItemFromCart = removeItemFromCart,
-            scaffoldState = scaffoldState
-        )
-    }
-}
-
-private val minCardWidth = 160.dp
-
-@Composable
-fun ProductsList(
-    productsFlow: Flow<PagingData<ProductUiModel>>,
-    addItemToCart: (Product) -> Unit,
-    removeItemFromCart: (Product) -> Unit,
-    scaffoldState: ScaffoldState
-) {
     val lazyProductList = productsFlow.collectAsLazyPagingItems()
 
     val coroutineScope = rememberCoroutineScope()
+
+    val minCardWidth = 160.dp
 
     BoxWithConstraints {
         val nbColumns = (maxWidth / minCardWidth).toInt()
