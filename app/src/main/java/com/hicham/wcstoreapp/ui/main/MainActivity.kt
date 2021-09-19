@@ -78,38 +78,8 @@ private fun Main(uiState: MainViewModel.UiState) {
         isFloatingActionButtonDocked = true,
         floatingActionButton = {
             if (currentScreen?.shouldShowBottomNav == true) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy((-16).dp),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    Surface(
-                        shape = CircleShape,
-                        color = Color.Red,
-                        border = BorderStroke(1.dp, Color.LightGray),
-                        modifier = Modifier
-                            .size(24.dp)
-                            .alpha(if (uiState.countOfItemsInCart > 0) 1f else 0f)
-                            .zIndex(1f)
-                    ) {
-                        Text(
-                            String.format("%02d", uiState.countOfItemsInCart),
-                            color = Color.White,
-                            style = MaterialTheme.typography.caption,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .wrapContentSize(align = Alignment.Center)
-                        )
-                    }
-                    FloatingActionButton(
-                        shape = CircleShape,
-                        backgroundColor = MaterialTheme.colors.surface,
-                        onClick = {
-                            navController.navigate(Screen.Cart.route)
-                        },
-                        modifier = Modifier.zIndex(0f)
-                    ) {
-                        Icon(TablerIcons.ShoppingCart, "")
-                    }
+                CartButton(uiState.countOfItemsInCart) {
+                    navController.navigate(Screen.Cart.route)
                 }
             }
         }
@@ -161,6 +131,41 @@ private fun RowScope.BottomNavItem(navController: NavController, screen: Screen)
             }
         }
     )
+}
+
+@Composable
+private fun CartButton(countOfItemsInCart: Int, onClick: () -> Unit) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy((-16).dp),
+        horizontalAlignment = Alignment.End
+    ) {
+        Surface(
+            shape = CircleShape,
+            color = Color.Red,
+            border = BorderStroke(1.dp, Color.LightGray),
+            modifier = Modifier
+                .size(24.dp)
+                .alpha(if (countOfItemsInCart > 0) 1f else 0f)
+                .zIndex(1f)
+        ) {
+            Text(
+                String.format("%02d", countOfItemsInCart),
+                color = Color.White,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(align = Alignment.Center)
+            )
+        }
+        FloatingActionButton(
+            shape = CircleShape,
+            backgroundColor = MaterialTheme.colors.surface,
+            onClick = onClick,
+            modifier = Modifier.zIndex(0f)
+        ) {
+            Icon(TablerIcons.ShoppingCart, "")
+        }
+    }
 }
 
 @Preview(showBackground = true)
