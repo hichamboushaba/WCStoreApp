@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -55,13 +56,15 @@ fun ProductCard(
                 contentDescription = null,
                 modifier = Modifier
                     .constrainAs(image) {
-                        start.linkTo(parent.start, 32.dp)
+                        start.linkTo(parent.start, 34.dp)
                         top.linkTo(parent.top, 8.dp)
                         bottom.linkTo(price.top, 8.dp)
-                        end.linkTo(addButton.start)
+                        end.linkTo(addButton.start, 2.dp)
                         width = Dimension.preferredWrapContent
                         height = Dimension.fillToConstraints
                     }
+                    .wrapContentSize(Alignment.Center)
+                    .clip(MaterialTheme.shapes.small)
             )
             Text(
                 text = uiModel.priceFormatted,
