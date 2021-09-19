@@ -25,8 +25,8 @@ import java.math.BigDecimal
 @Composable
 fun CartListItem(
     item: CartViewModel.CartItemUiModel,
-    onAdd: () -> Unit,
-    onDecrease: () -> Unit,
+    onIncreaseQuantity: () -> Unit,
+    onDecreaseQuantity: () -> Unit,
     onRemove: () -> Unit
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
@@ -51,7 +51,7 @@ fun CartListItem(
                 Text(text = item.product.name, style = MaterialTheme.typography.subtitle1)
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(text = item.totalPriceFormatted, style = MaterialTheme.typography.subtitle2)
-                ItemQuantity(quantity = item.quantity, onAdd = onAdd, onDecrease = onDecrease)
+                ItemQuantity(quantity = item.quantity, onAdd = onIncreaseQuantity, onDecrease = onDecreaseQuantity)
             }
 
             IconButton(onClick = onRemove) {

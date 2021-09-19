@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.data.source.fake.PRODUCTS_JSON
 import com.hicham.wcstoreapp.data.source.network.NetworkProduct
+import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
 import com.hicham.wcstoreapp.ui.components.InsetAwareTopAppBar
 import compose.icons.TablerIcons
@@ -30,12 +31,21 @@ fun CartScreen(
 ) {
     val items by viewModel.items.collectAsState(initial = emptyList())
 
-    CartScreen(items = items, onBack = onBack)
+    CartScreen(
+        items = items,
+        onIncreaseQuantity = viewModel::onIncreaseQuantity,
+        onDecreaseQuantity = viewModel::onDecreaseQuantity,
+        onRemoveProduct = viewModel::onRemoveProduct,
+        onBack = onBack
+    )
 }
 
 @Composable
 fun CartScreen(
     items: List<CartViewModel.CartItemUiModel>,
+    onIncreaseQuantity: (Product) -> Unit,
+    onDecreaseQuantity: (Product) -> Unit,
+    onRemoveProduct: (Product) -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
@@ -54,9 +64,9 @@ fun CartScreen(
                 items(items) {
                     CartListItem(
                         item = it,
-                        onAdd = {/*TODO*/ },
-                        onDecrease = {/*TODO*/ },
-                        onRemove = {/*TODO*/ }
+                        onIncreaseQuantity = { onIncreaseQuantity(it.product) },
+                        onDecreaseQuantity = { onDecreaseQuantity(it.product) },
+                        onRemove = { onRemoveProduct(it.product) }
                     )
                 }
             }
@@ -116,5 +126,11 @@ fun CartPreview() {
             quantity = 1
         )
     }
-    CartScreen(items = items, onBack = {})
+    CartScreen(
+        items = items,
+        onIncreaseQuantity = {},
+        onDecreaseQuantity = {},
+        onRemoveProduct = {},
+        onBack = {}
+    )
 }
