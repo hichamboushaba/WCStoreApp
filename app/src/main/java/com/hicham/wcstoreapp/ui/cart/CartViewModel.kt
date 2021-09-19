@@ -32,6 +32,18 @@ class CartViewModel @Inject constructor(
             }
         }
 
+    fun onIncreaseQuantity(product: Product) {
+        cartRepository.addItem(product)
+    }
+
+    fun onDecreaseQuantity(product: Product) {
+        cartRepository.deleteItem(product)
+    }
+
+    fun onRemoveProduct(product: Product) {
+        cartRepository.clearProduct(product)
+    }
+
     data class CartItemUiModel(
         val product: Product,
         val quantity: Int,
