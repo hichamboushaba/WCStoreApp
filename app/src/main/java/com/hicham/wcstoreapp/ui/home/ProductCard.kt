@@ -44,7 +44,7 @@ fun ProductCard(
             val (image, price, title, addButton, cartQuantity, minusButton) = createRefs()
             Image(
                 painter = rememberImagePainter(
-                    data = uiModel.product.images[0],
+                    data = uiModel.product.images.firstOrNull().orEmpty(),
                     builder = {
                         crossfade(true)
                         scale(Scale.FIT)
