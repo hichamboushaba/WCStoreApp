@@ -21,6 +21,7 @@ import com.hicham.wcstoreapp.models.toProduct
 import com.hicham.wcstoreapp.ui.components.InsetAwareTopAppBar
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
+import compose.icons.tablericons.ShoppingCartPlus
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
@@ -54,12 +55,35 @@ fun CartScreen(
         }
     ) { innerPadding ->
         if (items.isEmpty()) {
-            Text(text = "empty")
+            Column(
+                verticalArrangement = Arrangement.spacedBy(
+                    16.dp,
+                    alignment = Alignment.CenterVertically
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                Text(
+                    text = "Your shopping cart is empty",
+                    style = MaterialTheme.typography.subtitle1
+                )
+                Icon(
+                    imageVector = TablerIcons.ShoppingCartPlus,
+                    modifier = Modifier.size(84.dp),
+                    contentDescription = ""
+                )
+                Button(onClick = onBack) {
+                    Text(text = "Check available products")
+                }
+            }
+
         } else {
             LazyColumn(
                 modifier = Modifier
-                    .padding(innerPadding)
-                    .padding(top = 8.dp)
+                    .padding(innerPadding),
+                contentPadding = PaddingValues(top = 8.dp)
             ) {
                 items(items) {
                     CartListItem(
@@ -111,9 +135,22 @@ private fun TopBar(onBack: () -> Unit) {
     )
 }
 
+
 @Preview
 @Composable
-fun CartPreview() {
+private fun EmptyCartPreview() {
+    CartScreen(
+        items = emptyList(),
+        onIncreaseQuantity = {},
+        onDecreaseQuantity = {},
+        onRemoveProduct = {},
+        onBack = {}
+    )
+}
+
+@Preview
+@Composable
+private fun CartPreview() {
     val productsList =
         Json.decodeFromString(ListSerializer(NetworkProduct.serializer()), PRODUCTS_JSON)
             .map { it.toProduct() }
