@@ -93,7 +93,7 @@ private fun Main(uiState: MainViewModel.UiState) {
                 HomeScreen(viewModel = hiltViewModel())
             }
             composable(Screen.Cart.route) {
-                CartScreen(viewModel = hiltViewModel())
+                CartScreen(viewModel = hiltViewModel(), onBack = { navController.navigateUp() })
             }
         }
     }
