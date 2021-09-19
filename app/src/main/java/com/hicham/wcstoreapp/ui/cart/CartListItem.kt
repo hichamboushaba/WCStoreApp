@@ -44,7 +44,7 @@ fun CartListItem(
                 modifier = Modifier
                     .size(96.dp)
                     .padding(8.dp)
-                    .clip(MaterialTheme.shapes.medium)
+                    .clip(MaterialTheme.shapes.small)
             )
 
             Column(modifier = Modifier.weight(1f)) {
@@ -67,7 +67,7 @@ fun CartListItem(
 @Composable
 private fun ItemQuantity(quantity: Int, onAdd: () -> Unit, onDecrease: () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = onDecrease, enabled = quantity > 0) {
+        IconButton(onClick = onDecrease, enabled = quantity > 1) {
             Icon(
                 imageVector = TablerIcons.Minus, contentDescription = "",
                 Modifier.border(1.dp, Color.Gray, CircleShape)
