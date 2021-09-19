@@ -43,8 +43,9 @@ fun CartListItem(
                 contentDescription = "",
                 modifier = Modifier
                     .size(96.dp)
+                    .padding(8.dp)
                     .clip(MaterialTheme.shapes.medium)
-                    .padding(8.dp))
+            )
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = item.product.name, style = MaterialTheme.typography.subtitle1)

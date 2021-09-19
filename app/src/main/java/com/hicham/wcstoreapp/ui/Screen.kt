@@ -10,9 +10,14 @@ import compose.icons.tablericons.Search
 sealed class Screen(
     val route: String,
     @StringRes val resourceId: Int,
-    val icon: ImageVector? = null
+    val icon: ImageVector? = null,
+    val shouldShowBottomNav: Boolean = false
 ) {
-    object Home : Screen("home", R.string.home, icon = TablerIcons.LayoutGrid)
-    object Search : Screen("search", R.string.search, icon = TablerIcons.Search)
+    object Home :
+        Screen("home", R.string.home, icon = TablerIcons.LayoutGrid, shouldShowBottomNav = true)
+
+    object Search :
+        Screen("search", R.string.search, icon = TablerIcons.Search, shouldShowBottomNav = true)
+
     object Cart : Screen("cart", R.string.cart)
 }

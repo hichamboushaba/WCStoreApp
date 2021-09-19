@@ -30,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ui.BottomNavigation
 import com.hicham.wcstoreapp.ui.Screen
+import com.hicham.wcstoreapp.ui.cart.CartScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
 import com.hicham.wcstoreapp.ui.theme.Shapes
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
@@ -59,40 +60,56 @@ class MainActivity : ComponentActivity() {
 private fun Main(uiState: MainViewModel.UiState) {
     val navController = rememberNavController()
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    // TODO check if the performance impact is not big here, since it uses reflection
+    val currentScreen = Screen::class.sealedSubclasses.firstOrNull {
+        currentDestination?.route?.contains(it.objectInstance!!.route) ?: false
+    }?.objectInstance
+
     Scaffold(
-        bottomBar = { BottomNavigation(navController = navController) },
+        bottomBar = {
+            if (currentScreen?.shouldShowBottomNav == true) {
+                BottomNavigation(navController = navController)
+            }
+        },
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         floatingActionButton = {
-            Column(
-                verticalArrangement = Arrangement.spacedBy((-16).dp),
-                horizontalAlignment = Alignment.End
-            ) {
-                Surface(
-                    shape = CircleShape,
-                    color = Color.Red,
-                    border = BorderStroke(1.dp, Color.LightGray),
-                    modifier = Modifier
-                        .size(24.dp)
-                        .alpha(if (uiState.countOfItemsInCart > 0) 1f else 0f)
-                        .zIndex(1f)
+            if (currentScreen?.shouldShowBottomNav == true) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy((-16).dp),
+                    horizontalAlignment = Alignment.End
                 ) {
-                    Text(
-                        String.format("%02d", uiState.countOfItemsInCart),
-                        color = Color.White,
-                        style = MaterialTheme.typography.caption,
+                    Surface(
+                        shape = CircleShape,
+                        color = Color.Red,
+                        border = BorderStroke(1.dp, Color.LightGray),
                         modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentSize(align = Alignment.Center)
-                    )
-                }
-                FloatingActionButton(
-                    shape = CircleShape,
-                    backgroundColor = MaterialTheme.colors.surface,
-                    onClick = {},
-                    modifier = Modifier.zIndex(0f)
-                ) {
-                    Icon(TablerIcons.ShoppingCart, "")
+                            .size(24.dp)
+                            .alpha(if (uiState.countOfItemsInCart > 0) 1f else 0f)
+                            .zIndex(1f)
+                    ) {
+                        Text(
+                            String.format("%02d", uiState.countOfItemsInCart),
+                            color = Color.White,
+                            style = MaterialTheme.typography.caption,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .wrapContentSize(align = Alignment.Center)
+                        )
+                    }
+                    FloatingActionButton(
+                        shape = CircleShape,
+                        backgroundColor = MaterialTheme.colors.surface,
+                        onClick = {
+                            navController.navigate(Screen.Cart.route)
+                        },
+                        modifier = Modifier.zIndex(0f)
+                    ) {
+                        Icon(TablerIcons.ShoppingCart, "")
+                    }
                 }
             }
         }
@@ -104,6 +121,9 @@ private fun Main(uiState: MainViewModel.UiState) {
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(viewModel = hiltViewModel())
+            }
+            composable(Screen.Cart.route) {
+                CartScreen(viewModel = hiltViewModel())
             }
         }
     }
@@ -133,22 +153,14 @@ private fun RowScope.BottomNavItem(navController: NavController, screen: Screen)
         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
         onClick = {
             navController.navigate(screen.route) {
-
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
-
                 launchSingleTop = true
-
                 restoreState = true
             }
         }
     )
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
 }
 
 @Preview(showBackground = true)
