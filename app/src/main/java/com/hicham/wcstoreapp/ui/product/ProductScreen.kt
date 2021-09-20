@@ -2,22 +2,28 @@ package com.hicham.wcstoreapp.ui.product
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import coil.size.OriginalSize
 import coil.size.Scale
+import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -75,10 +81,7 @@ private fun ProductDetails(state: ProductViewModel.UiState.SuccessState) {
                 .fillMaxHeight(0.5f)
                 .fillMaxWidth()
         ) {
-            HorizontalPager(
-                state = pagerState,
-
-                ) {
+            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) {
                 Image(
                     painter = rememberImagePainter(
                         data = state.product.images.getOrNull(it),
@@ -87,12 +90,13 @@ private fun ProductDetails(state: ProductViewModel.UiState.SuccessState) {
                             scale(Scale.FIT)
                             placeholder(R.drawable.ic_product_placeholder)
                             error(R.drawable.ic_product_placeholder)
+                            size(OriginalSize)
+                            transformations(MaterialTheme.shapes.medium.toCoilTransformation())
                         }
                     ),
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
-                        .clip(MaterialTheme.shapes.medium),
+                        .padding(16.dp),
                     contentDescription = ""
                 )
             }
@@ -179,4 +183,16 @@ private fun ProductPreview() {
     )
 
     ProductScreen(uiState = state)
+}
+
+@Composable
+fun CornerBasedShape.toCoilTransformation(): RoundedCornersTransformation {
+    return with(LocalDensity.current) {
+        RoundedCornersTransformation(
+            topLeft = topStart.toPx(Size.Unspecified, this),
+            topRight = topEnd.toPx(Size.Unspecified, this),
+            bottomLeft = bottomStart.toPx(Size.Unspecified, this),
+            bottomRight = bottomEnd.toPx(Size.Unspecified, this)
+        )
+    }
 }
