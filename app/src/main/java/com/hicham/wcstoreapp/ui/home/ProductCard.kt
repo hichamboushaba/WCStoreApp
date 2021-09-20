@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -162,7 +161,9 @@ fun DefaultCard() {
                     id = 0L,
                     name = "product",
                     images = listOf("https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1"),
-                    price = BigDecimal.TEN
+                    price = BigDecimal.TEN,
+                    shortDescription = "",
+                    description = ""
                 ),
                 priceFormatted = "20 USD",
                 quantityInCart = 1

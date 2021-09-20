@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.ui.product
 
+import android.widget.TextView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +20,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.text.HtmlCompat
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
 import coil.size.Scale
@@ -65,78 +68,91 @@ private fun ProductScreen(uiState: ProductViewModel.UiState) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun ProductDetails(state: ProductViewModel.UiState.SuccessState) {
     Column {
-        val pagesCount = state.product.images.size.takeIf { it > 0 } ?: 1
-        val pagerState = rememberPagerState(pageCount = pagesCount)
-
-        val coroutineScope = rememberCoroutineScope()
 
         val product = state.product
 
-        Box(
-            modifier = Modifier
-                .fillMaxHeight(0.5f)
-                .fillMaxWidth()
-        ) {
-            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) {
-                Image(
-                    painter = rememberImagePainter(
-                        data = state.product.images.getOrNull(it),
-                        builder = {
-                            crossfade(true)
-                            scale(Scale.FIT)
-                            placeholder(R.drawable.ic_product_placeholder)
-                            error(R.drawable.ic_product_placeholder)
-                            size(OriginalSize)
-                            transformations(MaterialTheme.shapes.medium.toCoilTransformation())
-                        }
-                    ),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    contentDescription = ""
-                )
-            }
+        ProductImagesPager(state.product.images)
 
-            IconButton(
-                onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                    }
-                }, modifier = Modifier.align(Alignment.CenterStart),
-                enabled = pagerState.currentPage > 0
-            ) {
-                Icon(imageVector = TablerIcons.ChevronLeft, contentDescription = "")
-            }
-
-            IconButton(
-                onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                    }
-                }, modifier = Modifier.align(Alignment.CenterEnd),
-                enabled = pagerState.currentPage < pagerState.pageCount - 1
-            ) {
-                Icon(imageVector = TablerIcons.ChevronRight, contentDescription = "")
-            }
-
-            PagerIndicator(pagerState, modifier = Modifier.align(Alignment.BottomCenter))
-        }
         Spacer(modifier = Modifier.size(32.dp))
         Text(
-            text = product.name,
+            text = state.priceFormatted,
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         Spacer(modifier = Modifier.size(8.dp))
-        Text(
-            text = state.priceFormatted,
-            style = MaterialTheme.typography.subtitle2,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+        HtmlText(text = product.shortDescription, modifier = Modifier.padding(horizontal = 16.dp))
+        Spacer(modifier = Modifier.size(8.dp))
+        HtmlText(text = product.description, modifier = Modifier.padding(horizontal = 16.dp))
+    }
+}
+
+@Composable
+private fun HtmlText(text: String, modifier: Modifier = Modifier) {
+    AndroidView(modifier = modifier, factory = { context ->
+        TextView(context).apply {
+            setText(HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY))
+        }
+    })
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+private fun ProductImagesPager(images: List<String>) {
+    val pagesCount = images.size.takeIf { it > 0 } ?: 1
+    val pagerState = rememberPagerState(pageCount = pagesCount)
+    val coroutineScope = rememberCoroutineScope()
+
+    Box(
+        modifier = Modifier
+            .fillMaxHeight(0.5f)
+            .fillMaxWidth()
+    ) {
+        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = rememberImagePainter(
+                    data = images.getOrNull(it),
+                    builder = {
+                        crossfade(true)
+                        scale(Scale.FIT)
+                        placeholder(R.drawable.ic_product_placeholder)
+                        error(R.drawable.ic_product_placeholder)
+                        size(OriginalSize)
+                        transformations(MaterialTheme.shapes.medium.toCoilTransformation())
+                    }
+                ),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentDescription = ""
+            )
+        }
+
+        IconButton(
+            onClick = {
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                }
+            }, modifier = Modifier.align(Alignment.CenterStart),
+            enabled = pagerState.currentPage > 0
+        ) {
+            Icon(imageVector = TablerIcons.ChevronLeft, contentDescription = "")
+        }
+
+        IconButton(
+            onClick = {
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
+            }, modifier = Modifier.align(Alignment.CenterEnd),
+            enabled = pagerState.currentPage < pagerState.pageCount - 1
+        ) {
+            Icon(imageVector = TablerIcons.ChevronRight, contentDescription = "")
+        }
+
+        PagerIndicator(pagerState, modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 
