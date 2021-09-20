@@ -92,7 +92,9 @@ fun CartListItemPreview() {
             id = 0L,
             name = "product",
             images = listOf("https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1"),
-            price = BigDecimal.TEN
+            price = BigDecimal.TEN,
+            shortDescription = "",
+            description = ""
         ),
         totalPriceFormatted = "20 $",
         quantity = 1
