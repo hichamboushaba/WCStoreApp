@@ -8,7 +8,9 @@ import java.math.BigDecimal
 
 class BigDecimalSerializer : KSerializer<BigDecimal> {
     override fun deserialize(decoder: Decoder): BigDecimal {
-        return BigDecimal(decoder.decodeString())
+        return decoder.decodeString().takeIf { it.isNotEmpty() }?.let {
+            BigDecimal(it)
+        } ?: BigDecimal.ZERO
     }
 
     override val descriptor: SerialDescriptor =
