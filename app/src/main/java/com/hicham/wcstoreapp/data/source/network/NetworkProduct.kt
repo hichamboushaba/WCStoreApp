@@ -3,9 +3,8 @@
 package com.hicham.wcstoreapp.data.source.network
 
 import com.hicham.wcstoreapp.util.BigDecimalSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.UseSerializers
+import kotlinx.serialization.*
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -46,10 +45,10 @@ data class NetworkProduct(
     val price: BigDecimal,
 
     @SerialName("regular_price")
-    val regularPrice: String,
+    val regularPrice: BigDecimal?,
 
     @SerialName("sale_price")
-    val salePrice: String,
+    val salePrice: BigDecimal?,
 
     @SerialName("date_on_sale_from")
     val dateOnSaleFrom: JsonObject? = null,

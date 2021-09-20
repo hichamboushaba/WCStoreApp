@@ -26,7 +26,9 @@ import javax.inject.Singleton
 abstract class NetworkModule {
     companion object {
         @Provides
-        fun providesJson(): Json = Json
+        fun providesJson(): Json = Json {
+            isLenient = true
+        }
 
         @Provides
         @Singleton
