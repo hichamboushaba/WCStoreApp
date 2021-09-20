@@ -1,23 +1,28 @@
 package com.hicham.wcstoreapp.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.hicham.wcstoreapp.R
 import compose.icons.TablerIcons
 import compose.icons.tablericons.LayoutGrid
 import compose.icons.tablericons.Search
 
 sealed class Screen(
-    val route: String,
-    @StringRes val resourceId: Int,
+    open val route: String,
     val icon: ImageVector? = null,
     val shouldShowBottomNav: Boolean = false
 ) {
     object Home :
-        Screen("home", R.string.home, icon = TablerIcons.LayoutGrid, shouldShowBottomNav = true)
+        Screen("home", icon = TablerIcons.LayoutGrid, shouldShowBottomNav = true)
 
     object Search :
-        Screen("search", R.string.search, icon = TablerIcons.Search, shouldShowBottomNav = true)
+        Screen("search", icon = TablerIcons.Search, shouldShowBottomNav = true)
 
-    object Cart : Screen("cart", R.string.cart)
+    object Cart : Screen("cart")
+
+    object Product : Screen("product") {
+        val productIdKey = "productId"
+        override val route: String
+            get() = "${super.route}/{$productIdKey}"
+
+        fun createRoute(productId: Long) = route.replace("{$productIdKey}", productId.toString())
+    }
 }

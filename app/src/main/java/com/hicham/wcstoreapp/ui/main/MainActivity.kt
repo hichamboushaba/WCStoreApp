@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -24,15 +23,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.accompanist.insets.ui.BottomNavigation
 import com.hicham.wcstoreapp.ui.Screen
 import com.hicham.wcstoreapp.ui.cart.CartScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
-import com.hicham.wcstoreapp.ui.theme.Shapes
+import com.hicham.wcstoreapp.ui.product.ProductScreen
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
@@ -90,10 +91,18 @@ private fun Main(uiState: MainViewModel.UiState) {
             Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen(viewModel = hiltViewModel())
+                HomeScreen(
+                    viewModel = hiltViewModel()
+                ) { navController.navigate(Screen.Product.createRoute(it)) }
             }
             composable(Screen.Cart.route) {
                 CartScreen(viewModel = hiltViewModel(), onBack = { navController.navigateUp() })
+            }
+            composable(
+                Screen.Product.route,
+                arguments = listOf(navArgument("productId") { type = NavType.LongType })
+            ) {
+                ProductScreen(viewModel = hiltViewModel())
             }
         }
     }

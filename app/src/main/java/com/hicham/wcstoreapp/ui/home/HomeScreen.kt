@@ -1,6 +1,7 @@
 package com.hicham.wcstoreapp.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -12,20 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.map
-import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.components.InsetAwareTopAppBar
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -34,12 +31,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    scaffoldState: ScaffoldState = rememberScaffoldState()
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    openProduct: (Long) -> Unit
 ) {
     HomeScreen(
         productsFlow = viewModel.products,
         addItemToCart = viewModel::addItemToCart,
         removeItemFromCart = viewModel::deleteItemFromCart,
+        openProduct = openProduct,
         scaffoldState = scaffoldState
     )
 }
@@ -49,6 +48,7 @@ fun HomeScreen(
     productsFlow: Flow<PagingData<ProductUiModel>>,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
+    openProduct: (Long) -> Unit,
     scaffoldState: ScaffoldState
 ) {
     val lazyProductList = productsFlow.collectAsLazyPagingItems()
@@ -82,6 +82,7 @@ fun HomeScreen(
                         lazyProductList = lazyProductList,
                         addItemToCart = addItemToCart,
                         removeItemFromCart = removeItemFromCart,
+                        onProductClick = openProduct,
                         nbColumns = nbColumns,
                         itemsSize = size
                     )
@@ -118,6 +119,7 @@ private fun LazyListScope.renderList(
     lazyProductList: LazyPagingItems<ProductUiModel>,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
+    onProductClick: (Long) -> Unit,
     nbColumns: Int,
     itemsSize: Dp
 ) {
@@ -137,7 +139,9 @@ private fun LazyListScope.renderList(
                             uiModel = it,
                             addItemToCart = addItemToCart,
                             removeItemFromCart = removeItemFromCart,
-                            modifier = Modifier.size(itemsSize)
+                            modifier = Modifier
+                                .size(itemsSize)
+                                .clickable { onProductClick(it.product.id) }
                         )
                     }
                 } else {
@@ -185,6 +189,7 @@ fun DefaultHome() {
             productsFlow = productsFlow,
             addItemToCart = {},
             removeItemFromCart = {},
+            openProduct = {},
             scaffoldState = rememberScaffoldState()
         )
     }
