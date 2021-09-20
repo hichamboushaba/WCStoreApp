@@ -23,6 +23,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.map
 import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.components.ErrorView
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -148,29 +149,6 @@ private fun LazyListScope.renderList(
                     Spacer(Modifier.size(itemsSize))
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ErrorView(
-    modifier: Modifier = Modifier,
-    onRetry: () -> Unit,
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            bitmap = ImageBitmap.imageResource(id = android.R.drawable.stat_notify_error),
-            contentDescription = null,
-            modifier = Modifier.size(120.dp),
-            colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        Button(onClick = onRetry) {
-            Text(text = "Retry")
         }
     }
 }
