@@ -17,4 +17,9 @@ class FakeProductsRepository : ProductsRepository {
                 .map { it.toProduct() }
         return flowOf(PagingData.from(products))
     }
+
+    override suspend fun getProduct(id: Long): Product {
+        return Json.decodeFromString(ListSerializer(NetworkProduct.serializer()), PRODUCTS_JSON)
+            .first().toProduct()
+    }
 }
