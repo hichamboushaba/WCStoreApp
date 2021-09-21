@@ -87,7 +87,10 @@ private fun Main(uiState: MainViewModel.UiState, navigationManager: NavigationMa
         }
     }
 
+    val scaffoldState = rememberScaffoldState()
+
     Scaffold(
+        scaffoldState = scaffoldState,
         bottomBar = {
             if (currentScreen?.shouldShowBottomNav == true) {
                 BottomNavigation(navController = navController)
@@ -109,18 +112,16 @@ private fun Main(uiState: MainViewModel.UiState, navigationManager: NavigationMa
             Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen(
-                    viewModel = hiltViewModel()
-                )
+                HomeScreen(viewModel = hiltViewModel())
             }
             composable(Screen.Cart.route) {
                 CartScreen(viewModel = hiltViewModel())
             }
             composable(
                 Screen.Product.route,
-                arguments = listOf(navArgument("productId") { type = NavType.LongType })
+                arguments = Screen.Product.navArguments
             ) {
-                ProductScreen(viewModel = hiltViewModel())
+                ProductScreen(viewModel = hiltViewModel(), scaffoldState)
             }
         }
     }

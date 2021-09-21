@@ -22,7 +22,7 @@ class ProductViewModel @Inject constructor(
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository
 ) : BaseViewModel() {
-    private val productId = savedStateHandle.get<Long>(Screen.Product.productIdKey)!!
+    private val productId = savedStateHandle.get<Long>(Screen.Product.navArguments.first().name)!!
 
     private val _uiState = MutableStateFlow<UiState>(UiState.LoadingState)
     val uiState = _uiState.asStateFlow()

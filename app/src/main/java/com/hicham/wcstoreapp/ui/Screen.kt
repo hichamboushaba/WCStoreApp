@@ -1,15 +1,32 @@
 package com.hicham.wcstoreapp.ui
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import compose.icons.TablerIcons
 import compose.icons.tablericons.LayoutGrid
 import compose.icons.tablericons.Search
 
 sealed class Screen(
-    open val route: String,
+    private val baseRoute: String,
     val icon: ImageVector? = null,
-    val shouldShowBottomNav: Boolean = false
+    val shouldShowBottomNav: Boolean = false,
+    val navArguments: List<NamedNavArgument> = emptyList()
 ) {
+    val route: String
+        get() {
+            val mandatoryArguments = navArguments.filter { it.argument.defaultValue == null }
+                .takeIf { it.isNotEmpty() }
+                ?.joinToString(separator = "/", prefix = "/") { "{${it.name}}" }
+                .orEmpty()
+            val optionalArguments = navArguments.filter { it.argument.defaultValue != null }
+                .takeIf { it.isNotEmpty() }
+                ?.joinToString(separator = "&", prefix = "?") { "${it.name}={${it.name}}" }
+                .orEmpty()
+            return "$baseRoute$mandatoryArguments$optionalArguments"
+        }
+
     object Home :
         Screen("home", icon = TablerIcons.LayoutGrid, shouldShowBottomNav = true)
 
@@ -18,11 +35,11 @@ sealed class Screen(
 
     object Cart : Screen("cart")
 
-    object Product : Screen("product") {
-        val productIdKey = "productId"
-        override val route: String
-            get() = "${super.route}/{$productIdKey}"
-
-        fun createRoute(productId: Long) = route.replace("{$productIdKey}", productId.toString())
+    object Product : Screen(
+        baseRoute = "product",
+        navArguments = listOf(navArgument("productId") { type = NavType.LongType })
+    ) {
+        fun createRoute(productId: Long) =
+            route.replace("{${navArguments.first().name}}", productId.toString())
     }
 }
