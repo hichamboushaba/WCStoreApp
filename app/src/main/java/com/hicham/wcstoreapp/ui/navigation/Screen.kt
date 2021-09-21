@@ -14,18 +14,7 @@ sealed class Screen(
     val shouldShowBottomNav: Boolean = false,
     val navArguments: List<NamedNavArgument> = emptyList()
 ) {
-    val route: String
-        get() {
-            val mandatoryArguments = navArguments.filter { it.argument.defaultValue == null }
-                .takeIf { it.isNotEmpty() }
-                ?.joinToString(separator = "/", prefix = "/") { "{${it.name}}" }
-                .orEmpty()
-            val optionalArguments = navArguments.filter { it.argument.defaultValue != null }
-                .takeIf { it.isNotEmpty() }
-                ?.joinToString(separator = "&", prefix = "?") { "${it.name}={${it.name}}" }
-                .orEmpty()
-            return "$baseRoute$mandatoryArguments$optionalArguments"
-        }
+    val route: String = baseRoute.appendArguments(navArguments)
 
     object Home :
         Screen("home", icon = TablerIcons.LayoutGrid, shouldShowBottomNav = true)
@@ -42,4 +31,16 @@ sealed class Screen(
         fun createRoute(productId: Long) =
             route.replace("{${navArguments.first().name}}", productId.toString())
     }
+}
+
+private fun String.appendArguments(navArguments: List<NamedNavArgument>): String {
+    val mandatoryArguments = navArguments.filter { it.argument.defaultValue == null }
+        .takeIf { it.isNotEmpty() }
+        ?.joinToString(separator = "/", prefix = "/") { "{${it.name}}" }
+        .orEmpty()
+    val optionalArguments = navArguments.filter { it.argument.defaultValue != null }
+        .takeIf { it.isNotEmpty() }
+        ?.joinToString(separator = "&", prefix = "?") { "${it.name}={${it.name}}" }
+        .orEmpty()
+    return "$this$mandatoryArguments$optionalArguments"
 }
