@@ -24,18 +24,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.google.accompanist.insets.ui.BottomNavigation
 import com.hicham.wcstoreapp.ui.NavigationCommand
 import com.hicham.wcstoreapp.ui.NavigationManager
-import com.hicham.wcstoreapp.ui.Screen
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.cart.CartScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
+import com.hicham.wcstoreapp.ui.navigation.MainNavGraph
 import com.hicham.wcstoreapp.ui.product.ProductScreen
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
@@ -106,24 +105,11 @@ private fun Main(uiState: MainViewModel.UiState, navigationManager: NavigationMa
             }
         }
     ) { innerPadding ->
-        NavHost(
-            navController,
-            startDestination = Screen.Home.route,
-            Modifier.padding(innerPadding)
-        ) {
-            composable(Screen.Home.route) {
-                HomeScreen(viewModel = hiltViewModel())
-            }
-            composable(Screen.Cart.route) {
-                CartScreen(viewModel = hiltViewModel())
-            }
-            composable(
-                Screen.Product.route,
-                arguments = Screen.Product.navArguments
-            ) {
-                ProductScreen(viewModel = hiltViewModel(), scaffoldState)
-            }
-        }
+        MainNavGraph(
+            navController = navController,
+            modifier = Modifier.padding(innerPadding),
+            scaffoldState = scaffoldState
+        )
     }
 }
 
