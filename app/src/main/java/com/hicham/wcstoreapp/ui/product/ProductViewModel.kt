@@ -7,8 +7,10 @@ import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.Screen
+import com.hicham.wcstoreapp.ui.ShowSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -19,7 +21,7 @@ class ProductViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository
-) : ViewModel() {
+) : BaseViewModel() {
     private val productId = savedStateHandle.get<Long>(Screen.Product.productIdKey)!!
 
     private val _uiState = MutableStateFlow<UiState>(UiState.LoadingState)
@@ -46,6 +48,17 @@ class ProductViewModel @Inject constructor(
                 _uiState.value = UiState.ErrorState
             }
             .launchIn(viewModelScope)
+    }
+
+    fun onAddToCartClicked() {
+        val state = uiState.value
+        if (state !is UiState.SuccessState) return
+        cartRepository.addItem(state.product)
+        triggerEffect(ShowSnackBar("Product added to cart"))
+    }
+
+    fun onBackClicked() {
+
     }
 
     sealed class UiState {

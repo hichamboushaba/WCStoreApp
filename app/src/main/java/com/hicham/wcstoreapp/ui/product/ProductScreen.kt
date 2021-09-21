@@ -9,10 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -38,30 +35,50 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
+import com.hicham.wcstoreapp.ui.ShowSnackBar
 import com.hicham.wcstoreapp.ui.components.ErrorView
 import com.hicham.wcstoreapp.ui.components.WCTopAppBar
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ChevronLeft
 import compose.icons.tablericons.ChevronRight
 import compose.icons.tablericons.ShoppingCartPlus
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @Composable
-fun ProductScreen(viewModel: ProductViewModel) {
+fun ProductScreen(viewModel: ProductViewModel, scaffoldState: ScaffoldState) {
     val uiState by viewModel.uiState.collectAsState()
-    ProductScreen(uiState = uiState)
+    val snackbarHostState = scaffoldState.snackbarHostState
+
+    LaunchedEffect("effect") {
+        viewModel.effects.collect {
+            when (it) {
+                is ShowSnackBar -> snackbarHostState.showSnackbar(it.message)
+            }
+        }
+    }
+    ProductScreen(
+        uiState = uiState,
+        onAddToCart = viewModel::onAddToCartClicked,
+        onBack = viewModel::onBackClicked
+    )
 }
 
 @Composable
-private fun ProductScreen(uiState: ProductViewModel.UiState) {
+private fun ProductScreen(
+    uiState: ProductViewModel.UiState,
+    onAddToCart: () -> Unit,
+    onBack: () -> Unit
+) {
     val title =
         if (uiState is ProductViewModel.UiState.SuccessState) uiState.product.name else ""
+
     Scaffold(
         topBar = {
             WCTopAppBar(
                 title = title,
-                onNavigationClick = {/*TODO*/ }
+                onNavigationClick = onBack
             )
         }
     ) { innerPadding ->
@@ -70,13 +87,13 @@ private fun ProductScreen(uiState: ProductViewModel.UiState) {
                 // TODO
             }
             ProductViewModel.UiState.LoadingState -> LoadingView()
-            is ProductViewModel.UiState.SuccessState -> ProductDetails(uiState)
+            is ProductViewModel.UiState.SuccessState -> ProductDetails(uiState, onAddToCart)
         }
     }
 }
 
 @Composable
-private fun ProductDetails(state: ProductViewModel.UiState.SuccessState) {
+private fun ProductDetails(state: ProductViewModel.UiState.SuccessState, onAddToCart: () -> Unit) {
     val product = state.product
     val scrollState = rememberScrollState()
     Column {
@@ -109,7 +126,7 @@ private fun ProductDetails(state: ProductViewModel.UiState.SuccessState) {
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = onAddToCart,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -253,7 +270,7 @@ private fun ProductPreview() {
         quantityInCart = 1
     )
 
-    ProductScreen(uiState = state)
+    ProductScreen(uiState = state, {}, {})
 }
 
 @Composable
