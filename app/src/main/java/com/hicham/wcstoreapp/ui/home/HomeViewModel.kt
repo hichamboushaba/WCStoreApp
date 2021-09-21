@@ -10,7 +10,7 @@ import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.NavigationManager
-import com.hicham.wcstoreapp.ui.Screen
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map

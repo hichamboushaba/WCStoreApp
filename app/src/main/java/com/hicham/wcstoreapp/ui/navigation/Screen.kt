@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.ui
+package com.hicham.wcstoreapp.ui.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
