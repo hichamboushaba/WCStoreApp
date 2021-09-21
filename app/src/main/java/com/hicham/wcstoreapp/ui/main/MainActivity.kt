@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,6 +31,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.insets.ui.BottomNavigation
+import com.hicham.wcstoreapp.ui.NavigationCommand
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.Screen
 import com.hicham.wcstoreapp.ui.cart.CartScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
@@ -38,9 +41,15 @@ import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var navigationManager: NavigationManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -49,7 +58,7 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val viewModel = viewModel<MainViewModel>()
                     val uiState by viewModel.uiState.collectAsState()
-                    Main(uiState)
+                    Main(uiState, navigationManager)
                 }
             }
         }
@@ -58,7 +67,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun Main(uiState: MainViewModel.UiState) {
+private fun Main(uiState: MainViewModel.UiState, navigationManager: NavigationManager) {
     val navController = rememberNavController()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -68,6 +77,15 @@ private fun Main(uiState: MainViewModel.UiState) {
     val currentScreen = Screen::class.sealedSubclasses.firstOrNull {
         currentDestination?.route?.contains(it.objectInstance!!.route) ?: false
     }?.objectInstance
+
+    LaunchedEffect(Unit) {
+        navigationManager.navigationCommands.collect {
+            when (it) {
+                is NavigationCommand.NavigateToRoute -> navController.navigate(it.route)
+                NavigationCommand.NavigateUp -> navController.navigateUp()
+            }
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -80,7 +98,7 @@ private fun Main(uiState: MainViewModel.UiState) {
         floatingActionButton = {
             if (currentScreen?.shouldShowBottomNav == true) {
                 CartButton(uiState.countOfItemsInCart) {
-                    navController.navigate(Screen.Cart.route)
+                    navigationManager.navigate(Screen.Cart.route)
                 }
             }
         }
@@ -93,10 +111,10 @@ private fun Main(uiState: MainViewModel.UiState) {
             composable(Screen.Home.route) {
                 HomeScreen(
                     viewModel = hiltViewModel()
-                ) { navController.navigate(Screen.Product.createRoute(it)) }
+                )
             }
             composable(Screen.Cart.route) {
-                CartScreen(viewModel = hiltViewModel(), onBack = { navController.navigateUp() })
+                CartScreen(viewModel = hiltViewModel())
             }
             composable(
                 Screen.Product.route,
@@ -181,6 +199,6 @@ private fun CartButton(countOfItemsInCart: Int, onClick: () -> Unit) {
 @Composable
 fun DefaultPreview() {
     WCStoreAppTheme {
-        Main(MainViewModel.UiState(1))
+        Main(MainViewModel.UiState(1), NavigationManager())
     }
 }

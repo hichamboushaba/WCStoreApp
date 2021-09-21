@@ -9,6 +9,8 @@ import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.NavigationManager
+import com.hicham.wcstoreapp.ui.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repository: ProductsRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val navigationManager: NavigationManager
 ) : ViewModel() {
     private val currencyFormatter = currencyFormatProvider.formatSettings
         .map { CurrencyFormatter(it) }
@@ -47,6 +50,11 @@ class HomeViewModel @Inject constructor(
 
     fun deleteItemFromCart(product: Product) {
         cartRepository.deleteItem(product)
+    }
+
+    fun onProductClicked(id: Long) {
+        val route = Screen.Product.createRoute(id)
+        navigationManager.navigate(route)
     }
 }
 

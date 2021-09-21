@@ -25,8 +25,7 @@ import kotlinx.serialization.json.Json
 
 @Composable
 fun CartScreen(
-    viewModel: CartViewModel,
-    onBack: () -> Unit
+    viewModel: CartViewModel
 ) {
     val items by viewModel.items.collectAsState(initial = emptyList())
 
@@ -35,7 +34,7 @@ fun CartScreen(
         onIncreaseQuantity = viewModel::onIncreaseQuantity,
         onDecreaseQuantity = viewModel::onDecreaseQuantity,
         onRemoveProduct = viewModel::onRemoveProduct,
-        onBack = onBack
+        onBack = viewModel::onBackClicked
     )
 }
 
