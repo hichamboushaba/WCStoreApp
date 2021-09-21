@@ -32,14 +32,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
-    openProduct: (Long) -> Unit
+    scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     HomeScreen(
         productsFlow = viewModel.products,
         addItemToCart = viewModel::addItemToCart,
         removeItemFromCart = viewModel::deleteItemFromCart,
-        openProduct = openProduct,
+        openProduct = viewModel::onProductClicked,
         scaffoldState = scaffoldState
     )
 }
