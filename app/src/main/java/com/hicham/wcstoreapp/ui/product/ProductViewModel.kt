@@ -8,6 +8,7 @@ import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.ShowSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ class ProductViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productsRepository: ProductsRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val navigationManager: NavigationManager
 ) : BaseViewModel() {
     private val productId = savedStateHandle.get<Long>(Screen.Product.navArguments.first().name)!!
 
@@ -57,7 +59,7 @@ class ProductViewModel @Inject constructor(
     }
 
     fun onBackClicked() {
-
+        navigationManager.navigateUp()
     }
 
     sealed class UiState {
