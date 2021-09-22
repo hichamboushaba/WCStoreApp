@@ -5,7 +5,8 @@ import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
-import com.hicham.wcstoreapp.ui.NavigationManager
+import com.hicham.wcstoreapp.ui.navigation.NavigationManager
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -48,6 +49,10 @@ class CartViewModel @Inject constructor(
 
     fun onBackClicked() {
         navigationManager.navigateUp()
+    }
+
+    fun onGoToProductsClicked() {
+        navigationManager.popUpTo(Screen.Home.route)
     }
 
     data class CartItemUiModel(

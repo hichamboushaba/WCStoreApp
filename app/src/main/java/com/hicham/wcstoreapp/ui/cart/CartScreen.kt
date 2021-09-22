@@ -34,7 +34,8 @@ fun CartScreen(
         onIncreaseQuantity = viewModel::onIncreaseQuantity,
         onDecreaseQuantity = viewModel::onDecreaseQuantity,
         onRemoveProduct = viewModel::onRemoveProduct,
-        onBack = viewModel::onBackClicked
+        onBack = viewModel::onBackClicked,
+        onGoToProducts = viewModel::onGoToProductsClicked
     )
 }
 
@@ -44,7 +45,8 @@ fun CartScreen(
     onIncreaseQuantity: (Product) -> Unit,
     onDecreaseQuantity: (Product) -> Unit,
     onRemoveProduct: (Product) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onGoToProducts: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -86,7 +88,7 @@ fun CartScreen(
                     modifier = Modifier.size(84.dp),
                     contentDescription = ""
                 )
-                Button(onClick = onBack) {
+                Button(onClick = onGoToProducts) {
                     Text(text = "Check available products")
                 }
             }
@@ -118,7 +120,8 @@ private fun EmptyCartPreview() {
         onIncreaseQuantity = {},
         onDecreaseQuantity = {},
         onRemoveProduct = {},
-        onBack = {}
+        onBack = {},
+        onGoToProducts = {}
     )
 }
 
@@ -142,6 +145,7 @@ private fun CartPreview() {
         onIncreaseQuantity = {},
         onDecreaseQuantity = {},
         onRemoveProduct = {},
-        onBack = {}
+        onBack = {},
+        onGoToProducts = {}
     )
 }
