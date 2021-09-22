@@ -73,6 +73,11 @@ fun ProductCard(
                 modifier = Modifier
                     .constrainAs(price) {
                         bottom.linkTo(title.top)
+                        linkTo(
+                            start = title.start,
+                            end = addButton.start,
+                            bias = 0f,
+                        )
                     }
             )
             Text(
@@ -84,7 +89,8 @@ fun ProductCard(
                         linkTo(
                             start = parent.start,
                             end = addButton.start,
-                            bias = 0f
+                            bias = 0f,
+                            startMargin = 8.dp
                         )
                     }
             )
