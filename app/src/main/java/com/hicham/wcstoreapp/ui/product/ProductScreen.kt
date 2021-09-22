@@ -35,7 +35,8 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
-import com.hicham.wcstoreapp.ui.ShowSnackBar
+import com.hicham.wcstoreapp.ui.ShowActionSnackbar
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.components.ErrorView
 import com.hicham.wcstoreapp.ui.components.WCTopAppBar
 import compose.icons.TablerIcons
@@ -54,7 +55,12 @@ fun ProductScreen(viewModel: ProductViewModel, scaffoldState: ScaffoldState) {
     LaunchedEffect("effect") {
         viewModel.effects.collect {
             when (it) {
-                is ShowSnackBar -> snackbarHostState.showSnackbar(it.message)
+                is ShowActionSnackbar -> {
+                    val result = snackbarHostState.showSnackbar(it.message, actionLabel = it.actionText)
+                    if (result == SnackbarResult.ActionPerformed) {
+                        it.action()
+                    }
+                }
             }
         }
     }

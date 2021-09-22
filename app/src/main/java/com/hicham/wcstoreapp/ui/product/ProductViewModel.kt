@@ -6,11 +6,8 @@ import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.BaseViewModel
-import com.hicham.wcstoreapp.ui.CurrencyFormatter
-import com.hicham.wcstoreapp.ui.NavigationManager
+import com.hicham.wcstoreapp.ui.*
 import com.hicham.wcstoreapp.ui.navigation.Screen
-import com.hicham.wcstoreapp.ui.ShowSnackBar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -55,7 +52,17 @@ class ProductViewModel @Inject constructor(
         val state = uiState.value
         if (state !is UiState.SuccessState) return
         cartRepository.addItem(state.product)
-        triggerEffect(ShowSnackBar("Product added to cart"))
+        triggerEffect(
+            ShowActionSnackbar(
+                "Product added to cart",
+                actionText = "View Cart",
+                action = ::onViewCartClicked
+            )
+        )
+    }
+
+    private fun onViewCartClicked() {
+        navigationManager.navigate(Screen.Cart.route)
     }
 
     fun onBackClicked() {

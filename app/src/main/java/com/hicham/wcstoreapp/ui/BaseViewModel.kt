@@ -15,4 +15,6 @@ open class BaseViewModel() : ViewModel() {
 
 open class Effect
 
-data class ShowSnackBar(val message: String) : Effect()
+data class ShowSnackbar(val message: String) : Effect()
+data class ShowActionSnackbar(val message: String, val actionText: String, val action: () -> Unit) :
+    Effect()
