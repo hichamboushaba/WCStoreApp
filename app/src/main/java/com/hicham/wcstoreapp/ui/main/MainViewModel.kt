@@ -15,7 +15,7 @@ class MainViewModel @Inject constructor(cartRepository: CartRepository) : ViewMo
 
     init {
         cartRepository.items
-            .map { it.size }
+            .map { it.sumOf { it.quantity } }
             .onEach { _uiState.update { state -> state.copy(countOfItemsInCart = it) } }
             .launchIn(viewModelScope)
     }

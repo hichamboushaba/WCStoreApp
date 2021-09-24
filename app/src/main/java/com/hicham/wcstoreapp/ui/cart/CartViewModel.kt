@@ -22,15 +22,14 @@ class CartViewModel @Inject constructor(
         combine(
             cartRepository.items,
             currencyFormatProvider.formatSettings
-        ) { products, formatSettings ->
-            Pair(products, CurrencyFormatter(formatSettings))
-        }.map { (products, currencyFormatter) ->
-            products.groupBy { it }.map { (product, list) ->
-                val quantity = list.size
+        ) { cartItems, formatSettings ->
+            Pair(cartItems, CurrencyFormatter(formatSettings))
+        }.map { (cartItems, currencyFormatter) ->
+            cartItems.map {
                 CartItemUiModel(
-                    product = product,
-                    quantity = quantity,
-                    totalPriceFormatted = currencyFormatter.format(product.price.multiply(quantity.toBigDecimal()))
+                    product = it.product,
+                    quantity = it.quantity,
+                    totalPriceFormatted = currencyFormatter.format(it.product.price.multiply(it.quantity.toBigDecimal()))
                 )
             }
         }

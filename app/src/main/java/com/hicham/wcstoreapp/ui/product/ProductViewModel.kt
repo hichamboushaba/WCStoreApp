@@ -28,7 +28,9 @@ class ProductViewModel @Inject constructor(
 
     init {
         val productFlow = flow { emit(productsRepository.getProduct(productId)) }
-        val cartQuantityFlow = cartRepository.items.map { it.filter { it.id == productId }.size }
+        val cartQuantityFlow = cartRepository.items.map {
+            it.firstOrNull { it.product.id == productId }?.quantity ?: 0
+        }
         combine(
             productFlow,
             cartQuantityFlow,

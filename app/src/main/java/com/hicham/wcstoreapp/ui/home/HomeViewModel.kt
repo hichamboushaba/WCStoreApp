@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
             ProductUiModel(
                 product = product,
                 priceFormatted = formatter.format(product.price),
-                quantityInCart = cartItems.filter { it == product }.size
+                quantityInCart = cartItems.firstOrNull { it.product == product }?.quantity ?: 0
             )
         }
     }
