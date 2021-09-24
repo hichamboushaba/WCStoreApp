@@ -12,8 +12,11 @@ import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,14 +45,18 @@ class HomeViewModel @Inject constructor(
                 quantityInCart = cartItems.firstOrNull { it.product == product }?.quantity ?: 0
             )
         }
-    }
+    }.flowOn(Dispatchers.Default)
 
     fun addItemToCart(product: Product) {
-        cartRepository.addItem(product)
+        viewModelScope.launch {
+            cartRepository.addItem(product)
+        }
     }
 
     fun deleteItemFromCart(product: Product) {
-        cartRepository.deleteItem(product)
+        viewModelScope.launch {
+            cartRepository.deleteItem(product)
+        }
     }
 
     fun onProductClicked(id: Long) {

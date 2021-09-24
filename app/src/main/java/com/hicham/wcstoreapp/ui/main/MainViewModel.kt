@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -15,8 +16,9 @@ class MainViewModel @Inject constructor(cartRepository: CartRepository) : ViewMo
 
     init {
         cartRepository.items
-            .map { it.sumOf { it.quantity } }
+            .map { list -> list.sumOf { it.quantity } }
             .onEach { _uiState.update { state -> state.copy(countOfItemsInCart = it) } }
+            .flowOn(Dispatchers.Default)
             .launchIn(viewModelScope)
     }
 
