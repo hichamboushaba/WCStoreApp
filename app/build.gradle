@@ -67,6 +67,9 @@ dependencies {
     implementation libs.navigation.compose
     implementation libs.font.tabler.icons
 
+    implementation libs.room.runtime
+    kapt libs.room.compiler
+
     implementation libs.hilt.android
     implementation libs.hilt.navigation.compose
     kapt libs.hilt.compiler
