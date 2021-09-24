@@ -11,6 +11,7 @@ import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,16 +53,18 @@ class ProductViewModel @Inject constructor(
     }
 
     fun onAddToCartClicked() {
-        val state = uiState.value
-        if (state !is UiState.SuccessState) return
-        cartRepository.addItem(state.product)
-        triggerEffect(
-            ShowActionSnackbar(
-                "Product added to cart",
-                actionText = "View Cart",
-                action = ::onViewCartClicked
+        viewModelScope.launch {
+            val state = uiState.value
+            if (state !is UiState.SuccessState) return@launch
+            cartRepository.addItem(state.product)
+            triggerEffect(
+                ShowActionSnackbar(
+                    "Product added to cart",
+                    actionText = "View Cart",
+                    action = ::onViewCartClicked
+                )
             )
-        )
+        }
     }
 
     private fun onViewCartClicked() {

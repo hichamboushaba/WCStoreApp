@@ -13,7 +13,7 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
     private val _items = MutableStateFlow(emptyList<CartItem>())
     override val items: StateFlow<List<CartItem>> = _items.asStateFlow()
 
-    override fun addItem(product: Product) {
+    override suspend fun addItem(product: Product) {
         _items.update { list ->
             list.toMutableList().apply {
                 val index = indexOfFirst { it.product == product }
@@ -27,7 +27,7 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
         }
     }
 
-    override fun deleteItem(product: Product) {
+    override suspend fun deleteItem(product: Product) {
         _items.update { list ->
             list
                 .map {
@@ -37,7 +37,7 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
         }
     }
 
-    override fun clearProduct(product: Product) {
+    override suspend fun clearProduct(product: Product) {
         _items.update { list -> list.filterNot { it.product == product } }
     }
 }
