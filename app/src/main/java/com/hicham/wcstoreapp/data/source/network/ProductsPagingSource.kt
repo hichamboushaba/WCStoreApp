@@ -2,14 +2,17 @@ package com.hicham.wcstoreapp.data.source.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.hicham.wcstoreapp.data.source.db.AppDatabase
+import com.hicham.wcstoreapp.data.source.db.entities.ProductEntity
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
 import kotlinx.coroutines.delay
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
-class ProductsPagingSource @Inject constructor(private val api: WooCommerceApi) :
+class ProductsPagingSource @Inject constructor(
+    private val api: WooCommerceApi,
+    private val database: AppDatabase
+) :
     PagingSource<Int, Product>() {
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -24,6 +27,9 @@ class ProductsPagingSource @Inject constructor(private val api: WooCommerceApi) 
             val nextPageNumber = params.key ?: 1
             delay(1000)
             val response = api.getProducts(pageSize = params.loadSize, page = nextPageNumber)
+
+            cacheProducts(response)
+
             LoadResult.Page(
                 data = response.map { it.toProduct() },
                 prevKey = null, // Only paging forward.
@@ -32,5 +38,18 @@ class ProductsPagingSource @Inject constructor(private val api: WooCommerceApi) 
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
+    }
+
+    private suspend fun cacheProducts(products: List<NetworkProduct>) {
+        database.productDao().insertProduct(*products.map {
+            ProductEntity(
+                id = it.id,
+                name = it.name,
+                images = it.images.map { it.src },
+                price = it.price.toPlainString(),
+                shortDescription = it.shortDescription,
+                description = it.description
+            )
+        }.toTypedArray())
     }
 }
