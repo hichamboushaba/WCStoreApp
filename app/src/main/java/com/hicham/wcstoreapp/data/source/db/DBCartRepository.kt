@@ -4,16 +4,17 @@ import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.source.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.models.CartItem
 import com.hicham.wcstoreapp.models.Product
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class DBCartRepository @Inject constructor(database: AppDatabase) : CartRepository {
     private val cartDao = database.cartDao()
     private val productDao = database.productDao()
 
-    override val items: Flow<List<CartItem>>
-        get() = cartDao.getCartItems().map { list ->
+    override val items: Flow<List<CartItem>> = cartDao.getCartItems().map { list ->
             list.mapNotNull {
                 val productEntity = productDao.getProduct(it.productId)
                 if (productEntity != null) {
@@ -24,6 +25,8 @@ class DBCartRepository @Inject constructor(database: AppDatabase) : CartReposito
                 } else null
             }
         }
+        .distinctUntilChanged()
+        .shareIn(GlobalScope, started = SharingStarted.Lazily, replay = 1)
 
     override suspend fun addItem(product: Product) {
         val currentItem = cartDao.getCartItem(product.id)
