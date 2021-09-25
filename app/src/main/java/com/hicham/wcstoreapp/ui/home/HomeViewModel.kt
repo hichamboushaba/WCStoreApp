@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private val currencyFormatter = currencyFormatProvider.formatSettings
         .map { CurrencyFormatter(it) }
 
-    private val productPagingData = repository.getProductList().cachedIn(viewModelScope)
+    private val productPagingData = repository.getProductList()
 
     val products = combine(
         productPagingData,
@@ -45,7 +45,9 @@ class HomeViewModel @Inject constructor(
                 quantityInCart = cartItems.firstOrNull { it.product == product }?.quantity ?: 0
             )
         }
-    }.flowOn(Dispatchers.Default)
+    }
+        .cachedIn(viewModelScope)
+        .flowOn(Dispatchers.Default)
 
     fun addItemToCart(product: Product) {
         viewModelScope.launch {
