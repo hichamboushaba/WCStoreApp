@@ -2,15 +2,19 @@ package com.hicham.wcstoreapp.data.source.db
 
 import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.source.db.entities.CartItemEntity
+import com.hicham.wcstoreapp.di.AppCoroutineScope
 import com.hicham.wcstoreapp.models.CartItem
 import com.hicham.wcstoreapp.models.Product
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DBCartRepository @Inject constructor(database: AppDatabase) : CartRepository {
+class DBCartRepository @Inject constructor(
+    database: AppDatabase,
+    @AppCoroutineScope appCoroutineScope: CoroutineScope
+) : CartRepository {
     private val cartDao = database.cartDao()
     private val productDao = database.productDao()
 
@@ -26,7 +30,7 @@ class DBCartRepository @Inject constructor(database: AppDatabase) : CartReposito
             }
         }
         .distinctUntilChanged()
-        .shareIn(GlobalScope, started = SharingStarted.Lazily, replay = 1)
+        .shareIn(appCoroutineScope, started = SharingStarted.Lazily, replay = 1)
 
     override suspend fun addItem(product: Product) {
         val currentItem = cartDao.getCartItem(product.id)
