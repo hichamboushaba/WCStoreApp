@@ -10,9 +10,7 @@ import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,21 +20,32 @@ class CartViewModel @Inject constructor(
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val navigationManager: NavigationManager
 ) : ViewModel() {
-    val items =
-        combine(
+    val uiState: Flow<CartUiState>
+
+    init {
+        uiState = combine(
             cartRepository.items,
             currencyFormatProvider.formatSettings
         ) { cartItems, formatSettings ->
             Pair(cartItems, CurrencyFormatter(formatSettings))
         }.map { (cartItems, currencyFormatter) ->
-            cartItems.map {
+            val items = cartItems.map {
                 CartItemUiModel(
                     product = it.product,
                     quantity = it.quantity,
                     totalPriceFormatted = currencyFormatter.format(it.product.price.multiply(it.quantity.toBigDecimal()))
                 )
             }
-        }.flowOn(Dispatchers.Default)
+            val totalPrice = cartItems.sumOf { it.product.price * it.quantity.toBigDecimal() }
+            CartUiState(
+                cartItems = items,
+                subtotalFormatted = currencyFormatter.format(totalPrice),
+                totalFormatted = currencyFormatter.format(totalPrice)
+            )
+        }
+            .flowOn(Dispatchers.Default)
+            .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
+    }
 
     fun onIncreaseQuantity(product: Product) {
         viewModelScope.launch {
@@ -62,6 +71,14 @@ class CartViewModel @Inject constructor(
 
     fun onGoToProductsClicked() {
         navigationManager.popUpTo(Screen.Home.route)
+    }
+
+    data class CartUiState(
+        val cartItems: List<CartItemUiModel> = emptyList(),
+        val subtotalFormatted: String = "",
+        val totalFormatted: String = ""
+    ) {
+        val shippingCost: String = "Free" // TODO
     }
 
     data class CartItemUiModel(

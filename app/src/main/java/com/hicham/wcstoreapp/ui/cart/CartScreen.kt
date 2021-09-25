@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.data.source.fake.PRODUCTS_JSON
@@ -27,10 +28,10 @@ import kotlinx.serialization.json.Json
 fun CartScreen(
     viewModel: CartViewModel
 ) {
-    val items by viewModel.items.collectAsState(initial = emptyList())
+    val uiState by viewModel.uiState.collectAsState(CartViewModel.CartUiState())
 
     CartScreen(
-        items = items,
+        state = uiState,
         onIncreaseQuantity = viewModel::onIncreaseQuantity,
         onDecreaseQuantity = viewModel::onDecreaseQuantity,
         onRemoveProduct = viewModel::onRemoveProduct,
@@ -41,7 +42,7 @@ fun CartScreen(
 
 @Composable
 fun CartScreen(
-    items: List<CartViewModel.CartItemUiModel>,
+    state: CartViewModel.CartUiState,
     onIncreaseQuantity: (Product) -> Unit,
     onDecreaseQuantity: (Product) -> Unit,
     onRemoveProduct: (Product) -> Unit,
@@ -68,7 +69,7 @@ fun CartScreen(
             )
         }
     ) { innerPadding ->
-        if (items.isEmpty()) {
+        if (state.cartItems.isEmpty()) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(
                     16.dp,
@@ -94,18 +95,87 @@ fun CartScreen(
             }
 
         } else {
-            LazyColumn(
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(top = 8.dp)
+                    .fillMaxHeight()
+                    .padding(innerPadding)
             ) {
-                items(items) {
-                    CartListItem(
-                        item = it,
-                        onIncreaseQuantity = { onIncreaseQuantity(it.product) },
-                        onDecreaseQuantity = { onDecreaseQuantity(it.product) },
-                        onRemove = { onRemoveProduct(it.product) }
-                    )
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(top = 8.dp)
+                ) {
+                    items(state.cartItems) {
+                        CartListItem(
+                            item = it,
+                            onIncreaseQuantity = { onIncreaseQuantity(it.product) },
+                            onDecreaseQuantity = { onDecreaseQuantity(it.product) },
+                            onRemove = { onRemoveProduct(it.product) }
+                        )
+                    }
+                }
+
+                Surface(
+                    elevation = 8.dp, modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text(text = "Cart Totals", style = MaterialTheme.typography.h5)
+
+                        Spacer(modifier = Modifier.size(16.dp))
+
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Subtotal", style = MaterialTheme.typography.subtitle1)
+                            Text(
+                                text = state.subtotalFormatted,
+                                style = MaterialTheme.typography.subtitle2
+                            )
+                        }
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "Shipping (TODO)",
+                                style = MaterialTheme.typography.subtitle1
+                            )
+                            Text(
+                                text = state.shippingCost,
+                                style = MaterialTheme.typography.subtitle2
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.size(16.dp))
+
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "Total",
+                                style = MaterialTheme.typography.subtitle1,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = state.totalFormatted,
+                                style = MaterialTheme.typography.subtitle2
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.size(16.dp))
+
+                        Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+                            Text(text = "Checkout")
+                        }
+                    }
+
                 }
             }
         }
@@ -116,7 +186,7 @@ fun CartScreen(
 @Composable
 private fun EmptyCartPreview() {
     CartScreen(
-        items = emptyList(),
+        state = CartViewModel.CartUiState(),
         onIncreaseQuantity = {},
         onDecreaseQuantity = {},
         onRemoveProduct = {},
@@ -140,8 +210,13 @@ private fun CartPreview() {
             quantity = 1
         )
     }
+    val state = CartViewModel.CartUiState(
+        cartItems = items + items,
+        subtotalFormatted = "10$",
+        totalFormatted = "10$"
+    )
     CartScreen(
-        items = items,
+        state = state,
         onIncreaseQuantity = {},
         onDecreaseQuantity = {},
         onRemoveProduct = {},
