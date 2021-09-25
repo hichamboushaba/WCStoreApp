@@ -126,7 +126,7 @@ private fun LazyListScope.renderList(
     val rowsCount =
         kotlin.math.ceil(lazyProductList.itemCount.toDouble() / nbColumns).toInt()
 
-    items(count = rowsCount) { row ->
+    items(count = rowsCount, key = { lazyProductList[it]?.product?.id ?: 0L }) { row ->
         val firstIndex = row * nbColumns
         Row(
             modifier = Modifier.fillMaxWidth(),
