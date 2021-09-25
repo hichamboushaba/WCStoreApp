@@ -16,19 +16,19 @@ class DBCartRepository @Inject constructor(
     @AppCoroutineScope appCoroutineScope: CoroutineScope
 ) : CartRepository {
     private val cartDao = database.cartDao()
-    private val productDao = database.productDao()
 
     override val items: Flow<List<CartItem>> = cartDao.getCartItems().map { list ->
-            list.mapNotNull {
-                val productEntity = productDao.getProduct(it.productId)
-                if (productEntity != null) {
-                    CartItem(
-                        productEntity.toProduct(),
-                        quantity = it.quantity
-                    )
-                } else null
-            }
+        list.mapNotNull { cartItem ->
+            // Can't happen due to the foreign key we have now
+            // TODO check what's the best way to handle this
+            if (cartItem.product != null) {
+                CartItem(
+                    cartItem.product.toProduct(),
+                    quantity = cartItem.cartItem.quantity
+                )
+            } else null
         }
+    }
         .distinctUntilChanged()
         .shareIn(appCoroutineScope, started = SharingStarted.Lazily, replay = 1)
 
