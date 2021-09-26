@@ -73,6 +73,10 @@ class CartViewModel @Inject constructor(
         navigationManager.popUpTo(Screen.Home.route)
     }
 
+    fun onCheckoutClicked() {
+        navigationManager.navigate(Screen.Checkout.route)
+    }
+
     data class CartUiState(
         val cartItems: List<CartItemUiModel> = emptyList(),
         val subtotalFormatted: String = "",
