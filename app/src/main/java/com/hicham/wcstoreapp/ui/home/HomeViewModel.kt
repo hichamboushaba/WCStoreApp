@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private val currencyFormatter = currencyFormatProvider.formatSettings
         .map { CurrencyFormatter(it) }
 
-    private val productPagingData = repository.getProductList()
+    private val productPagingData = repository.getProductList().cachedIn(viewModelScope)
 
     val products = combine(
         productPagingData,
