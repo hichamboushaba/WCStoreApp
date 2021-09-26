@@ -17,6 +17,7 @@ import com.hicham.wcstoreapp.data.source.fake.PRODUCTS_JSON
 import com.hicham.wcstoreapp.data.source.network.NetworkProduct
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
+import com.hicham.wcstoreapp.ui.components.CartTotals
 import com.hicham.wcstoreapp.ui.components.WCTopAppBar
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
@@ -115,68 +116,13 @@ fun CartScreen(
                     }
                 }
 
-                Surface(
-                    elevation = 8.dp, modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Text(text = "Cart Totals", style = MaterialTheme.typography.h5)
-
-                        Spacer(modifier = Modifier.size(16.dp))
-
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "Subtotal", style = MaterialTheme.typography.subtitle1)
-                            Text(
-                                text = state.subtotalFormatted,
-                                style = MaterialTheme.typography.subtitle2
-                            )
-                        }
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Shipping (TODO)",
-                                style = MaterialTheme.typography.subtitle1
-                            )
-                            Text(
-                                text = state.shippingCost,
-                                style = MaterialTheme.typography.subtitle2
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.size(16.dp))
-
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Total",
-                                style = MaterialTheme.typography.subtitle1,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                text = state.totalFormatted,
-                                style = MaterialTheme.typography.subtitle2
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.size(16.dp))
-
-                        Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                            Text(text = "Checkout")
-                        }
-                    }
-
-                }
+                CartTotals(
+                    subtotal = state.subtotalFormatted,
+                    shippingCost = state.shippingCost,
+                    total = state.totalFormatted,
+                    buttonLabel = "Checkout",
+                    onButtonClick = { /* TODO */ }
+                )
             }
         }
     }
