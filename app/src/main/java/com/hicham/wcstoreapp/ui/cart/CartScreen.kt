@@ -36,6 +36,7 @@ fun CartScreen(
         onIncreaseQuantity = viewModel::onIncreaseQuantity,
         onDecreaseQuantity = viewModel::onDecreaseQuantity,
         onRemoveProduct = viewModel::onRemoveProduct,
+        onCheckout = viewModel::onCheckoutClicked,
         onBack = viewModel::onBackClicked,
         onGoToProducts = viewModel::onGoToProductsClicked
     )
@@ -47,6 +48,7 @@ fun CartScreen(
     onIncreaseQuantity: (Product) -> Unit,
     onDecreaseQuantity: (Product) -> Unit,
     onRemoveProduct: (Product) -> Unit,
+    onCheckout: () -> Unit,
     onBack: () -> Unit,
     onGoToProducts: () -> Unit
 ) {
@@ -121,7 +123,7 @@ fun CartScreen(
                     shippingCost = state.shippingCost,
                     total = state.totalFormatted,
                     buttonLabel = "Checkout",
-                    onButtonClick = { /* TODO */ }
+                    onButtonClick = onCheckout
                 )
             }
         }
@@ -136,6 +138,7 @@ private fun EmptyCartPreview() {
         onIncreaseQuantity = {},
         onDecreaseQuantity = {},
         onRemoveProduct = {},
+        onCheckout = {},
         onBack = {},
         onGoToProducts = {}
     )
@@ -166,6 +169,7 @@ private fun CartPreview() {
         onIncreaseQuantity = {},
         onDecreaseQuantity = {},
         onRemoveProduct = {},
+        onCheckout = {},
         onBack = {},
         onGoToProducts = {}
     )
