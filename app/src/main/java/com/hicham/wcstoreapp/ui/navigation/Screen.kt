@@ -31,6 +31,8 @@ sealed class Screen(
         fun createRoute(productId: Long) =
             route.replace("{${navArguments.first().name}}", productId.toString())
     }
+
+    object Checkout : Screen(baseRoute = "checkout")
 }
 
 private fun String.appendArguments(navArguments: List<NamedNavArgument>): String {

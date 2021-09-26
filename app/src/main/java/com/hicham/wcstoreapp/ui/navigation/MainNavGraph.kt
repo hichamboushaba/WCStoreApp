@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.hicham.wcstoreapp.ui.cart.CartScreen
+import com.hicham.wcstoreapp.ui.checkout.CheckoutScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
 import com.hicham.wcstoreapp.ui.product.ProductScreen
 
@@ -35,6 +36,11 @@ fun MainNavGraph(
             arguments = Screen.Product.navArguments
         ) {
             ProductScreen(viewModel = hiltViewModel(), scaffoldState)
+        }
+        composable(
+            Screen.Checkout.route
+        ) {
+            CheckoutScreen(viewModel = hiltViewModel())
         }
     }
 }
