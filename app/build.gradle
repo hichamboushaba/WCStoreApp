@@ -59,13 +59,16 @@ dependencies {
     implementation libs.lifecycle.viewmodel
     implementation libs.lifecycle.viewmodel.compose
     implementation libs.material
-    implementation libs.bundles.compose
     implementation libs.bundles.paging
-    implementation libs.accompanist.insets.ui
-    implementation libs.accompanist.pager
-    implementation libs.coil.compose
+
+    implementation libs.bundles.compose
     implementation libs.navigation.compose
     implementation libs.font.tabler.icons
+    implementation libs.coil.compose
+    implementation libs.accompanist.insets.ui
+    implementation libs.accompanist.pager
+
+    implementation libs.kotlinx.coroutines.core
 
     implementation libs.bundles.room
     kapt libs.room.compiler
@@ -74,7 +77,7 @@ dependencies {
     implementation libs.hilt.navigation.compose
     kapt libs.hilt.compiler
 
-    implementation libs.kotlinx.coroutines.core
+    implementation libs.datastore
 
     implementation libs.retrofit
     implementation libs.okhttp.signpost
