@@ -29,6 +29,7 @@ kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
 paging-runtime = "androidx.paging:paging-runtime:3.0.1"
 paging-compose = "androidx.paging:paging-compose:1.0.0-alpha12"
 okhttp-signpost = "se.akerfeldt:okhttp-signpost:1.1.0"
+datastore = "androidx.datastore:datastore-preferences:1.0.0"
 
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room"}
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room"}

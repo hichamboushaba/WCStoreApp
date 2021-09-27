@@ -1,13 +1,18 @@
 package com.hicham.wcstoreapp.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.paging.PagingSource
 import androidx.room.Room
-import com.hicham.wcstoreapp.data.CartRepository
-import com.hicham.wcstoreapp.data.CurrencyFormatProvider
-import com.hicham.wcstoreapp.data.ProductsRepository
-import com.hicham.wcstoreapp.data.ProductsRepositoryImpl
+import com.hicham.wcstoreapp.data.*
 import com.hicham.wcstoreapp.data.source.db.AppDatabase
+import com.hicham.wcstoreapp.data.source.db.DBAddressRepository
 import com.hicham.wcstoreapp.data.source.db.DBCartRepository
 import com.hicham.wcstoreapp.data.source.fake.FakeCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.source.inmemory.InMemoryCartRepository
@@ -20,6 +25,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -35,6 +41,14 @@ abstract class DataModule {
                 .fallbackToDestructiveMigration()
                 .build()
         }
+
+        @Provides
+        @Singleton
+        fun providesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+            return PreferenceDataStoreFactory.create {
+                context.preferencesDataStoreFile("preferences")
+            }
+        }
     }
 
     @Binds
@@ -49,4 +63,7 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindCart(cart: DBCartRepository): CartRepository
+
+    @Binds
+    abstract fun bindAddressRepository(repository: DBAddressRepository): AddressRepository
 }
