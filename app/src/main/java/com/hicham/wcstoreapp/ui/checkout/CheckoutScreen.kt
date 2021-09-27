@@ -18,11 +18,17 @@ import com.hicham.wcstoreapp.ui.components.CartTotals
 @Composable
 fun CheckoutScreen(viewModel: CheckoutViewModel) {
     val state by viewModel.uiState.collectAsState(CheckoutViewModel.UiState())
-    CheckoutScreen(state = state)
+    CheckoutScreen(
+        state = state,
+        onEditShippingAddress = viewModel::onEditShippingAddressClicked
+    )
 }
 
 @Composable
-private fun CheckoutScreen(state: CheckoutViewModel.UiState) {
+private fun CheckoutScreen(
+    state: CheckoutViewModel.UiState,
+    onEditShippingAddress: () -> Unit = {}
+) {
     val scrollState = rememberScrollState()
     Column(
         Modifier
@@ -42,7 +48,7 @@ private fun CheckoutScreen(state: CheckoutViewModel.UiState) {
                 Spacer(modifier = Modifier.size(16.dp))
                 if (state.shippingAddress == null) {
                     OutlinedButton(
-                        onClick = { /*TODO*/ }, modifier = Modifier
+                        onClick = onEditShippingAddress, modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Text("Add new address")
@@ -54,7 +60,7 @@ private fun CheckoutScreen(state: CheckoutViewModel.UiState) {
                     )
                     Spacer(Modifier.size(16.dp))
                     OutlinedButton(
-                        onClick = { /*TODO*/ }, modifier = Modifier
+                        onClick = onEditShippingAddress, modifier = Modifier
                             .fillMaxWidth()
                     ) {
                         Text("Change address")
