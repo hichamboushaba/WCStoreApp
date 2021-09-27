@@ -22,27 +22,24 @@ class DBAddressRepository @Inject constructor(
     private val addressDao = database.addressDao()
 
     private val _savedAddresses = addressDao.getSavedAddresses()
-        .shareIn(
-            appCoroutineScope,
+        .stateIn(
+            scope = appCoroutineScope,
             started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
-            replay = 1
+            initialValue = emptyList()
         )
 
-    override val savedAddresses: Flow<List<Address>> =
-        _savedAddresses.map { list -> list.map { it.toAddress() } }
+    override val savedAddresses = _savedAddresses.map { list -> list.map { it.toAddress() } }
 
-    override val primaryShippingAddress: Flow<Address?>
-        get() {
-            return combine(
-                _savedAddresses,
-                dataStore.data.map { it[longPreferencesKey(PRIMARY_ADDRESS_KEY)] }
-            ) { savedAddresses, primaryAddress ->
-                primaryAddress?.let { savedAddresses.firstOrNull { it.id == primaryAddress } }
-                    ?.toAddress()
-            }.distinctUntilChanged()
-        }
-    override val primaryBillingAddress: Flow<Address?>
-        get() = emptyFlow()
+    override val primaryShippingAddress = combine(
+        _savedAddresses,
+        dataStore.data.map { it[longPreferencesKey(PRIMARY_ADDRESS_KEY)] }
+    ) { savedAddresses, primaryAddress ->
+        primaryAddress?.let { savedAddresses.firstOrNull { it.id == primaryAddress } }
+            ?.toAddress()
+    }
+        .distinctUntilChanged()
+
+    override val primaryBillingAddress = MutableStateFlow(null)
 
     override suspend fun addAddress(address: Address) {
         with(address) {
