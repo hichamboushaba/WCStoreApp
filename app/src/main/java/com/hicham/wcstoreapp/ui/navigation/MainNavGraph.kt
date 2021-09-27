@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.hicham.wcstoreapp.ui.cart.CartScreen
 import com.hicham.wcstoreapp.ui.checkout.CheckoutScreen
+import com.hicham.wcstoreapp.ui.checkout.address.AddAddressScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
 import com.hicham.wcstoreapp.ui.product.ProductScreen
 
@@ -41,6 +42,11 @@ fun MainNavGraph(
             Screen.Checkout.route
         ) {
             CheckoutScreen(viewModel = hiltViewModel())
+        }
+        composable(
+            Screen.AddAddress.route
+        ) {
+            AddAddressScreen(viewModel = hiltViewModel())
         }
     }
 }

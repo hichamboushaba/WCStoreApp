@@ -33,6 +33,10 @@ sealed class Screen(
     }
 
     object Checkout : Screen(baseRoute = "checkout")
+
+    object AddressList : Screen(baseRoute = "addressList")
+
+    object AddAddress : Screen(baseRoute = "addAddress")
 }
 
 private fun String.appendArguments(navArguments: List<NamedNavArgument>): String {
