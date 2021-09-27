@@ -11,6 +11,7 @@ import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,7 +53,13 @@ class CheckoutViewModel @Inject constructor(
     }
 
     fun onEditShippingAddressClicked() {
-        navigationManager.navigate(Screen.AddAddress.route)
+        viewModelScope.launch {
+            if (addressRepository.savedAddresses.first().isEmpty()) {
+                navigationManager.navigate(Screen.AddAddress.route)
+            } else {
+                navigationManager.navigate(Screen.AddressList.route)
+            }
+        }
     }
 
     data class UiState(
