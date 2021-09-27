@@ -129,6 +129,7 @@ private fun CheckoutPreview() {
     CheckoutScreen(
         CheckoutViewModel.UiState(
             shippingAddress = Address(
+                label = "Home",
                 firstName = "first",
                 lastName = "last",
                 street1 = "street",
@@ -136,8 +137,8 @@ private fun CheckoutPreview() {
                 phone = null,
                 city = "city",
                 state = "state",
+                postCode = "postCode",
                 country = "country",
-                postCode = "postCode"
             )
         )
     )
