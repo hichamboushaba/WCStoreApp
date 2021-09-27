@@ -31,6 +31,7 @@ class AddAddressViewModel @Inject constructor(
         viewModelScope.launch {
             val address = uiState.value.let {
                 Address(
+                    label = "",
                     it.firstName!!,
                     it.lastName!!,
                     it.street1!!,
@@ -39,7 +40,7 @@ class AddAddressViewModel @Inject constructor(
                     it.city!!,
                     it.state,
                     it.postCode!!,
-                    it.country!!
+                    it.country!!,
                 )
             }
             addressRepository.addAddress(address)

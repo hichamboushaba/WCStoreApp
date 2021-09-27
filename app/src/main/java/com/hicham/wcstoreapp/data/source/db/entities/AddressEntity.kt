@@ -7,6 +7,7 @@ import com.hicham.wcstoreapp.models.Address
 @Entity
 data class AddressEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val label: String?,
     val firstName: String,
     val lastName: String,
     val street1: String,
@@ -18,6 +19,7 @@ data class AddressEntity(
     val country: String
 ) {
     fun toAddress() = Address(
+        label = label,
         firstName = firstName,
         lastName = lastName,
         street1 = street1,

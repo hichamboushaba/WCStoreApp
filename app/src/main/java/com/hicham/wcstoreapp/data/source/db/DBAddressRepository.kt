@@ -45,6 +45,7 @@ class DBAddressRepository @Inject constructor(
         with(address) {
             addressDao.insertAddress(
                 AddressEntity(
+                    label = label,
                     firstName = firstName,
                     lastName = lastName,
                     street1 = street1,

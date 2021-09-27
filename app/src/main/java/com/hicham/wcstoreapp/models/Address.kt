@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 
 data class Address(
+    val label: String? = null,
     val firstName: String,
     val lastName: String,
     val street1: String,
@@ -15,7 +16,7 @@ data class Address(
     val city: String,
     val state: String?,
     val postCode: String,
-    val country: String
+    val country: String,
 ) {
     fun formatAddress(): AnnotatedString {
         return buildAnnotatedString {

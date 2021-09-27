@@ -98,6 +98,7 @@ private fun PreviewAddressListScreen() {
         items = listOf(
             AddressListViewModel.AddressItemUiModel(
                 Address(
+                    label = "Home",
                     firstName = "first",
                     lastName = "last",
                     street1 = "street",
@@ -105,13 +106,14 @@ private fun PreviewAddressListScreen() {
                     phone = null,
                     city = "city",
                     state = "state",
+                    postCode = "postCode",
                     country = "country",
-                    postCode = "postCode"
                 ),
                 isSelected = true
             ),
             AddressListViewModel.AddressItemUiModel(
                 Address(
+                    label = "Work",
                     firstName = "first",
                     lastName = "last",
                     street1 = "street",
@@ -119,8 +121,8 @@ private fun PreviewAddressListScreen() {
                     phone = null,
                     city = "city",
                     state = "state",
+                    postCode = "postCode",
                     country = "country",
-                    postCode = "postCode"
                 ),
                 isSelected = false
             )
