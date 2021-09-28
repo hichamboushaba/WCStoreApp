@@ -9,4 +9,5 @@ interface CartRepository {
     suspend fun addItem(product: Product)
     suspend fun deleteItem(product: Product)
     suspend fun clearProduct(product: Product)
+    suspend fun clear()
 }
