@@ -68,6 +68,7 @@ class CheckoutViewModel @Inject constructor(
 
     fun onPlacedOrderClicked() {
         viewModelScope.launch {
+            _uiState.update { state -> state.copy(isLoading = true) }
             val cartItems = cartRepository.items.first()
             val shipping = uiState.value.shippingAddress!!
 
@@ -77,6 +78,9 @@ class CheckoutViewModel @Inject constructor(
                 billingAddress = uiState.value.billingAddress ?: shipping,
                 paymentMethod = uiState.value.selectedPaymentMethod
             )
+
+            _uiState.update { state -> state.copy(isLoading = false) }
+
             result.fold(
                 onSuccess = {
                     cartRepository.clear()
@@ -92,6 +96,7 @@ class CheckoutViewModel @Inject constructor(
     }
 
     data class UiState(
+        val isLoading: Boolean = false,
         val shippingAddress: Address? = null,
         val isBillingSameAsShippingAddress: Boolean = true,
         val billingAddress: Address? = null,
