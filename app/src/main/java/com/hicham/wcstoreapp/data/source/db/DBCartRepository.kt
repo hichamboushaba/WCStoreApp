@@ -53,4 +53,8 @@ class DBCartRepository @Inject constructor(
     override suspend fun clearProduct(product: Product) {
         cartDao.deleteCartItemForProductId(productId = product.id)
     }
+
+    override suspend fun clear() {
+        cartDao.clear()
+    }
 }

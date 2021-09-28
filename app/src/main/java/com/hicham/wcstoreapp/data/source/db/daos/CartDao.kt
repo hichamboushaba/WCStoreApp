@@ -22,4 +22,7 @@ interface CartDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateItem(cartItemEntity: CartItemEntity)
+
+    @Query("DELETE FROM CartItemEntity")
+    suspend fun clear()
 }

@@ -40,4 +40,8 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
     override suspend fun clearProduct(product: Product) {
         _items.update { list -> list.filterNot { it.product == product } }
     }
+
+    override suspend fun clear() {
+        _items.value = emptyList()
+    }
 }
