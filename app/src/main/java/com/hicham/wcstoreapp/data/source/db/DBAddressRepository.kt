@@ -22,10 +22,10 @@ class DBAddressRepository @Inject constructor(
     private val addressDao = database.addressDao()
 
     private val _savedAddresses = addressDao.getSavedAddresses()
-        .stateIn(
+        .shareIn(
             scope = appCoroutineScope,
             started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
-            initialValue = emptyList()
+            replay = 1
         )
 
     override val savedAddresses = _savedAddresses.map { list -> list.map { it.toAddress() } }
