@@ -13,6 +13,7 @@ import com.hicham.wcstoreapp.ui.cart.CartScreen
 import com.hicham.wcstoreapp.ui.checkout.CheckoutScreen
 import com.hicham.wcstoreapp.ui.checkout.address.AddAddressScreen
 import com.hicham.wcstoreapp.ui.checkout.address.AddressListScreen
+import com.hicham.wcstoreapp.ui.checkout.after.OrderPlacedScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
 import com.hicham.wcstoreapp.ui.product.ProductScreen
 
@@ -53,6 +54,16 @@ fun MainNavGraph(
             Screen.AddAddress.route
         ) {
             AddAddressScreen(viewModel = hiltViewModel())
+        }
+        composable(
+            Screen.OrderPlaced.route
+        ) { backStackEntry ->
+            OrderPlacedScreen(
+                orderId = backStackEntry
+                    .arguments
+                    ?.getString(Screen.OrderPlaced.navArguments.first().name)!!
+                    .toLong()
+            )
         }
     }
 }

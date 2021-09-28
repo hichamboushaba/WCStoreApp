@@ -1,10 +1,13 @@
 package com.hicham.wcstoreapp.ui.checkout
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.navOptions
 import com.hicham.wcstoreapp.data.AddressRepository
 import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
+import com.hicham.wcstoreapp.data.source.OrderRepository
 import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
@@ -19,7 +22,8 @@ class CheckoutViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val addressRepository: AddressRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    private val orderRepository: OrderRepository
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -62,10 +66,36 @@ class CheckoutViewModel @Inject constructor(
         }
     }
 
+    fun onPlacedOrderClicked() {
+        viewModelScope.launch {
+            val cartItems = cartRepository.items.first()
+            val shipping = uiState.value.shippingAddress!!
+
+            val result = orderRepository.createOrder(
+                items = cartItems,
+                shippingAddress = shipping,
+                billingAddress = uiState.value.billingAddress ?: shipping,
+                paymentMethod = uiState.value.selectedPaymentMethod
+            )
+            result.fold(
+                onSuccess = {
+                    cartRepository.clear()
+                    navigationManager.navigate(Screen.OrderPlaced.createRoute(it)) {
+                        popUpTo(Screen.Home.route)
+                    }
+                },
+                onFailure = {
+                    //TODO show a snackbar
+                }
+            )
+        }
+    }
+
     data class UiState(
         val shippingAddress: Address? = null,
         val isBillingSameAsShippingAddress: Boolean = true,
         val billingAddress: Address? = null,
+        val selectedPaymentMethod: PaymentMethod = PaymentMethod.CASH,
         val subtotalFormatted: String = "",
         val totalFormatted: String = ""
     ) {

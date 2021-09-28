@@ -17,7 +17,8 @@ fun CartTotals(
     shippingCost: String,
     buttonLabel: String,
     onButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    buttonEnabled: Boolean = true,
 ) {
     Surface(
         elevation = 8.dp, modifier = modifier
@@ -75,7 +76,11 @@ fun CartTotals(
 
             Spacer(modifier = Modifier.size(16.dp))
 
-            Button(onClick = onButtonClick, modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = onButtonClick,
+                enabled = buttonEnabled,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text(text = buttonLabel)
             }
         }

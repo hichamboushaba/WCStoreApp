@@ -13,6 +13,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.components.CartTotals
 
 @Composable
@@ -20,14 +21,16 @@ fun CheckoutScreen(viewModel: CheckoutViewModel) {
     val state by viewModel.uiState.collectAsState(CheckoutViewModel.UiState())
     CheckoutScreen(
         state = state,
-        onEditShippingAddress = viewModel::onEditShippingAddressClicked
+        onEditShippingAddress = viewModel::onEditShippingAddressClicked,
+        onPlaceOrder = viewModel::onPlacedOrderClicked
     )
 }
 
 @Composable
 private fun CheckoutScreen(
     state: CheckoutViewModel.UiState,
-    onEditShippingAddress: () -> Unit = {}
+    onEditShippingAddress: () -> Unit = {},
+    onPlaceOrder: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -109,8 +112,26 @@ private fun CheckoutScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         ) {
-            Column(Modifier.padding(16.dp)) {
-                Text("Payment")
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "Payment",
+                    style = MaterialTheme.typography.subtitle1
+                )
+
+                Text(
+                    text = state.selectedPaymentMethod.title,
+                    style = MaterialTheme.typography.body1
+                )
+                OutlinedButton(
+                    onClick = { /*TODO*/ }, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Text("Change payment method")
+                }
             }
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -119,9 +140,17 @@ private fun CheckoutScreen(
             total = state.totalFormatted,
             shippingCost = state.shippingCost,
             buttonLabel = "Place Order",
-            onButtonClick = { /*TODO*/ })
+            buttonEnabled = state.shippingAddress != null,
+            onButtonClick = onPlaceOrder
+        )
     }
 }
+
+private val PaymentMethod.title
+    get() = when (this) {
+        PaymentMethod.WIRE -> "Wire Transfer"
+        PaymentMethod.CASH -> "Cash on delivery"
+    }
 
 @Preview
 @Composable

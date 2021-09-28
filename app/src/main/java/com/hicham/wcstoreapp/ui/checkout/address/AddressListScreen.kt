@@ -62,6 +62,7 @@ private fun AddressListScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.size(24.dp))
             Button(
                 onClick = onSaveClicked,
                 modifier = Modifier.fillMaxWidth(),

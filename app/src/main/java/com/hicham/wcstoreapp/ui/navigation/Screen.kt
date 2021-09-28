@@ -34,9 +34,18 @@ sealed class Screen(
 
     object Checkout : Screen(baseRoute = "checkout")
 
-    object AddressList : Screen(baseRoute = "addressList")
+    object AddressList : Screen(baseRoute = "checkout/addressList")
 
-    object AddAddress : Screen(baseRoute = "addAddress")
+    object AddAddress : Screen(baseRoute = "checkout/addAddress")
+
+    object OrderPlaced : Screen(
+        baseRoute = "checkout/orderplaced",
+        navArguments = listOf(
+            navArgument("orderId") { type = NavType.LongType })
+    ) {
+        fun createRoute(orderId: Long) =
+            route.replace("{${navArguments.first().name}}", orderId.toString())
+    }
 }
 
 private fun String.appendArguments(navArguments: List<NamedNavArgument>): String {
