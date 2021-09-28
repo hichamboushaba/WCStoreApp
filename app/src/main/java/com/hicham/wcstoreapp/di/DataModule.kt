@@ -11,10 +11,12 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.paging.PagingSource
 import androidx.room.Room
 import com.hicham.wcstoreapp.data.*
+import com.hicham.wcstoreapp.data.source.OrderRepository
 import com.hicham.wcstoreapp.data.source.db.AppDatabase
 import com.hicham.wcstoreapp.data.source.db.DBAddressRepository
 import com.hicham.wcstoreapp.data.source.db.DBCartRepository
 import com.hicham.wcstoreapp.data.source.fake.FakeCurrencyFormatProvider
+import com.hicham.wcstoreapp.data.source.fake.FakeOrderRepository
 import com.hicham.wcstoreapp.data.source.inmemory.InMemoryCartRepository
 import com.hicham.wcstoreapp.data.source.network.ProductsPagingSource
 import com.hicham.wcstoreapp.models.Product
@@ -66,4 +68,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindAddressRepository(repository: DBAddressRepository): AddressRepository
+
+    @Binds
+    abstract fun bindOrderRepository(repository: FakeOrderRepository): OrderRepository
 }
