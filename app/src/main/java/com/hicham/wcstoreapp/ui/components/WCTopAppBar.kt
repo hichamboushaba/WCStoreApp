@@ -56,7 +56,7 @@ fun WCTopAppBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(align = Alignment.CenterHorizontally)
-                    .padding(end = 48.dp),
+                    .padding(end = 60.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 title()
