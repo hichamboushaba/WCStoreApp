@@ -31,9 +31,12 @@ class AddressListViewModel @Inject constructor(
                 AddressItemUiModel(address = it, isSelected = it == selectedAddress)
             }
         }
-        viewModelScope.launch {
-            selectedAddress.value = addressRepository.primaryShippingAddress.first()
-        }
+
+        // Listen to changes of primaryShippingAddress
+        addressRepository.primaryShippingAddress
+            .distinctUntilChanged()
+            .onEach { selectedAddress.value = it }
+            .launchIn(viewModelScope)
     }
 
     fun onAddressClicked(address: Address) {
