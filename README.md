@@ -49,4 +49,15 @@ patterns, it uses the following technologies/patterns:
 - ...
 
 ## Setup Instructions
-TODO
+1. Clone the project
+```
+$ git clone https://github.com/woocommerce/woocommerce-android.git
+$ cd woocommerce-android
+```
+2. Generate REST API key for authentication using this [guide](https://woocommerce.github.io/woocommerce-rest-api-docs/#rest-api-keys)
+3. Generate the local.properties file for this app:
+```
+$ cp ./local.properties-example ./local.properties
+```
+4. Open and modify the file `local.properties` using your site's URL and the keys you generated above. 
+5. Open the project using Android Studio
