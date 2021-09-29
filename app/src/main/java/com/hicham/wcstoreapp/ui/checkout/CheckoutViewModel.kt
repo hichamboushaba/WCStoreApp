@@ -1,11 +1,10 @@
 package com.hicham.wcstoreapp.ui.checkout
 
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.navOptions
 import com.hicham.wcstoreapp.data.AddressRepository
 import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
-import com.hicham.wcstoreapp.data.source.OrderRepository
+import com.hicham.wcstoreapp.data.OrderRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel

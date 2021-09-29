@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.data.source.fake
 
-import com.hicham.wcstoreapp.data.source.OrderRepository
+import com.hicham.wcstoreapp.data.OrderRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CartItem
 import com.hicham.wcstoreapp.models.PaymentMethod

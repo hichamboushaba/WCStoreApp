@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.data.source
+package com.hicham.wcstoreapp.data
 
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CartItem
