@@ -62,7 +62,8 @@ fun MainNavGraph(
                 orderId = backStackEntry
                     .arguments
                     ?.getString(Screen.OrderPlaced.navArguments.first().name)!!
-                    .toLong()
+                    .toLong(),
+                onNavigateUp = { navController.navigateUp() }
             )
         }
     }
