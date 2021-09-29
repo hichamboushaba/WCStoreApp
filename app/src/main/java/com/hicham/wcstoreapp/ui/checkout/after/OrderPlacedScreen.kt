@@ -16,12 +16,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.hicham.wcstoreapp.R
 import compose.icons.TablerIcons
 
 @Composable
-fun OrderPlacedScreen(orderId: Long) {
+fun OrderPlacedScreen(orderId: Long, onNavigateUp: () -> Unit) {
     val navController = rememberNavController()
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -35,9 +36,7 @@ fun OrderPlacedScreen(orderId: Long) {
         )
         Text(text = "Order id is #$orderId")
         Spacer(modifier = Modifier)
-        Button(onClick = {
-            navController.navigateUp()
-        }) {
+        Button(onClick = onNavigateUp) {
             Text(text = "Continue shopping")
         }
     }
@@ -46,5 +45,5 @@ fun OrderPlacedScreen(orderId: Long) {
 @Preview
 @Composable
 private fun PreviewOrderPlacedScreen() {
-    OrderPlacedScreen(orderId = 20L)
+    OrderPlacedScreen(orderId = 20L, {})
 }
