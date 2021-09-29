@@ -2,22 +2,17 @@ package com.hicham.wcstoreapp.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.paging.PagingSource
 import androidx.room.Room
 import com.hicham.wcstoreapp.data.*
-import com.hicham.wcstoreapp.data.source.OrderRepository
 import com.hicham.wcstoreapp.data.source.db.AppDatabase
 import com.hicham.wcstoreapp.data.source.db.DBAddressRepository
 import com.hicham.wcstoreapp.data.source.db.DBCartRepository
 import com.hicham.wcstoreapp.data.source.fake.FakeCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.source.fake.FakeOrderRepository
-import com.hicham.wcstoreapp.data.source.inmemory.InMemoryCartRepository
 import com.hicham.wcstoreapp.data.source.network.ProductsPagingSource
 import com.hicham.wcstoreapp.models.Product
 import dagger.Binds
