@@ -1,11 +1,14 @@
 package com.hicham.wcstoreapp.models
 
+import android.os.Parcelable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Address(
     val label: String? = null,
     val firstName: String,
@@ -17,7 +20,7 @@ data class Address(
     val state: String?,
     val postCode: String,
     val country: String,
-) {
+): Parcelable {
     fun formatAddress(): AnnotatedString {
         return buildAnnotatedString {
             withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
