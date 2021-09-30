@@ -5,7 +5,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface WooCommerceApi {
-    @GET("/wp-json/wc/v3/products")
+    @GET("/wp-json/wc/v3/products?status=publish")
     suspend fun getProducts(
         @Query("per_page") pageSize: Int,
         @Query("page") page: Int = 1
