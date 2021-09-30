@@ -1,21 +1,18 @@
 package com.hicham.wcstoreapp.di
 
-import androidx.paging.PagingSource
 import com.hicham.wcstoreapp.BuildConfig
-import com.hicham.wcstoreapp.data.ProductsRepository
-import com.hicham.wcstoreapp.data.ProductsRepositoryImpl
-import com.hicham.wcstoreapp.data.source.network.ProductsPagingSource
 import com.hicham.wcstoreapp.data.source.network.WooCommerceApi
-import com.hicham.wcstoreapp.models.Product
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
+import logcat.LogPriority
+import logcat.logcat
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer
 import se.akerfeldt.okhttp.signpost.SigningInterceptor
@@ -27,20 +24,29 @@ abstract class NetworkModule {
     companion object {
         @Provides
         fun providesJson(): Json = Json {
+            // TODO we can probably remove this, and filter the API using the _fields parameter instead for better performance
+            ignoreUnknownKeys = true
             isLenient = true
         }
 
         @Provides
         @Singleton
         fun providesRetrofit(json: Json): Retrofit {
-            val contentType = MediaType.get("application/json")
+            val contentType = "application/json".toMediaType()
             val consumer = OkHttpOAuthConsumer(
                 BuildConfig.WC_CONSUMER_KEY,
                 BuildConfig.WC_CONSUMER_SECRET
             )
 
+            val loggingInterceptor = HttpLoggingInterceptor { message ->
+                logcat(priority = LogPriority.DEBUG, message = { message })
+            }.apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(SigningInterceptor(consumer))
+                .addInterceptor(loggingInterceptor)
                 .build()
 
             return Retrofit.Builder()
