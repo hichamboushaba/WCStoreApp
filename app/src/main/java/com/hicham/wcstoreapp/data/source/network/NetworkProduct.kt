@@ -136,22 +136,7 @@ data class NetworkProduct(
     val metaData: List<MetaDataItem>,
 
     @SerialName("stock_status")
-    val stockStatus: StockStatus,
-
-    @SerialName("jetpack_publicize_connections")
-    val jetpackPublicizeConnections: JsonArray,
-
-    @SerialName("jetpack_likes_enabled")
-    val jetpackLikesEnabled: Boolean,
-
-    @SerialName("jetpack_sharing_enabled")
-    val jetpackSharingEnabled: Boolean,
-
-    @SerialName("amp_enabled")
-    val ampEnabled: Boolean,
-
-    @SerialName("_links")
-    val links: Links
+    val stockStatus: StockStatus
 )
 
 @Serializable
@@ -276,8 +261,10 @@ data class RuleValue(
 enum class StockStatus {
     @SerialName("instock")
     Instock,
+
     @SerialName("outofstock")
     OutOfStock,
+
     @SerialName("onbackorder")
     OnBackOrder
 }
@@ -286,8 +273,10 @@ enum class StockStatus {
 enum class TaxStatus {
     @SerialName("taxable")
     Taxable,
+
     @SerialName("shipping")
     Shipping,
+
     @SerialName("none")
     None
 }
