@@ -79,10 +79,10 @@ dependencies {
 
     implementation libs.datastore
 
-    implementation libs.retrofit
-    implementation libs.okhttp.signpost
-    implementation libs.retrofit.kotlinx.serialization.converter
+    implementation libs.bundles.networking
     implementation libs.kotlinx.serialization
+    
+    implementation libs.logcat
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test

@@ -7,6 +7,8 @@ import com.hicham.wcstoreapp.data.source.db.entities.ProductEntity
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
 import kotlinx.coroutines.delay
+import logcat.LogPriority
+import logcat.logcat
 import javax.inject.Inject
 
 class ProductsPagingSource @Inject constructor(
@@ -36,6 +38,9 @@ class ProductsPagingSource @Inject constructor(
                 nextKey = if (response.size < params.loadSize) null else nextPageNumber + 1
             )
         } catch (e: Exception) {
+            logcat(priority = LogPriority.WARN) {
+                e.toString()
+            }
             LoadResult.Error(e)
         }
     }
