@@ -72,16 +72,7 @@ private fun Main(uiState: MainViewModel.UiState, navigationManager: NavigationMa
     }?.objectInstance
 
     LaunchedEffect(Unit) {
-        navigationManager.navigationCommands.collect {
-            when (it) {
-                is NavigationCommand.NavigateToRoute -> navController.navigate(it.route, it.options)
-                NavigationCommand.NavigateUp -> navController.navigateUp()
-                is NavigationCommand.PopUpToRoute -> navController.popBackStack(
-                    it.route,
-                    it.inclusive
-                )
-            }
-        }
+        navigationManager.handleNavigationCommands(navController)
     }
 
     val scaffoldState = rememberScaffoldState()
