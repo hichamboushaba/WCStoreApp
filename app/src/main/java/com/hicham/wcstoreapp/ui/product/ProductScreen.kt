@@ -56,7 +56,8 @@ fun ProductScreen(viewModel: ProductViewModel, scaffoldState: ScaffoldState) {
         viewModel.effects.collect {
             when (it) {
                 is ShowActionSnackbar -> {
-                    val result = snackbarHostState.showSnackbar(it.message, actionLabel = it.actionText)
+                    val result =
+                        snackbarHostState.showSnackbar(it.message, actionLabel = it.actionText)
                     if (result == SnackbarResult.ActionPerformed) {
                         it.action()
                     }
@@ -177,7 +178,7 @@ private fun HtmlText(
 @Composable
 private fun ProductImagesPager(images: List<String>, elevation: Dp, modifier: Modifier = Modifier) {
     val pagesCount = images.size.takeIf { it > 0 } ?: 1
-    val pagerState = rememberPagerState(pageCount = pagesCount)
+    val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
     Surface(elevation = elevation) {
@@ -187,7 +188,11 @@ private fun ProductImagesPager(images: List<String>, elevation: Dp, modifier: Mo
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
         ) {
-            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) {
+            HorizontalPager(
+                state = pagerState,
+                count = pagesCount,
+                modifier = Modifier.fillMaxSize()
+            ) {
                 Image(
                     painter = rememberImagePainter(
                         data = images.getOrNull(it),
