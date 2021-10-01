@@ -17,8 +17,7 @@ class AddressListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val addressRepository: AddressRepository,
     private val navigationManager: NavigationManager
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
     val items: Flow<List<AddressItemUiModel>>
 
     private val selectedAddress = MutableStateFlow<Address?>(null)
@@ -32,11 +31,24 @@ class AddressListViewModel @Inject constructor(
             }
         }
 
-        // Listen to changes of primaryShippingAddress
-        addressRepository.primaryShippingAddress
-            .distinctUntilChanged()
+        observeSelectedAddress()
+    }
+
+    private fun observeSelectedAddress() {
+        // Observe navigation result
+        navigationManager.observeResult<Address>(AddAddressViewModel.ADDRESS_RESULT)
+            .onStart {
+                val defaultAddress = savedStateHandle.get<Address>("address")
+                    ?: addressRepository.primaryShippingAddress.first()
+                if (defaultAddress != null) emit(defaultAddress)
+            }
             .onEach { selectedAddress.value = it }
             .launchIn(viewModelScope)
+
+        // Save current selected address to savedStateHandle
+        selectedAddress.onEach {
+            savedStateHandle.set("address", it)
+        }.launchIn(viewModelScope)
     }
 
     fun onAddressClicked(address: Address) {

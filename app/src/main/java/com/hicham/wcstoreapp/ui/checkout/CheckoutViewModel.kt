@@ -9,6 +9,7 @@ import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,6 +47,17 @@ class CheckoutViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
 
+        observeShippingAddress()
+    }
+
+    private fun observeShippingAddress() {
+        // Observe Added Address
+        navigationManager.observeResult<Address>(AddAddressViewModel.ADDRESS_RESULT)
+            .onEach {
+                addressRepository.setPrimaryShippingAddress(it)
+            }.launchIn(viewModelScope)
+
+        // Observe primary shipping address
         addressRepository.primaryShippingAddress.onEach {
             _uiState.update { state ->
                 state.copy(
