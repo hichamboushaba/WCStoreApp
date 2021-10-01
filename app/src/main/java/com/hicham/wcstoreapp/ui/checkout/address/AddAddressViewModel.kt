@@ -16,8 +16,11 @@ import javax.inject.Inject
 class AddAddressViewModel @Inject constructor(
     private val addressRepository: AddressRepository,
     private val navigationManager: NavigationManager
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
+    companion object {
+        const val ADDRESS_RESULT = "address"
+    }
+
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
@@ -44,8 +47,7 @@ class AddAddressViewModel @Inject constructor(
                 )
             }
             addressRepository.addAddress(address)
-            addressRepository.setPrimaryShippingAddress(address)
-            navigationManager.navigateUp()
+            navigationManager.navigateBackWithResult(ADDRESS_RESULT, address)
         }
     }
 
