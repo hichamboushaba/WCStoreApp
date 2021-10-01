@@ -12,13 +12,14 @@ import javax.inject.Singleton
 
 @Singleton
 class NavigationManager @Inject constructor() {
-
-    private var navController: NavController? = null
+    // We use a StateFlow here to allow ViewModels to start observing navigation results before the initial composition,
+    // and still get the navigation result later
+    private val navControllerFlow = MutableStateFlow<NavController?>(null)
 
     suspend fun handleNavigationCommands(navController: NavController) {
         navigationCommands
-            .onSubscription { this@NavigationManager.navController = navController }
-            .onCompletion { this@NavigationManager.navController = null }
+            .onSubscription { this@NavigationManager.navControllerFlow.value = navController }
+            .onCompletion { this@NavigationManager.navControllerFlow.value = null }
             .collect {
                 when (it) {
                     is NavigationCommand.NavigateToRoute -> navController.navigate(
@@ -57,7 +58,7 @@ class NavigationManager @Inject constructor() {
     }
 
     fun <T> navigateBackWithResult(key: String, result: T, destination: String? = null) {
-        val navController = navController ?: run {
+        val navController = navControllerFlow.value ?: run {
             // shouldn't happen
             return
         }
@@ -73,16 +74,22 @@ class NavigationManager @Inject constructor() {
     }
 
     fun <T> observeResult(key: String, route: String? = null): Flow<T> {
-        val navController = navController ?: run {
-            // shouldn't happen
-            return emptyFlow()
-        }
+        return navControllerFlow
+            .filterNotNull()
+            .flatMapLatest { navController ->
+                val backStackEntry = route?.let { navController.getBackStackEntry(it) }
+                    ?: navController.currentBackStackEntry
 
-        val backStackEntry = route?.let { navController.getBackStackEntry(it) }
-            ?: navController.currentBackStackEntry
-
-        return backStackEntry?.savedStateHandle?.getLiveData<T>(key)?.asFlow()
-            ?: emptyFlow()
+                backStackEntry?.savedStateHandle?.let { savedStateHandle ->
+                    savedStateHandle.getLiveData<T?>(key)
+                        .asFlow()
+                        .filter { it != null }
+                        .onEach {
+                            // Nullify the result to avoid resubmitting it
+                            savedStateHandle.set(key, null)
+                        }
+                } ?: emptyFlow()
+            }
     }
 }
 
