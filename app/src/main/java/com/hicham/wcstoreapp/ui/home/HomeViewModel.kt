@@ -1,6 +1,5 @@
 package com.hicham.wcstoreapp.ui.home
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
@@ -8,6 +7,7 @@ import com.hicham.wcstoreapp.data.CartRepository
 import com.hicham.wcstoreapp.data.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository,
     private val navigationManager: NavigationManager
-) : ViewModel() {
+) : BaseViewModel() {
     private val currencyFormatter = currencyFormatProvider.formatSettings
         .map { CurrencyFormatter(it) }
 
