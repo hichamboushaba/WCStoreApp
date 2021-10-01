@@ -1,6 +1,7 @@
 package com.hicham.wcstoreapp.ui.home
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.hicham.wcstoreapp.data.CartRepository
@@ -13,6 +14,7 @@ import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -31,13 +33,11 @@ class HomeViewModel @Inject constructor(
 
     private val productPagingData = repository.getProductList().cachedIn(viewModelScope)
 
-    val products = combine(
+    val products: Flow<PagingData<ProductUiModel>> = combine(
         productPagingData,
         currencyFormatter,
         cartRepository.items
     ) { pagingData, formatter, cartItems ->
-        Triple(pagingData, formatter, cartItems)
-    }.map { (pagingData, formatter, cartItems) ->
         pagingData.map { product ->
             ProductUiModel(
                 product = product,

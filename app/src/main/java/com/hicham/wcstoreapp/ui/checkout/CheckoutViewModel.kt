@@ -34,8 +34,7 @@ class CheckoutViewModel @Inject constructor(
             cartRepository.items,
             currencyFormatProvider.formatSettings
         ) { cartItems, formatSettings ->
-            Pair(cartItems, CurrencyFormatter(formatSettings))
-        }.onEach { (cartItems, currencyFormatter) ->
+            val currencyFormatter = CurrencyFormatter(formatSettings)
             val totalPrice = currencyFormatter.format(
                 price = cartItems.sumOf { it.product.price * it.quantity.toBigDecimal() }
             )

@@ -27,8 +27,7 @@ class CartViewModel @Inject constructor(
             cartRepository.items,
             currencyFormatProvider.formatSettings
         ) { cartItems, formatSettings ->
-            Pair(cartItems, CurrencyFormatter(formatSettings))
-        }.map { (cartItems, currencyFormatter) ->
+            val currencyFormatter = CurrencyFormatter(formatSettings)
             val items = cartItems.map {
                 CartItemUiModel(
                     product = it.product,

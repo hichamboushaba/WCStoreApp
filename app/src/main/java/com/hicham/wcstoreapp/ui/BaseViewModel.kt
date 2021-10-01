@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-open class BaseViewModel() : ViewModel() {
+open class BaseViewModel : ViewModel() {
     private val _effects = MutableSharedFlow<Effect>(extraBufferCapacity = Int.MAX_VALUE)
     val effects = _effects.asSharedFlow()
 
