@@ -27,14 +27,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ui.BottomNavigation
 import com.hicham.wcstoreapp.ui.navigation.MainNavGraph
-import com.hicham.wcstoreapp.ui.navigation.NavigationCommand
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
