@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.ui.components
+package com.hicham.wcstoreapp.ui.common.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon

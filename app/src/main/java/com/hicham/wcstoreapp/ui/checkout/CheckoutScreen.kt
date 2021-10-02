@@ -18,7 +18,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
-import com.hicham.wcstoreapp.ui.components.CartTotals
+import com.hicham.wcstoreapp.ui.common.components.CartTotals
 
 @Composable
 fun CheckoutScreen(viewModel: CheckoutViewModel) {

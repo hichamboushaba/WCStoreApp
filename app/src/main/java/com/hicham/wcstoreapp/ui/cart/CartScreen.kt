@@ -10,15 +10,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.data.source.fake.PRODUCTS_JSON
 import com.hicham.wcstoreapp.data.source.network.NetworkProduct
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
-import com.hicham.wcstoreapp.ui.components.CartTotals
-import com.hicham.wcstoreapp.ui.components.WCTopAppBar
+import com.hicham.wcstoreapp.ui.common.components.CartTotals
+import com.hicham.wcstoreapp.ui.common.components.WCTopAppBar
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
 import compose.icons.tablericons.ShoppingCartPlus
