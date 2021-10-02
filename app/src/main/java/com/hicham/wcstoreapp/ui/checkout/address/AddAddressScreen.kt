@@ -6,6 +6,11 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -179,7 +184,7 @@ private fun AddressTextField(
             isError = isError,
             trailingIcon = {
                 if (isError) Icon(
-                    imageVector = TablerIcons.InfoCircle,
+                    imageVector = Icons.Outlined.Info,
                     contentDescription = "",
                     tint = Color.Red
                 )
