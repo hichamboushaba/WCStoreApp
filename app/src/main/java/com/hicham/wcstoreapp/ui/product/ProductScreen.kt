@@ -36,9 +36,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
-import com.hicham.wcstoreapp.ui.ShowSnackbar
-import com.hicham.wcstoreapp.ui.components.ErrorView
-import com.hicham.wcstoreapp.ui.components.WCTopAppBar
+import com.hicham.wcstoreapp.ui.common.components.ErrorView
+import com.hicham.wcstoreapp.ui.common.components.WCTopAppBar
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ChevronLeft
 import compose.icons.tablericons.ChevronRight

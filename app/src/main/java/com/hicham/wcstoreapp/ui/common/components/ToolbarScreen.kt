@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.ui.components
+package com.hicham.wcstoreapp.ui.common.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.Scaffold

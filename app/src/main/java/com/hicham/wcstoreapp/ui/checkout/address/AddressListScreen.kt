@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.models.Address
-import com.hicham.wcstoreapp.ui.components.ToolbarScreen
+import com.hicham.wcstoreapp.ui.common.components.ToolbarScreen
 
 @Composable
 fun AddressListScreen(viewModel: AddressListViewModel) {
