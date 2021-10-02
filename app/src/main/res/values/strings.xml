@@ -3,4 +3,6 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="cart">Cart</string>
+    <string name="error_required_field">This field is required</string>
+    <string name="error_invalid_phone">Please enter a valid phone number</string>
 </resources>
