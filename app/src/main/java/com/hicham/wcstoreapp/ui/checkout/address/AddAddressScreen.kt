@@ -22,16 +22,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.rememberImeNestedScrollConnection
 import com.hicham.wcstoreapp.ui.common.InputField
 import com.hicham.wcstoreapp.ui.common.RequiredField
 import com.hicham.wcstoreapp.ui.common.components.ToolbarScreen
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
 import compose.icons.tablericons.InfoCircle
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,7 +42,6 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
     )
 }
 
-@OptIn(ExperimentalAnimatedInsets::class)
 @Composable
 private fun AddAddressScreen(
     state: AddAddressViewModel.UiState,
@@ -55,6 +50,7 @@ private fun AddAddressScreen(
     onSaveClicked: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+
     ToolbarScreen(title = { Text(text = "Add Address") }, onNavigationClick = onBackClick) {
         Column(
             modifier = Modifier
@@ -62,114 +58,29 @@ private fun AddAddressScreen(
                 .fillMaxSize()
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                inputField = state.firstName,
-                onValueChange = {
-                    onFieldEdited(
-                        AddAddressViewModel.Field.FirstName,
-                        it
-                    )
-                },
-                label = "First Name",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.lastName,
-                onValueChange = {
-                    onFieldEdited(
-                        AddAddressViewModel.Field.LastName,
-                        it
-                    )
-                },
-                label = "Last Name",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.phone,
-                onValueChange = { onFieldEdited(AddAddressViewModel.Field.Phone, it) },
-                label = "Phone",
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Phone,
-                    imeAction = ImeAction.Next
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.street1,
-                onValueChange = {
-                    onFieldEdited(
-                        AddAddressViewModel.Field.Street1,
-                        it
-                    )
-                },
-                label = "Street 1",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.street2,
-                onValueChange = {
-                    onFieldEdited(
-                        AddAddressViewModel.Field.Street2,
-                        it
-                    )
-                },
-                label = "Street 2",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.city,
-                onValueChange = { onFieldEdited(AddAddressViewModel.Field.City, it) },
-                label = "City",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.state,
-                onValueChange = { onFieldEdited(AddAddressViewModel.Field.State, it) },
-                label = "State",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.postCode,
-                onValueChange = {
-                    onFieldEdited(
-                        AddAddressViewModel.Field.PostCode,
-                        it
-                    )
-                },
-                label = "Postal Code",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-            TextField(
-                inputField = state.country,
-                onValueChange = {
-                    onFieldEdited(
-                        AddAddressViewModel.Field.Country,
-                        it
-                    )
-                },
-                label = "Country",
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
-
+            AddAddressViewModel.Field.values().forEachIndexed { index, field ->
+                AddressTextField(
+                    inputField = state[field],
+                    onValueChange = {
+                        onFieldEdited(
+                            field,
+                            it
+                        )
+                    },
+                    label = field.label,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = field.keyboardType,
+                        imeAction = if (index == AddAddressViewModel.Field.values().size - 1) {
+                            ImeAction.Done
+                        } else {
+                            ImeAction.Next
+                        }
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
@@ -185,6 +96,24 @@ private fun AddAddressScreen(
     }
 }
 
+private val AddAddressViewModel.Field.label: String
+    get() = when (this) {
+        AddAddressViewModel.Field.FirstName -> "First Name"
+        AddAddressViewModel.Field.LastName -> "Last Name"
+        AddAddressViewModel.Field.Street1 -> "Street 1"
+        AddAddressViewModel.Field.Street2 -> "Street 2"
+        AddAddressViewModel.Field.Phone -> "Phone"
+        AddAddressViewModel.Field.City -> "City"
+        AddAddressViewModel.Field.State -> "State"
+        AddAddressViewModel.Field.PostCode -> "Postal Code"
+        AddAddressViewModel.Field.Country -> "Country"
+    }
+
+private val AddAddressViewModel.Field.keyboardType: KeyboardType
+    get() = when (this) {
+        AddAddressViewModel.Field.Phone -> KeyboardType.Phone
+        else -> KeyboardType.Text
+    }
 
 /**
  * This composable use a workaround to highlight the focused view when keyboard is displayed.
@@ -196,7 +125,7 @@ private fun AddAddressScreen(
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun TextField(
+private fun AddressTextField(
     label: String,
     inputField: InputField<*>,
     modifier: Modifier = Modifier,
