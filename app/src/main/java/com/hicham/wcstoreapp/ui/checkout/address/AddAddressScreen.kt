@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.ui.checkout.address
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -7,9 +8,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -18,23 +16,20 @@ import androidx.compose.ui.focus.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.RelocationRequester
 import androidx.compose.ui.layout.relocationRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.hicham.wcstoreapp.ui.Effect
 import com.hicham.wcstoreapp.ui.common.InputField
 import com.hicham.wcstoreapp.ui.common.RequiredField
 import com.hicham.wcstoreapp.ui.common.components.ToolbarScreen
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
-import compose.icons.TablerIcons
-import compose.icons.tablericons.InfoCircle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
@@ -46,9 +41,11 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
     AddAddressScreen(
         state = state,
         effects = viewModel.effects,
-        onFieldEdited = viewModel::onFieldEdited,
-        onSaveClicked = viewModel::onSaveClicked,
-        onBackClick = viewModel::onBackClicked
+        onFieldEdit = viewModel::onFieldEdited,
+        onSaveClick = viewModel::onSaveClicked,
+        onBackClick = viewModel::onBackClicked,
+        onDiscardDialogDismiss = viewModel::onDiscardDialogDismissed,
+        onDiscardChanges = viewModel::onDiscardChangesClicked
     )
 }
 
@@ -56,9 +53,11 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
 private fun AddAddressScreen(
     state: AddAddressViewModel.UiState,
     effects: Flow<Effect> = emptyFlow(),
-    onFieldEdited: (AddAddressViewModel.Field, String) -> Unit = { _, _ -> },
+    onFieldEdit: (AddAddressViewModel.Field, String) -> Unit = { _, _ -> },
     onBackClick: () -> Unit = {},
-    onSaveClicked: () -> Unit = {},
+    onSaveClick: () -> Unit = {},
+    onDiscardDialogDismiss: () -> Unit = {},
+    onDiscardChanges: () -> Unit = {}
 ) {
     val fieldsCount = AddAddressViewModel.Field.values().size
     val scrollState = rememberScrollState()
@@ -78,6 +77,7 @@ private fun AddAddressScreen(
         }
     }
 
+    BackHandler(onBack = onBackClick)
 
     ToolbarScreen(title = { Text(text = "Add Address") }, onNavigationClick = onBackClick) {
         Column(
@@ -90,7 +90,7 @@ private fun AddAddressScreen(
                 AddressTextField(
                     inputField = state[field],
                     onValueChange = {
-                        onFieldEdited(
+                        onFieldEdit(
                             field,
                             it
                         )
@@ -116,13 +116,36 @@ private fun AddAddressScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = onSaveClicked,
+                onClick = onSaveClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
                 Text(text = "Save Address")
             }
+        }
+
+
+        if (state.showDiscardChangesDialog) {
+            AlertDialog(
+                onDismissRequest = onDiscardDialogDismiss,
+                confirmButton = {
+                    Button(onClick = onDiscardChanges) {
+                        Text(text = "Discard Changes")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = onDiscardDialogDismiss) {
+                        Text(text = "Go Back")
+                    }
+                },
+                title = {
+                    Text(text = "Discard changes?")
+                },
+                text = {
+                    Text(text = "Your changes will be lost")
+                }
+            )
         }
     }
 }
