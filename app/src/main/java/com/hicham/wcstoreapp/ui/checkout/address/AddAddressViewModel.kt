@@ -59,6 +59,10 @@ class AddAddressViewModel @Inject constructor(
         }
     }
 
+    fun onBackClicked() {
+        navigationManager.navigateUp()
+    }
+
     data class UiState(
         val addressLabel: OptionalField = OptionalField(""),
         val firstName: RequiredField = RequiredField(""),
