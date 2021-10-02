@@ -91,6 +91,7 @@ private fun AddAddressScreen(
                         )
                     },
                     label = field.label,
+                    helperText = field.helperText,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = field.keyboardType,
                         imeAction = if (index == fieldsCount - 1) {
@@ -123,6 +124,7 @@ private fun AddAddressScreen(
 
 private val AddAddressViewModel.Field.label: String
     get() = when (this) {
+        AddAddressViewModel.Field.AddressLabel -> "Address Label"
         AddAddressViewModel.Field.FirstName -> "First Name"
         AddAddressViewModel.Field.LastName -> "Last Name"
         AddAddressViewModel.Field.Street1 -> "Street 1"
@@ -140,6 +142,12 @@ private val AddAddressViewModel.Field.keyboardType: KeyboardType
         else -> KeyboardType.Text
     }
 
+private val AddAddressViewModel.Field.helperText: String
+    get() = when (this) {
+        AddAddressViewModel.Field.AddressLabel -> "An optional name to identify the address"
+        else -> ""
+    }
+
 /**
  * This composable use a workaround to highlight the focused view when keyboard is displayed.
  * Since Compose doesn't handle it now.
@@ -153,6 +161,7 @@ private val AddAddressViewModel.Field.keyboardType: KeyboardType
 private fun AddressTextField(
     label: String,
     inputField: InputField<*>,
+    helperText: String,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
@@ -198,15 +207,14 @@ private fun AddressTextField(
                 },
             colors = TextFieldDefaults.textFieldColors(),
         )
-        if (isError) {
-            Text(
-                text = stringResource(id = inputField.error!!),
-                color = Color.Red,
-                modifier = Modifier.defaultMinSize(minHeight = 24.dp)
-            )
-        } else {
-            Spacer(modifier = Modifier.height(24.dp))
-        }
+        Text(
+            text = if (isError) stringResource(id = inputField.error!!) else helperText,
+            color = if (isError) Color.Red else Color.Unspecified,
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .defaultMinSize(minHeight = 24.dp)
+        )
     }
 }
 

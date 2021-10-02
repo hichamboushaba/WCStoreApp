@@ -92,6 +92,7 @@ class AddAddressViewModel @Inject constructor(
 
         operator fun get(field: Field): InputField<*> {
             return when (field) {
+                Field.AddressLabel -> addressLabel
                 Field.FirstName -> firstName
                 Field.LastName -> lastName
                 Field.Street1 -> street1
@@ -106,6 +107,7 @@ class AddAddressViewModel @Inject constructor(
 
         fun updateField(field: Field, content: String): UiState {
             return when (field) {
+                Field.AddressLabel -> copy(addressLabel = addressLabel.copy(content = content).validate())
                 Field.FirstName -> copy(firstName = firstName.copy(content = content).validate())
                 Field.LastName -> copy(lastName = lastName.copy(content = content).validate())
                 Field.Street1 -> copy(street1 = street1.copy(content = content).validate())
@@ -142,7 +144,7 @@ class AddAddressViewModel @Inject constructor(
     }
 
     enum class Field {
-        FirstName, LastName, Street1, Street2, Phone, City, State, PostCode, Country
+        AddressLabel, FirstName, LastName, Street1, Street2, Phone, City, State, PostCode, Country
     }
 
     data class FocusOnField(val field: Field) : Effect()
