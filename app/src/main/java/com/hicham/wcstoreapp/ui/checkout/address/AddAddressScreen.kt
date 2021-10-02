@@ -9,8 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.RelocationRequester
 import androidx.compose.ui.layout.relocationRequester
@@ -49,7 +48,9 @@ private fun AddAddressScreen(
     onBackClick: () -> Unit = {},
     onSaveClicked: () -> Unit = {}
 ) {
+    val fieldsCount = AddAddressViewModel.Field.values().size
     val scrollState = rememberScrollState()
+    val focusRequesters = List(fieldsCount) { FocusRequester() }
 
     ToolbarScreen(title = { Text(text = "Add Address") }, onNavigationClick = onBackClick) {
         Column(
@@ -70,7 +71,7 @@ private fun AddAddressScreen(
                     label = field.label,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = field.keyboardType,
-                        imeAction = if (index == AddAddressViewModel.Field.values().size - 1) {
+                        imeAction = if (index == fieldsCount - 1) {
                             ImeAction.Done
                         } else {
                             ImeAction.Next
@@ -78,6 +79,9 @@ private fun AddAddressScreen(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
+                        .focusOrder(focusRequesters[index]) {
+                            if (index < fieldsCount - 1) next = focusRequesters[index + 1]
+                        }
                         .padding(horizontal = 16.dp)
                 )
             }
@@ -157,9 +161,6 @@ private fun AddressTextField(
             singleLine = true,
             keyboardOptions = keyboardOptions,
             keyboardActions = KeyboardActions(
-                onNext = {
-                    localFocusManage.moveFocus(FocusDirection.Down)
-                },
                 onDone = {
                     keyboardController?.hide()
                 }
