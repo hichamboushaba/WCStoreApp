@@ -5,21 +5,30 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.RelocationRequester
+import androidx.compose.ui.layout.relocationRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.rememberImeNestedScrollConnection
 import com.hicham.wcstoreapp.ui.common.InputField
 import com.hicham.wcstoreapp.ui.common.RequiredField
 import com.hicham.wcstoreapp.ui.common.components.ToolbarScreen
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
 import compose.icons.tablericons.InfoCircle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddAddressScreen(viewModel: AddAddressViewModel) {
@@ -32,6 +41,7 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
     )
 }
 
+@OptIn(ExperimentalAnimatedInsets::class)
 @Composable
 private fun AddAddressScreen(
     state: AddAddressViewModel.UiState,
@@ -166,6 +176,16 @@ private fun AddAddressScreen(
     }
 }
 
+
+/**
+ * This composable use a workaround to highlight the focused view when keyboard is displayed.
+ * Since Compose doesn't handle it now.
+ * See: https://issuetracker.google.com/issues/192043120
+ *
+ * Even ProvideWindowInsets(windowInsetsAnimationsEnabled = true) doesn't handle it well now
+ * when the column is scrollable
+ */
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun TextField(
     label: String,
@@ -175,6 +195,9 @@ private fun TextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     val isError = inputField.error != null
+    val relocationRequester = remember { RelocationRequester() }
+    val scope = rememberCoroutineScope()
+
     Column(modifier = modifier) {
         OutlinedTextField(
             value = inputField.content,
@@ -191,7 +214,17 @@ private fun TextField(
                 Text(label)
             },
             keyboardOptions = keyboardOptions,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .relocationRequester(relocationRequester)
+                .onFocusChanged {
+                    if (it.isFocused) {
+                        scope.launch {
+                            delay(200)
+                            relocationRequester.bringIntoView()
+                        }
+                    }
+                },
             colors = TextFieldDefaults.textFieldColors(),
         )
         if (isError) {
