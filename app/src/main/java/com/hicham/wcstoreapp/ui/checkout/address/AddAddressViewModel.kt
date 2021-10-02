@@ -72,6 +72,18 @@ class AddAddressViewModel @Inject constructor(
     }
 
     fun onBackClicked() {
+        if (uiState.value.hasChanges()) {
+            _uiState.update { state -> state.copy(showDiscardChangesDialog = true) }
+        } else {
+            navigationManager.navigateUp()
+        }
+    }
+
+    fun onDiscardDialogDismissed() {
+        _uiState.update { state -> state.copy(showDiscardChangesDialog = false) }
+    }
+
+    fun onDiscardChangesClicked() {
         navigationManager.navigateUp()
     }
 
@@ -85,7 +97,8 @@ class AddAddressViewModel @Inject constructor(
         val city: RequiredField = RequiredField(""),
         val state: OptionalField = OptionalField(""),
         val postCode: RequiredField = RequiredField(""),
-        val country: RequiredField = RequiredField("")
+        val country: RequiredField = RequiredField(""),
+        val showDiscardChangesDialog: Boolean = false
     ) {
         val areAllRequiredFieldsValid
             get() = Field.values().all { get(it).isValid }
@@ -107,7 +120,9 @@ class AddAddressViewModel @Inject constructor(
 
         fun updateField(field: Field, content: String): UiState {
             return when (field) {
-                Field.AddressLabel -> copy(addressLabel = addressLabel.copy(content = content).validate())
+                Field.AddressLabel -> copy(
+                    addressLabel = addressLabel.copy(content = content).validate()
+                )
                 Field.FirstName -> copy(firstName = firstName.copy(content = content).validate())
                 Field.LastName -> copy(lastName = lastName.copy(content = content).validate())
                 Field.Street1 -> copy(street1 = street1.copy(content = content).validate())
@@ -133,6 +148,8 @@ class AddAddressViewModel @Inject constructor(
                 country = country.validate(),
             )
         }
+
+        fun hasChanges(): Boolean = Field.values().any { get(it).content.isNotEmpty() }
     }
 
     @Parcelize
