@@ -1,21 +1,18 @@
 package com.hicham.wcstoreapp.ui.checkout.address
 
 import android.util.Patterns
-import androidx.core.util.PatternsCompat
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.Effect
 import com.hicham.wcstoreapp.ui.common.InputField
 import com.hicham.wcstoreapp.ui.common.OptionalField
 import com.hicham.wcstoreapp.ui.common.RequiredField
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import javax.inject.Inject
@@ -32,6 +29,12 @@ class AddAddressViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        uiState.onEach {
+            println(it)
+        }.launchIn(viewModelScope)
+    }
+
     fun onFieldEdited(field: Field, content: String) {
         _uiState.update { state ->
             state.updateField(field, content)
@@ -39,23 +42,32 @@ class AddAddressViewModel @Inject constructor(
     }
 
     fun onSaveClicked() {
-        viewModelScope.launch {
-            val address = uiState.value.let {
-                Address(
-                    label = it.addressLabel.content,
-                    firstName = it.firstName.content,
-                    lastName = it.lastName.content,
-                    street1 = it.street1.content,
-                    street2 = it.street2.content,
-                    phone = it.phone.content,
-                    city = it.city.content,
-                    state = it.state.content,
-                    postCode = it.postCode.content,
-                    country = it.country.content
-                )
+        _uiState.update { state ->
+            state.validateInput()
+        }
+        uiState.value.let { state ->
+            if (!state.areAllRequiredFieldsValid) {
+                val firstNonValidField = Field.values().first { !state[it].isValid }
+                triggerEffect(FocusOnField(firstNonValidField))
+                return@let
             }
-            addressRepository.addAddress(address)
-            navigationManager.navigateBackWithResult(ADDRESS_RESULT, address)
+
+            viewModelScope.launch {
+                val address = Address(
+                    label = state.addressLabel.content,
+                    firstName = state.firstName.content,
+                    lastName = state.lastName.content,
+                    street1 = state.street1.content,
+                    street2 = state.street2.content,
+                    phone = state.phone.content,
+                    city = state.city.content,
+                    state = state.state.content,
+                    postCode = state.postCode.content,
+                    country = state.country.content
+                )
+                addressRepository.addAddress(address)
+                navigationManager.navigateBackWithResult(ADDRESS_RESULT, address)
+            }
         }
     }
 
@@ -106,10 +118,18 @@ class AddAddressViewModel @Inject constructor(
             }
         }
 
-        fun validateInput() {
-            Field.values().forEach {
-                get(it).validate()
-            }
+        fun validateInput(): UiState {
+            return copy(
+                firstName = firstName.validate(),
+                lastName = lastName.validate(),
+                street1 = street1.validate(),
+                street2 = street2.validate(),
+                phone = phone.validate(),
+                city = city.validate(),
+                state = state.validate(),
+                postCode = postCode.validate(),
+                country = country.validate(),
+            )
         }
     }
 
@@ -124,4 +144,6 @@ class AddAddressViewModel @Inject constructor(
     enum class Field {
         FirstName, LastName, Street1, Street2, Phone, City, State, PostCode, Country
     }
+
+    data class FocusOnField(val field: Field) : Effect()
 }

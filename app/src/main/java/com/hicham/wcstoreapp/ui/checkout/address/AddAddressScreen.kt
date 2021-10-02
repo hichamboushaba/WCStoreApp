@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.hicham.wcstoreapp.ui.Effect
 import com.hicham.wcstoreapp.ui.common.InputField
 import com.hicham.wcstoreapp.ui.common.RequiredField
 import com.hicham.wcstoreapp.ui.common.components.ToolbarScreen
@@ -28,13 +28,19 @@ import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
 import compose.icons.tablericons.InfoCircle
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 @Composable
 fun AddAddressScreen(viewModel: AddAddressViewModel) {
     val state by viewModel.uiState.collectAsState()
+
     AddAddressScreen(
         state = state,
+        effects = viewModel.effects,
         onFieldEdited = viewModel::onFieldEdited,
         onSaveClicked = viewModel::onSaveClicked,
         onBackClick = viewModel::onBackClicked
@@ -44,13 +50,29 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
 @Composable
 private fun AddAddressScreen(
     state: AddAddressViewModel.UiState,
+    effects: Flow<Effect> = emptyFlow(),
     onFieldEdited: (AddAddressViewModel.Field, String) -> Unit = { _, _ -> },
     onBackClick: () -> Unit = {},
-    onSaveClicked: () -> Unit = {}
+    onSaveClicked: () -> Unit = {},
 ) {
     val fieldsCount = AddAddressViewModel.Field.values().size
     val scrollState = rememberScrollState()
-    val focusRequesters = List(fieldsCount) { FocusRequester() }
+    val focusRequesters = remember {
+        List(fieldsCount) { FocusRequester() }
+    }
+
+    LaunchedEffect("effects") {
+        effects.collect { effect ->
+            when (effect) {
+                is AddAddressViewModel.FocusOnField -> {
+                    val focusRequester =
+                        focusRequesters[AddAddressViewModel.Field.values().indexOf(effect.field)]
+                    focusRequester.requestFocus()
+                }
+            }
+        }
+    }
+
 
     ToolbarScreen(title = { Text(text = "Add Address") }, onNavigationClick = onBackClick) {
         Column(
@@ -91,8 +113,7 @@ private fun AddAddressScreen(
                 onClick = onSaveClicked,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                enabled = state.areAllRequiredFieldsValid
+                    .padding(16.dp)
             ) {
                 Text(text = "Save Address")
             }
@@ -140,7 +161,6 @@ private fun AddressTextField(
     val relocationRequester = remember { RelocationRequester() }
     val scope = rememberCoroutineScope()
 
-    val localFocusManage = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(modifier = modifier) {
