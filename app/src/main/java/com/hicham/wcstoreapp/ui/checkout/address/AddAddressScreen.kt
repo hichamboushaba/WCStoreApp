@@ -27,7 +27,8 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
     AddAddressScreen(
         state = state,
         onFieldEdited = viewModel::onFieldEdited,
-        onSaveClicked = viewModel::onSaveClicked
+        onSaveClicked = viewModel::onSaveClicked,
+        onBackClick = viewModel::onBackClicked
     )
 }
 
@@ -35,16 +36,17 @@ fun AddAddressScreen(viewModel: AddAddressViewModel) {
 private fun AddAddressScreen(
     state: AddAddressViewModel.UiState,
     onFieldEdited: (AddAddressViewModel.Field, String) -> Unit = { _, _ -> },
+    onBackClick: () -> Unit = {},
     onSaveClicked: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
-    ToolbarScreen(title = { Text(text = "Add Address") }, onNavigationClick = { /*TODO*/ }) {
+    ToolbarScreen(title = { Text(text = "Add Address") }, onNavigationClick = onBackClick) {
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
                 .fillMaxSize()
         ) {
-            Spacer(modifier = Modifier)
+            Spacer(modifier = Modifier.height(16.dp))
             TextField(
                 inputField = state.firstName,
                 onValueChange = {
