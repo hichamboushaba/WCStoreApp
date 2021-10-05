@@ -12,8 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hicham.wcstoreapp.data.source.fake.PRODUCTS_JSON
-import com.hicham.wcstoreapp.data.source.network.NetworkProduct
+import com.hicham.wcstoreapp.data.product.fake.PRODUCTS_JSON
+import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
 import com.hicham.wcstoreapp.ui.common.components.CartTotals

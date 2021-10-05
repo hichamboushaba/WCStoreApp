@@ -2,9 +2,9 @@ package com.hicham.wcstoreapp.ui.product
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.hicham.wcstoreapp.data.CartRepository
-import com.hicham.wcstoreapp.data.CurrencyFormatProvider
-import com.hicham.wcstoreapp.data.ProductsRepository
+import com.hicham.wcstoreapp.data.cart.CartRepository
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
+import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.*
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
