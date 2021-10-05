@@ -10,7 +10,7 @@ import com.hicham.wcstoreapp.data.db.entities.AddressEntity
 import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.data.db.entities.ProductEntity
 
-@Database(entities = [ProductEntity::class, CartItemEntity::class, AddressEntity::class], version = 2)
+@Database(entities = [ProductEntity::class, CartItemEntity::class, AddressEntity::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
