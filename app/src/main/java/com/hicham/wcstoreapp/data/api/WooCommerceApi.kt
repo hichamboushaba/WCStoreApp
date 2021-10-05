@@ -8,7 +8,9 @@ interface WooCommerceApi {
     @GET("/wp-json/wc/v3/products?status=publish")
     suspend fun getProducts(
         @Query("per_page") pageSize: Int,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("orderby") orderBy: String = "title",
+        @Query("order") order: String = "asc"
     ): List<NetworkProduct>
 
     @GET("/wp-json/wc/v3/products/{productId}")
