@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -21,6 +22,7 @@ import com.hicham.wcstoreapp.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -56,15 +58,16 @@ fun HomeScreen(
     BoxWithConstraints {
         val nbColumns = (maxWidth / minCardWidth).toInt()
         val size = (maxWidth / nbColumns) - 16.dp
-        when (lazyProductList.loadState.refresh) {
-            LoadState.Loading -> {
+        val loadState = lazyProductList.loadState
+        when {
+            loadState.refresh is LoadState.Loading && lazyProductList.itemCount == 0 -> {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .fillMaxSize()
                         .wrapContentSize(Alignment.Center)
                 )
             }
-            is LoadState.Error -> {
+            loadState.refresh is LoadState.Error && lazyProductList.itemCount == 0 -> {
                 ErrorView(modifier = Modifier.fillMaxSize()) { lazyProductList.retry() }
             }
             else -> {
@@ -83,28 +86,55 @@ fun HomeScreen(
                         itemsSize = size
                     )
 
-                    if (lazyProductList.loadState.append == LoadState.Loading) {
-                        item {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp)
-                                    .wrapContentWidth(align = Alignment.CenterHorizontally)
-                            )
-                        }
-                    } else if (lazyProductList.loadState.append is LoadState.Error) {
-                        coroutineScope.launch {
-                            println("show snackbar")
-                            val result = scaffoldState.snackbarHostState.showSnackbar(
-                                message = "Loading Products Failed",
-                                actionLabel = "Retry",
-                                duration = SnackbarDuration.Indefinite
-                            )
-                            if (result == SnackbarResult.ActionPerformed) {
-                                lazyProductList.retry()
-                            }
-                        }
-                    }
+                    handleLoadState(
+                        coroutineScope = coroutineScope,
+                        loadState = loadState,
+                        scaffoldState = scaffoldState
+                    ) { lazyProductList.retry() }
+                }
+            }
+        }
+    }
+}
+
+private fun LazyListScope.handleLoadState(
+    coroutineScope: CoroutineScope,
+    loadState: CombinedLoadStates,
+    scaffoldState: ScaffoldState,
+    retry: () -> Unit
+) {
+    when {
+        loadState.refresh is LoadState.Error -> {
+            coroutineScope.launch {
+                val result = scaffoldState.snackbarHostState.showSnackbar(
+                    message = "Fetching products failed",
+                    actionLabel = "Retry",
+                    duration = SnackbarDuration.Long
+                )
+                if (result == SnackbarResult.ActionPerformed) {
+                    retry()
+                }
+            }
+        }
+        loadState.append == LoadState.Loading -> {
+            item {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .wrapContentWidth(align = Alignment.CenterHorizontally)
+                )
+            }
+        }
+        loadState.append is LoadState.Error -> {
+            coroutineScope.launch {
+                val result = scaffoldState.snackbarHostState.showSnackbar(
+                    message = "Loading Products Failed",
+                    actionLabel = "Retry",
+                    duration = SnackbarDuration.Indefinite
+                )
+                if (result == SnackbarResult.ActionPerformed) {
+                    retry()
                 }
             }
         }
