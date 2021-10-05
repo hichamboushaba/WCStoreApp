@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.BuildConfig
-import com.hicham.wcstoreapp.data.source.network.WooCommerceApi
+import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

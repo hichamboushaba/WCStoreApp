@@ -17,7 +17,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.map
-import com.hicham.wcstoreapp.data.source.fake.FakeProductsRepository
+import com.hicham.wcstoreapp.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme

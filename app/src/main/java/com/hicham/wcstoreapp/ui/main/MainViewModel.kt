@@ -2,7 +2,7 @@ package com.hicham.wcstoreapp.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hicham.wcstoreapp.data.CartRepository
+import com.hicham.wcstoreapp.data.cart.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

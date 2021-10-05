@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.models
 
-import com.hicham.wcstoreapp.data.source.network.NetworkProduct
+import com.hicham.wcstoreapp.data.api.NetworkProduct
 import java.math.BigDecimal
 
 data class Product(

@@ -2,7 +2,7 @@ package com.hicham.wcstoreapp.ui.checkout.address
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.hicham.wcstoreapp.data.AddressRepository
+import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
