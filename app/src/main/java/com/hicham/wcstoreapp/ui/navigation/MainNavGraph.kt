@@ -29,7 +29,7 @@ fun MainNavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-            HomeScreen(viewModel = hiltViewModel())
+            HomeScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
         }
         composable(Screen.Cart.route) {
             CartScreen(viewModel = hiltViewModel())
