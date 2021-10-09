@@ -9,6 +9,7 @@ import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.ProductEntity
+import logcat.logcat
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -20,9 +21,12 @@ class ProductRemoteMediator(
     private val productDao = database.productDao()
 
     // TODO confirm if this is OK, since documentation states the need of a separate table for storing the next key
-    private var lastLoadedPage: Int = 1
+    private var offset: Int = 0
+    private val idsOfDeletedProducts = mutableListOf<Long>()
 
     override suspend fun initialize(): InitializeAction {
+        // Start with list of all products
+        idsOfDeletedProducts.addAll(productDao.getIdsOfProducts())
         return super.initialize()
     }
 
@@ -31,26 +35,45 @@ class ProductRemoteMediator(
         state: PagingState<Int, ProductEntity>
     ): MediatorResult {
         try {
-            // Get the closest item from PagingState that we want to load data around.
-            val nextPage = when (loadType) {
-                LoadType.REFRESH -> 1
+            // Calculate the offset of next call
+            offset = when (loadType) {
+                LoadType.REFRESH -> 0
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    lastLoadedPage + 1
+                    offset
                 }
             }
 
-            val data = api.getProducts(state.config.pageSize, nextPage)
-            lastLoadedPage = nextPage
-            val products = data.map { it.toEntity() }
+            val pageSize = if (loadType == LoadType.REFRESH) {
+                state.config.initialLoadSize
+            } else {
+                state.config.pageSize
+            }
+
+            logcat {
+                "load products from API, offset = $offset, pageSize = $pageSize"
+            }
+
+            val products = api.getProducts(
+                pageSize = pageSize,
+                offset = offset
+            ).map { it.toEntity() }
+
+            logcat {
+                "Received ${products.size} successfully"
+            }
+            // Keep track of offset
+            this.offset += products.size
+
+            val endOfPaginationReached = products.size < pageSize
             database.withTransaction {
-                if (nextPage == 1) {
+                if (loadType == LoadType.REFRESH) {
                     productDao.clearAll()
                 }
                 productDao.insertProduct(*products.toTypedArray())
             }
 
-            return MediatorResult.Success(endOfPaginationReached = products.size < state.config.pageSize)
+            return MediatorResult.Success(endOfPaginationReached)
         } catch (e: IOException) {
             return MediatorResult.Error(e)
         } catch (e: HttpException) {

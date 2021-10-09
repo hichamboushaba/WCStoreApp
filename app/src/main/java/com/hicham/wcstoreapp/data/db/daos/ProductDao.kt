@@ -10,6 +10,9 @@ interface ProductDao {
     @Query("SELECT * FROM ProductEntity ORDER BY name ASC")
     fun getAll(): Flow<List<ProductEntity>>
 
+    @Query("SELECT id FROM ProductEntity")
+    suspend fun getIdsOfProducts(): List<Long>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(vararg productEntity: ProductEntity)
 
@@ -21,4 +24,7 @@ interface ProductDao {
 
     @Query("DELETE FROM ProductEntity")
     suspend fun clearAll()
+
+    @Query("DELETE FROM ProductEntity WHERE id = :productId")
+    suspend fun deleteProduct(vararg productId: Long)
 }
