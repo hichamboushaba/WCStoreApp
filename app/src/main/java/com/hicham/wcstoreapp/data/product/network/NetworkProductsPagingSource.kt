@@ -13,11 +13,10 @@ import logcat.LogPriority
 import logcat.logcat
 import javax.inject.Inject
 
-class ProductsPagingSource @Inject constructor(
+class NetworkProductsPagingSource(
     private val api: WooCommerceApi,
     private val database: AppDatabase
-) :
-    PagingSource<Int, Product>() {
+) : PagingSource<Int, Product>() {
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -27,17 +26,16 @@ class ProductsPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         return try {
-            // Start refresh at page 1 if undefined.
-            val nextPageNumber = params.key ?: 1
-            delay(1000)
-            val response = api.getProducts(pageSize = params.loadSize, page = nextPageNumber)
+            // Start refresh at offset 0 if undefined.
+            val offset = params.key ?: 0
+            val response = api.getProducts(pageSize = params.loadSize, offset = offset)
 
             cacheProducts(response)
 
             LoadResult.Page(
                 data = response.map { it.toProduct() },
                 prevKey = null, // Only paging forward.
-                nextKey = if (response.size < params.loadSize) null else nextPageNumber + 1
+                nextKey = if (response.size < params.loadSize) null else offset + response.size
             )
         } catch (e: Exception) {
             logcat(priority = LogPriority.WARN) {
