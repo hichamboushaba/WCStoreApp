@@ -27,7 +27,6 @@ import coil.compose.rememberImagePainter
 import coil.size.Scale
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.home.ProductUiModel
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import java.math.BigDecimal
 
