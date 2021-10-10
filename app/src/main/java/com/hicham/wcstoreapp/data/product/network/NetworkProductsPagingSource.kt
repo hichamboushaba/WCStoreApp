@@ -2,20 +2,21 @@ package com.hicham.wcstoreapp.data.product.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.hicham.wcstoreapp.data.api.Category
 import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.ProductEntity
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
-import kotlinx.coroutines.delay
 import logcat.LogPriority
 import logcat.logcat
-import javax.inject.Inject
 
 class NetworkProductsPagingSource(
     private val api: WooCommerceApi,
-    private val database: AppDatabase
+    private val database: AppDatabase,
+    private val query: String?,
+    private val category: Category?
 ) : PagingSource<Int, Product>() {
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -28,7 +29,12 @@ class NetworkProductsPagingSource(
         return try {
             // Start refresh at offset 0 if undefined.
             val offset = params.key ?: 0
-            val response = api.getProducts(pageSize = params.loadSize, offset = offset)
+            val response = api.getProducts(
+                pageSize = params.loadSize,
+                offset = offset,
+                query = query,
+                categoryId = category?.id.toString()
+            )
 
             cacheProducts(response)
 

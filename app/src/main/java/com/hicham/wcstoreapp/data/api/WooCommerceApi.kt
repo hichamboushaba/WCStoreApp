@@ -10,7 +10,9 @@ interface WooCommerceApi {
         @Query("per_page") pageSize: Int = 10,
         @Query("offset") offset: Int = 0,
         @Query("orderby") orderBy: String = "title",
-        @Query("order") order: String = "asc"
+        @Query("order") order: String = "asc",
+        @Query("search") query: String? = null,
+        @Query("category") categoryId: String? = null,
     ): List<NetworkProduct>
 
     @GET("/wp-json/wc/v3/products/{productId}")
