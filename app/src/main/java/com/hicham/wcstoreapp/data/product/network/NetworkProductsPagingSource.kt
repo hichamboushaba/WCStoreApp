@@ -33,7 +33,7 @@ class NetworkProductsPagingSource(
                 pageSize = params.loadSize,
                 offset = offset,
                 query = query,
-                categoryId = category?.id.toString()
+                categoryId = category?.id?.toString()
             )
 
             cacheProducts(response)
