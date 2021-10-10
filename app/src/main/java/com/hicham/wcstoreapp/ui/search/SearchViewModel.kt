@@ -9,11 +9,13 @@ import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,5 +44,22 @@ class SearchViewModel @Inject constructor(
 
     fun onQueryChanged(query: String) {
         _searchQuery.value = query
+    }
+
+    fun addItemToCart(product: Product) {
+        viewModelScope.launch {
+            cartRepository.addItem(product)
+        }
+    }
+
+    fun deleteItemFromCart(product: Product) {
+        viewModelScope.launch {
+            cartRepository.deleteItem(product)
+        }
+    }
+
+    fun onProductClicked(id: Long) {
+        val route = Screen.Product.createRoute(id)
+        navigationManager.navigate(route)
     }
 }
