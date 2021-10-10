@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import androidx.paging.PagingSource
 import androidx.room.Room
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.address.db.DBAddressRepository
@@ -18,8 +17,6 @@ import com.hicham.wcstoreapp.data.order.OrderRepository
 import com.hicham.wcstoreapp.data.order.fake.FakeOrderRepository
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.data.product.db.DBProductsRepository
-import com.hicham.wcstoreapp.data.product.network.ProductsPagingSource
-import com.hicham.wcstoreapp.models.Product
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -55,9 +52,6 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindProductsRepository(repository: DBProductsRepository): ProductsRepository
-
-    @Binds
-    abstract fun bindProductsPagingSource(source: ProductsPagingSource): PagingSource<Int, Product>
 
     @Binds
     abstract fun bindCurrencyFormatProvider(provider: FakeCurrencyFormatProvider): CurrencyFormatProvider

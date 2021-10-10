@@ -1,8 +1,9 @@
 package com.hicham.wcstoreapp.data.product.fake
 
 import androidx.paging.PagingData
-import com.hicham.wcstoreapp.data.product.ProductsRepository
+import com.hicham.wcstoreapp.data.api.Category
 import com.hicham.wcstoreapp.data.api.NetworkProduct
+import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class FakeProductsRepository : ProductsRepository {
-    override fun getProductList(): Flow<PagingData<Product>> {
+    override fun getProductList(query: String?, category: Category?): Flow<PagingData<Product>> {
         val products =
             Json.decodeFromString(ListSerializer(NetworkProduct.serializer()), PRODUCTS_JSON)
                 .map { it.toProduct() }

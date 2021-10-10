@@ -3,8 +3,9 @@ package com.hicham.wcstoreapp.data.product.network
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
+import com.hicham.wcstoreapp.data.api.Category
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
@@ -14,14 +15,14 @@ import javax.inject.Inject
 private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
 
 class NetworkProductsRepository @Inject constructor(
-    private val pagingSource: PagingSource<Int, Product>,
-    private val wooCommerceApi: WooCommerceApi
+    private val wooCommerceApi: WooCommerceApi,
+    private val database: AppDatabase
 ) : ProductsRepository {
-    override fun getProductList(): Flow<PagingData<Product>> {
+    override fun getProductList(query: String?, category: Category?): Flow<PagingData<Product>> {
         return Pager(
             PagingConfig(pageSize = DEFAULT_PRODUCT_PAGE_SIZE)
         ) {
-            pagingSource
+            NetworkProductsPagingSource(wooCommerceApi, database)
         }.flow
     }
 
