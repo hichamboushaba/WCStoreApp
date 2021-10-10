@@ -12,6 +12,8 @@ import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
+import com.hicham.wcstoreapp.ui.products.ProductUiModel
+import com.hicham.wcstoreapp.ui.products.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -38,13 +40,7 @@ class HomeViewModel @Inject constructor(
         currencyFormatter,
         cartRepository.items
     ) { pagingData, formatter, cartItems ->
-        pagingData.map { product ->
-            ProductUiModel(
-                product = product,
-                priceFormatted = formatter.format(product.price),
-                quantityInCart = cartItems.firstOrNull { it.product == product }?.quantity ?: 0
-            )
-        }
+        pagingData.map { product -> product.toUiModel(formatter, cartItems) }
     }
         .cachedIn(viewModelScope)
         .flowOn(Dispatchers.Default)
@@ -66,9 +62,3 @@ class HomeViewModel @Inject constructor(
         navigationManager.navigate(route)
     }
 }
-
-data class ProductUiModel(
-    val product: Product,
-    val priceFormatted: String,
-    val quantityInCart: Int = 0
-)

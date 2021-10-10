@@ -21,7 +21,6 @@ import androidx.paging.map
 import com.hicham.wcstoreapp.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.common.components.ErrorView
-import com.hicham.wcstoreapp.ui.home.ProductUiModel
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
