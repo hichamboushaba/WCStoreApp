@@ -16,6 +16,7 @@ import com.hicham.wcstoreapp.ui.checkout.address.AddressListScreen
 import com.hicham.wcstoreapp.ui.checkout.after.OrderPlacedScreen
 import com.hicham.wcstoreapp.ui.home.HomeScreen
 import com.hicham.wcstoreapp.ui.product.ProductScreen
+import com.hicham.wcstoreapp.ui.search.SearchScreen
 
 @Composable
 fun MainNavGraph(
@@ -30,6 +31,9 @@ fun MainNavGraph(
     ) {
         composable(Screen.Home.route) {
             HomeScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
+        }
+        composable(Screen.Search.route) {
+            SearchScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
         }
         composable(Screen.Cart.route) {
             CartScreen(viewModel = hiltViewModel())
