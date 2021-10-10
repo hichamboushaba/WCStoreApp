@@ -25,7 +25,10 @@ fun SearchScreen(viewModel: SearchViewModel, scaffoldState: ScaffoldState) {
         productsList = viewModel.products,
         searchQuery = searchQuery,
         scaffoldState = scaffoldState,
-        onQueryChanged = viewModel::onQueryChanged
+        onQueryChanged = viewModel::onQueryChanged,
+        addItemToCart = viewModel::addItemToCart,
+        removeItemFromCart = viewModel::deleteItemFromCart,
+        openProduct = viewModel::onProductClicked
     )
 }
 
