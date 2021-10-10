@@ -38,7 +38,7 @@ class DBProductsRepository @Inject constructor(
             return Pager(
                 PagingConfig(pageSize = DEFAULT_PRODUCT_PAGE_SIZE)
             ) {
-                NetworkProductsPagingSource(wooCommerceApi, database)
+                NetworkProductsPagingSource(wooCommerceApi, database, query, category)
             }.flow
         }
     }
