@@ -1,8 +1,6 @@
 package com.hicham.wcstoreapp.data.api
 
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface WooCommerceApi {
     @GET("/wp-json/wc/v3/products?status=publish")
@@ -19,4 +17,9 @@ interface WooCommerceApi {
     suspend fun getProduct(
         @Path("productId") productId: Long
     ): NetworkProduct
+
+    @POST("/wp-json/wc/v3/orders")
+    suspend fun createOrder(
+        @Body request: NetworkOrderCreationRequest
+    ): NetworkOrder
 }

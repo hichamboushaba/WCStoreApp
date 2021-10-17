@@ -15,6 +15,7 @@ import com.hicham.wcstoreapp.data.currencyformat.fake.FakeCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.order.OrderRepository
 import com.hicham.wcstoreapp.data.order.fake.FakeOrderRepository
+import com.hicham.wcstoreapp.data.order.network.NetworkOrderRepository
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.data.product.db.DBProductsRepository
 import dagger.Binds
@@ -64,5 +65,5 @@ abstract class DataModule {
     abstract fun bindAddressRepository(repository: DBAddressRepository): AddressRepository
 
     @Binds
-    abstract fun bindOrderRepository(repository: FakeOrderRepository): OrderRepository
+    abstract fun bindOrderRepository(repository: NetworkOrderRepository): OrderRepository
 }
