@@ -11,6 +11,7 @@ import com.hicham.wcstoreapp.di.AppCoroutineScope
 import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
+import logcat.logcat
 import javax.inject.Inject
 
 private const val PRIMARY_ADDRESS_KEY = "primary-address"
@@ -68,6 +69,10 @@ class DBAddressRepository @Inject constructor(
     }
 
     override suspend fun setPrimaryShippingAddress(address: Address) {
+        val addresses = _savedAddresses.first()
+        logcat {
+            addresses.toString()
+        }
         val addressEntity =
             _savedAddresses.first().first { it.isSameAsAddress(address) }
         dataStore.edit {
