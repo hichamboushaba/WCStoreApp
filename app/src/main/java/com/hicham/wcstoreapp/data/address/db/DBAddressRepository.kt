@@ -60,12 +60,22 @@ class DBAddressRepository @Inject constructor(
                 )
             )
         }
+
+        // Wait until the the data change is reflected
+        _savedAddresses.waitUntil { addresses ->
+            addresses.any { it.isSameAsAddress(address) }
+        }
     }
 
     override suspend fun removeAddress(address: Address) {
         val addressEntity =
             _savedAddresses.first().first { it.isSameAsAddress(address) }
         addressDao.deleteAddress(addressEntity)
+
+        // Wait until the the data change is reflected
+        _savedAddresses.waitUntil { addresses ->
+            addresses.none { it.isSameAsAddress(address) }
+        }
     }
 
     override suspend fun setPrimaryShippingAddress(address: Address) {
@@ -82,5 +92,9 @@ class DBAddressRepository @Inject constructor(
 
     override suspend fun setPrimaryBillingAddress(address: Address) {
         TODO("Not yet implemented")
+    }
+
+    private suspend fun Flow<List<AddressEntity>>.waitUntil(predicate: (List<AddressEntity>) -> Boolean) {
+        takeWhile { predicate(it) }.first()
     }
 }
