@@ -54,6 +54,9 @@ fun SearchScreen(
                         tint = MaterialTheme.colors.onPrimary
                     )
                 },
+                placeholder = {
+                    Text(text = "Search")
+                },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
                         IconButton(
@@ -74,7 +77,8 @@ fun SearchScreen(
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = MaterialTheme.colors.primary,
-                    cursorColor = MaterialTheme.colors.onPrimary
+                    cursorColor = MaterialTheme.colors.onPrimary,
+                    placeholderColor = MaterialTheme.colors.onPrimary.copy(alpha = 0.6f)
                 )
             )
         }
