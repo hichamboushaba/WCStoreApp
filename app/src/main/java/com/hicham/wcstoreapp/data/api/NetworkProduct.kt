@@ -3,7 +3,9 @@
 package com.hicham.wcstoreapp.data.api
 
 import com.hicham.wcstoreapp.util.BigDecimalSerializer
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.json.JsonElement
 import java.math.BigDecimal
 
@@ -119,7 +121,7 @@ data class NetworkProduct(
     @SerialName("parent_id")
     val parentID: Long? = null,
 
-    val categories: List<Category>,
+    val categories: List<NetworkCategory>,
     val tags: List<String>,
     val images: List<Image>,
     val attributes: List<Attribute>,
@@ -164,13 +166,6 @@ enum class CatalogVisibility {
     @SerialName("visible")
     Visible
 }
-
-@Serializable
-data class Category(
-    val id: Long,
-    val name: String,
-    val slug: String
-)
 
 @Serializable
 data class Dimensions(
