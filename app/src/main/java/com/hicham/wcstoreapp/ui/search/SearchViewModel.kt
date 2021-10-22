@@ -58,8 +58,8 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onProductClicked(id: Long) {
-        val route = Screen.Product.createRoute(id)
+    fun onProductClicked(product: Product) {
+        val route = Screen.Product.createRoute(product.id)
         navigationManager.navigate(route)
     }
 }

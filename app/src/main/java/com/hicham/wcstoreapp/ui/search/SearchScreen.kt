@@ -40,7 +40,7 @@ fun SearchScreen(
     onQueryChanged: (String) -> Unit = {},
     addItemToCart: (Product) -> Unit = {},
     removeItemFromCart: (Product) -> Unit = {},
-    openProduct: (Long) -> Unit = {}
+    openProduct: (Product) -> Unit = {}
 ) {
     Scaffold(scaffoldState = scaffoldState, topBar = {
         TopAppBar {
