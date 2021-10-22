@@ -32,7 +32,7 @@ fun ProductsList(
     productsFlow: Flow<PagingData<ProductUiModel>>,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
-    openProduct: (Long) -> Unit,
+    openProduct: (Product) -> Unit,
     scaffoldState: ScaffoldState
 ) {
     val lazyProductList = productsFlow.collectAsLazyPagingItems()
@@ -131,7 +131,7 @@ private fun LazyListScope.renderList(
     lazyProductList: LazyPagingItems<ProductUiModel>,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
-    onProductClick: (Long) -> Unit,
+    onProductClick: (Product) -> Unit,
     nbColumns: Int,
     itemsSize: Dp
 ) {
@@ -153,7 +153,7 @@ private fun LazyListScope.renderList(
                             removeItemFromCart = removeItemFromCart,
                             modifier = Modifier
                                 .size(itemsSize)
-                                .clickable { onProductClick(it.product.id) }
+                                .clickable { onProductClick(it.product) }
                         )
                     }
                 } else {
