@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.product
 
 import androidx.paging.PagingData
-import com.hicham.wcstoreapp.data.api.Category
+import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.flow.Flow
 

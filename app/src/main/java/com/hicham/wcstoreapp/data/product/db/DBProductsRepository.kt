@@ -1,12 +1,12 @@
 package com.hicham.wcstoreapp.data.product.db
 
 import androidx.paging.*
-import com.hicham.wcstoreapp.data.api.Category
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.product.ProductRemoteMediator
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.data.product.network.NetworkProductsPagingSource
+import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toProduct
 import kotlinx.coroutines.flow.Flow
