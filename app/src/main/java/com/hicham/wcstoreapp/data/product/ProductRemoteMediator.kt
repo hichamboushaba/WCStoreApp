@@ -5,10 +5,10 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.ProductEntity
+import com.hicham.wcstoreapp.data.db.entities.toEntity
 import logcat.logcat
 import retrofit2.HttpException
 import java.io.IOException
@@ -79,16 +79,5 @@ class ProductRemoteMediator(
         } catch (e: HttpException) {
             return MediatorResult.Error(e)
         }
-    }
-
-    private fun NetworkProduct.toEntity(): ProductEntity {
-        return ProductEntity(
-            id = id,
-            name = name,
-            images = images.map { it.src },
-            price = price.toPlainString(),
-            shortDescription = shortDescription,
-            description = description
-        )
     }
 }
