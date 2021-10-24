@@ -60,7 +60,7 @@ private fun HomeScreen(
                 .horizontalScroll(rememberScrollState())
         ) {
             categories.forEach {
-                CategoryChip(text = it.category.title, isSelected = it.isSelected) {
+                CategoryChip(text = it.category.name, isSelected = it.isSelected) {
                     onCategorySelected(it.category)
                 }
             }
