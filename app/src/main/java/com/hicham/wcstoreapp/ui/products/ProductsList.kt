@@ -32,7 +32,7 @@ fun ProductsList(
     productsFlow: Flow<PagingData<ProductUiModel>>,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
-    openProduct: (Product) -> Unit,
+    onProductClicked: (Product) -> Unit,
     scaffoldState: ScaffoldState
 ) {
     val lazyProductList = productsFlow.collectAsLazyPagingItems()
@@ -44,9 +44,13 @@ fun ProductsList(
     BoxWithConstraints {
         val nbColumns = (maxWidth / minCardWidth).toInt()
         val size = (maxWidth / nbColumns) - 16.dp
+        val dbSourceLoadState = lazyProductList.loadState.mediator
         val loadState = lazyProductList.loadState
         when {
-            loadState.refresh is LoadState.Loading && lazyProductList.itemCount == 0 -> {
+            loadState.refresh is LoadState.Loading && (
+                    dbSourceLoadState == null ||
+                            lazyProductList.itemCount == 0) -> {
+                // When refreshing and there is no items, or there is no offline cache
                 CircularProgressIndicator(
                     modifier = Modifier
                         .fillMaxSize()
@@ -67,7 +71,7 @@ fun ProductsList(
                         lazyProductList = lazyProductList,
                         addItemToCart = addItemToCart,
                         removeItemFromCart = removeItemFromCart,
-                        onProductClick = openProduct,
+                        onProductClick = onProductClicked,
                         nbColumns = nbColumns,
                         itemsSize = size
                     )
@@ -178,7 +182,7 @@ fun DefaultList() {
             productsFlow = productsFlow,
             addItemToCart = {},
             removeItemFromCart = {},
-            openProduct = {},
+            onProductClicked = {},
             scaffoldState = rememberScaffoldState()
         )
     }

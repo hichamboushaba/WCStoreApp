@@ -88,7 +88,7 @@ fun SearchScreen(
             productsFlow = productsList,
             addItemToCart = addItemToCart,
             removeItemFromCart = removeItemFromCart,
-            openProduct = openProduct,
+            onProductClicked = openProduct,
             scaffoldState = scaffoldState
         )
     }

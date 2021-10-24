@@ -18,12 +18,7 @@ class NetworkProductsPagingSource(
     private val query: String?,
     private val category: Category?
 ) : PagingSource<Int, Product>() {
-    override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
-    }
+    override fun getRefreshKey(state: PagingState<Int, Product>): Int? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         return try {

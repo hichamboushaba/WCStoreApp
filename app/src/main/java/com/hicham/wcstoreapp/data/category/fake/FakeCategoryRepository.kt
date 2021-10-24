@@ -10,7 +10,7 @@ class FakeCategoryRepository @Inject constructor() : CategoryRepository {
     override val categories: Flow<List<Category>>
         get() = flowOf(
             listOf(
-                Category(0L, "Tshirts"),
+                Category(1376L, "Tshirts"),
                 Category(1L, "Hoodies"),
                 Category(2L, "Accessories"),
                 Category(3L, "Decor")
