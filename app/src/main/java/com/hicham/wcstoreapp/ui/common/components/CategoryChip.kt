@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CategoryChip(text: String, isSelected: Boolean, onClicked: () -> Unit) {
+fun CategoryChip(text: String, isSelected: Boolean, onClick: () -> Unit) {
     Text(
         text = text,
         style = MaterialTheme.typography.body2,
@@ -21,7 +21,7 @@ fun CategoryChip(text: String, isSelected: Boolean, onClicked: () -> Unit) {
         },
         fontWeight = FontWeight.Bold,
         modifier = Modifier
-            .clickable(enabled = !isSelected, onClick = onClicked)
+            .clickable(enabled = !isSelected, onClick = onClick)
             .padding(8.dp)
     )
 }
@@ -29,11 +29,11 @@ fun CategoryChip(text: String, isSelected: Boolean, onClicked: () -> Unit) {
 @Preview
 @Composable
 fun SelectedChipPreview() {
-    CategoryChip(text = "Chip", isSelected = true, onClicked = {})
+    CategoryChip(text = "Chip", isSelected = true, onClick = {})
 }
 
 @Preview
 @Composable
 fun UnSelectedChipPreview() {
-    CategoryChip(text = "Chip", isSelected = false, onClicked = {})
+    CategoryChip(text = "Chip", isSelected = false, onClick = {})
 }
