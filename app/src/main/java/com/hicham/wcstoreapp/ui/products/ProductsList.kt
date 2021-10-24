@@ -44,12 +44,11 @@ fun ProductsList(
     BoxWithConstraints {
         val nbColumns = (maxWidth / minCardWidth).toInt()
         val size = (maxWidth / nbColumns) - 16.dp
-        val dbSourceLoadState = lazyProductList.loadState.mediator
+        val hasOfflineData = lazyProductList.loadState.mediator != null &&
+                lazyProductList.itemCount != 0
         val loadState = lazyProductList.loadState
         when {
-            loadState.refresh is LoadState.Loading && (
-                    dbSourceLoadState == null ||
-                            lazyProductList.itemCount == 0) -> {
+            loadState.refresh is LoadState.Loading && !hasOfflineData -> {
                 // When refreshing and there is no items, or there is no offline cache
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -57,7 +56,7 @@ fun ProductsList(
                         .wrapContentSize(Alignment.Center)
                 )
             }
-            loadState.refresh is LoadState.Error && lazyProductList.itemCount == 0 -> {
+            loadState.refresh is LoadState.Error && !hasOfflineData -> {
                 ErrorView(modifier = Modifier.fillMaxSize()) { lazyProductList.retry() }
             }
             else -> {
