@@ -22,4 +22,7 @@ interface WooCommerceApi {
     suspend fun createOrder(
         @Body request: NetworkOrderCreationRequest
     ): NetworkOrder
+
+    @GET("/wp-json/wc/v3/products/categories?hide_empty=true&orderby=count&per_page=30")
+    suspend fun getCategories(): List<NetworkCategory>
 }

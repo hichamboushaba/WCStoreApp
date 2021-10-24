@@ -11,7 +11,7 @@ import com.hicham.wcstoreapp.data.address.db.DBAddressRepository
 import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.cart.db.DBCartRepository
 import com.hicham.wcstoreapp.data.category.CategoryRepository
-import com.hicham.wcstoreapp.data.category.fake.FakeCategoryRepository
+import com.hicham.wcstoreapp.data.category.db.DBCategoryRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.fake.FakeCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.db.AppDatabase
@@ -69,5 +69,5 @@ abstract class DataModule {
     abstract fun bindOrderRepository(repository: NetworkOrderRepository): OrderRepository
 
     @Binds
-    abstract fun bindCategoryRepository(repository: FakeCategoryRepository): CategoryRepository
+    abstract fun bindCategoryRepository(repository: DBCategoryRepository): CategoryRepository
 }
