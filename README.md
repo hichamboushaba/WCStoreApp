@@ -19,14 +19,14 @@ production use, since WooCoomerce's API is not ready for a headless usage:
 - [x] List all products with pagination
 - [x] Price formatting
 - [ ] Fetch price formatting settings from the store
-- [ ] Offline support
-- [ ] Search and filtering
+- [x] Offline support
+- [x] Search and filtering
 - [x] Check basic details about products
 - [ ] Check more details about products: stock, sale, reviews...
 - [x] Local cart
 - [x] Shipping Addresses: save and list saved addresses.
 - [ ] Edit/Delete addresses
-- [ ] Address form validation
+- [x] Address form validation
 - [ ] Billing Address
 - [ ] Select Payment Method
 - [ ] Complete Checkout flow
