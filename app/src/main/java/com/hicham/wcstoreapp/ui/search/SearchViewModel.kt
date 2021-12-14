@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hicham.wcstoreapp.data.cart.CartRepository
-import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
@@ -21,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: ProductsRepository,
-    currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository,
     private val navigationManager: NavigationManager
 ) : BaseViewModel() {
@@ -38,7 +36,7 @@ class SearchViewModel @Inject constructor(
             } else {
                 flowOf(PagingData.from(emptyList<Product>()))
             }
-        }.mapToUiModel(currencyFormatProvider, cartRepository)
+        }.mapToUiModel(cartRepository)
         .cachedIn(viewModelScope)
         .flowOn(Dispatchers.Default)
 

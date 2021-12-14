@@ -3,11 +3,9 @@ package com.hicham.wcstoreapp.ui.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.cart.CartRepository
-import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
-import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
@@ -20,7 +18,6 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productsRepository: ProductsRepository,
-    private val currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository,
     private val navigationManager: NavigationManager
 ) : BaseViewModel() {
@@ -36,18 +33,14 @@ class ProductViewModel @Inject constructor(
         }
         combine(
             productFlow,
-            cartQuantityFlow,
-            currencyFormatProvider.formatSettings
-        ) { product, cartQuantity, formatSettings ->
-            Triple(product, cartQuantity, CurrencyFormatter(formatSettings))
+            cartQuantityFlow
+        ) { product, cartQuantity ->
+            _uiState.value = UiState.SuccessState(
+                product = product,
+                priceFormatted = product.prices.formattedPrice,
+                quantityInCart = cartQuantity
+            )
         }
-            .onEach { (product, cartQuantity, currencyFormatter) ->
-                _uiState.value = UiState.SuccessState(
-                    product = product,
-                    priceFormatted = currencyFormatter.format(product.prices.price),
-                    quantityInCart = cartQuantity
-                )
-            }
             .catch {
                 _uiState.value = UiState.ErrorState
             }
