@@ -20,7 +20,7 @@ data class NetworkProduct(
     @SerialName("on_sale")
     val onSale: Boolean,
 
-    val prices: NetworkPrices,
+    val prices: NetworkProductPrices,
 
     @SerialName("average_rating")
     val averageRating: String,

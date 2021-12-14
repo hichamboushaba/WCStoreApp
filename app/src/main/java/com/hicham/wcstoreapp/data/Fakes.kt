@@ -1,11 +1,11 @@
 package com.hicham.wcstoreapp.data
 
-import com.hicham.wcstoreapp.models.Prices
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.models.ProductPrices
 import java.math.BigDecimal
 
 object Fakes {
-    val prices = Prices(
+    val prices = ProductPrices(
         price = BigDecimal.TEN,
         salePrice = BigDecimal.ONE,
         regularPrice = BigDecimal.TEN,
