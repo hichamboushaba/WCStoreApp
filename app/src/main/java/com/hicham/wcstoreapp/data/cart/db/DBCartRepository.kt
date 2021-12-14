@@ -28,6 +28,8 @@ class DBCartRepository @Inject constructor(
 ) : CartRepository {
     private val cartDao = database.cartDao()
 
+    private var isExecutingOperation: Boolean = false
+
     override val items: Flow<List<CartItem>> = cartDao.getCartItemsWithProducts()
         .map { list ->
             list.mapNotNull { cartItem ->
@@ -60,6 +62,7 @@ class DBCartRepository @Inject constructor(
     }
 
     override suspend fun addItem(product: Product): Result<Unit> {
+        if (isExecutingOperation) return Result.success(Unit)
         addItemToDb(product)
 
         return runActionWithOptimisticUpdate(
@@ -69,6 +72,7 @@ class DBCartRepository @Inject constructor(
     }
 
     override suspend fun deleteItem(product: Product): Result<Unit> {
+        if (isExecutingOperation) return Result.success(Unit)
         val currentItem = deleteItemFromDb(product)
 
         return runActionWithOptimisticUpdate(
@@ -78,6 +82,7 @@ class DBCartRepository @Inject constructor(
     }
 
     override suspend fun clearProduct(product: Product): Result<Unit> {
+        if (isExecutingOperation) return Result.success(Unit)
         val currentItem =
             cartDao.getCartItem(product.id) ?: return Result.failure(NullPointerException())
         cartDao.deleteCartItemForProductId(productId = product.id)
@@ -89,6 +94,7 @@ class DBCartRepository @Inject constructor(
     }
 
     override suspend fun clear(): Result<Unit> {
+        if (isExecutingOperation) return Result.success(Unit)
         val cartContent = cartDao.getCartItems()
         cartDao.clear()
 
@@ -130,6 +136,7 @@ class DBCartRepository @Inject constructor(
         action: suspend () -> NetworkCart,
         revertAction: suspend () -> Unit
     ): Result<Unit> {
+        isExecutingOperation = true
         return try {
             val networkCart = action()
             saveCart(networkCart)
@@ -141,6 +148,8 @@ class DBCartRepository @Inject constructor(
             // Revert changes
             revertAction()
             Result.failure(e)
+        } finally {
+            isExecutingOperation = false
         }
     }
 
