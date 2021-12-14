@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.data.api
 
+import com.hicham.wcstoreapp.models.NetworkCart
 import retrofit2.http.*
 
 interface WooCommerceApi {
@@ -17,6 +18,26 @@ interface WooCommerceApi {
     suspend fun getProduct(
         @Path("productId") productId: Long
     ): NetworkProduct
+
+    @GET("/wp-json/wc/store/cart")
+    suspend fun getCart(): NetworkCart
+
+    @POST("/wp-json/wc/store/cart/add-item")
+    suspend fun addItemToCart(
+        @Path("id") productId: Long,
+        @Path("quantity") quantity: Int = 1
+    ): NetworkCart
+
+    @POST("/wp-json/wc/store/cart/remove-item")
+    suspend fun removeItemFromCart(
+        @Path("key") key: String
+    ): NetworkCart
+
+    @POST("/wp-json/wc/store/cart/remove-item")
+    suspend fun updateCartItem(
+        @Path("key") key: String,
+        @Path("quantity") quantity: Int
+    )
 
     @POST("/wp-json/wc/v3/orders")
     suspend fun createOrder(
