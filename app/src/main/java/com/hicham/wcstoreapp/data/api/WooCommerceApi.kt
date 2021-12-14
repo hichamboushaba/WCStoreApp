@@ -13,7 +13,7 @@ interface WooCommerceApi {
         @Query("category") categoryId: String? = null,
     ): List<NetworkProduct>
 
-    @GET("/wp-json/wc/v3/products/{productId}")
+    @GET("/wp-json/wc/store/products/{productId}")
     suspend fun getProduct(
         @Path("productId") productId: Long
     ): NetworkProduct
