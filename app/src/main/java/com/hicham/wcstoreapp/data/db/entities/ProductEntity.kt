@@ -5,7 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.hicham.wcstoreapp.data.api.NetworkProduct
-import com.hicham.wcstoreapp.models.Prices
+import com.hicham.wcstoreapp.models.ProductPrices
 import com.hicham.wcstoreapp.models.toDomainModel
 
 @Entity
@@ -13,7 +13,7 @@ data class ProductEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo val name: String,
     @ColumnInfo val images: List<String>,
-    @Embedded val prices: Prices,
+    @Embedded val prices: ProductPrices,
     @ColumnInfo val shortDescription: String,
     @ColumnInfo val description: String
 )
