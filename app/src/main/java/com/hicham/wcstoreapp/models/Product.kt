@@ -2,33 +2,32 @@ package com.hicham.wcstoreapp.models
 
 import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.db.entities.ProductEntity
-import java.math.BigDecimal
 
 data class Product(
     val id: Long,
     val name: String,
     val images: List<String>,
-    val price: BigDecimal,
+    val prices: Prices,
     val shortDescription: String,
     val description: String
 )
 
-fun ProductEntity.toProduct(): Product {
+fun ProductEntity.toDomainModel(): Product {
     return Product(
         id = id,
         name = name,
         images = images,
-        price = BigDecimal(price),
+        prices = prices,
         shortDescription = shortDescription,
         description = description
     )
 }
 
-fun NetworkProduct.toProduct() = Product(
+fun NetworkProduct.toDomainModel() = Product(
     id = id,
     name = name,
     shortDescription = shortDescription,
     description = description,
     images = images.map { it.src },
-    price = price
+    prices = prices.toDomainModel()
 )
