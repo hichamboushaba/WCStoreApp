@@ -30,7 +30,7 @@ fun Flow<PagingData<Product>>.mapToUiModel(
         pagingData.map { product ->
             ProductUiModel(
                 product = product,
-                priceFormatted = currencyFormatter.format(product.price),
+                priceFormatted = product.prices.formattedPrice,
                 quantityInCart = cartItems.firstOrNull { it.product == product }?.quantity ?: 0
             )
         }

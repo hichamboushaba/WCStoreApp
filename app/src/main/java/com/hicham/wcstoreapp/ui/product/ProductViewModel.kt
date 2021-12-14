@@ -6,7 +6,9 @@ import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.*
+import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +44,7 @@ class ProductViewModel @Inject constructor(
             .onEach { (product, cartQuantity, currencyFormatter) ->
                 _uiState.value = UiState.SuccessState(
                     product = product,
-                    priceFormatted = currencyFormatter.format(product.price),
+                    priceFormatted = currencyFormatter.format(product.prices.price),
                     quantityInCart = cartQuantity
                 )
             }

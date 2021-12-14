@@ -18,7 +18,7 @@ import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.order.OrderRepository
 import com.hicham.wcstoreapp.data.order.network.NetworkOrderRepository
 import com.hicham.wcstoreapp.data.product.ProductsRepository
-import com.hicham.wcstoreapp.data.product.db.DBProductsRepository
+import com.hicham.wcstoreapp.data.product.network.NetworkProductsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -53,7 +53,7 @@ abstract class DataModule {
     }
 
     @Binds
-    abstract fun bindProductsRepository(repository: DBProductsRepository): ProductsRepository
+    abstract fun bindProductsRepository(repository: NetworkProductsRepository): ProductsRepository
 
     @Binds
     abstract fun bindCurrencyFormatProvider(provider: FakeCurrencyFormatProvider): CurrencyFormatProvider
