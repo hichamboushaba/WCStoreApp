@@ -1,9 +1,4 @@
-// To parse the JSON, install kotlin's serialization plugin and do:
-//
-// val json        = Json(JsonConfiguration.Stable)
-// val networkCart = json.parse(NetworkCart.serializer(), jsonString)
-
-package com.hicham.wcstoreapp.models
+package com.hicham.wcstoreapp.data.api
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -86,54 +81,6 @@ data class CouponTotals(
 class Extensions()
 
 @Serializable
-data class NetworkCartItem(
-    val key: String,
-    val id: Long,
-    val quantity: Long,
-
-    @SerialName("quantity_limit")
-    val quantityLimit: Long,
-
-    val name: String,
-    val summary: String,
-
-    @SerialName("short_description")
-    val shortDescription: String,
-
-    val description: String,
-    val sku: String,
-
-    @SerialName("low_stock_remaining")
-    val lowStockRemaining: JsonObject? = null,
-
-    @SerialName("backorders_allowed")
-    val backordersAllowed: Boolean,
-
-    @SerialName("show_backorder_badge")
-    val showBackorderBadge: Boolean,
-
-    @SerialName("sold_individually")
-    val soldIndividually: Boolean,
-
-    val permalink: String,
-    val images: List<Image>,
-    val variation: JsonArray,
-    val prices: Prices,
-    val totals: ItemTotals
-)
-
-@Serializable
-data class Image(
-    val id: Long,
-    val src: String,
-    val thumbnail: String,
-    val srcset: String,
-    val sizes: String,
-    val name: String,
-    val alt: String
-)
-
-@Serializable
 data class Prices(
     @SerialName("currency_code")
     val currencyCode: String,
@@ -181,42 +128,6 @@ data class RawPrices(
 
     @SerialName("sale_price")
     val salePrice: String
-)
-
-@Serializable
-data class ItemTotals(
-    @SerialName("currency_code")
-    val currencyCode: String,
-
-    @SerialName("currency_symbol")
-    val currencySymbol: String,
-
-    @SerialName("currency_minor_unit")
-    val currencyMinorUnit: Long,
-
-    @SerialName("currency_decimal_separator")
-    val currencyDecimalSeparator: String,
-
-    @SerialName("currency_thousand_separator")
-    val currencyThousandSeparator: String,
-
-    @SerialName("currency_prefix")
-    val currencyPrefix: String,
-
-    @SerialName("currency_suffix")
-    val currencySuffix: String,
-
-    @SerialName("line_subtotal")
-    val lineSubtotal: String,
-
-    @SerialName("line_subtotal_tax")
-    val lineSubtotalTax: String,
-
-    @SerialName("line_total")
-    val lineTotal: String,
-
-    @SerialName("line_total_tax")
-    val lineTotalTax: String
 )
 
 @Serializable
@@ -369,10 +280,10 @@ data class NetworkCartTotals(
     val totalDiscountTax: String,
 
     @SerialName("total_shipping")
-    val totalShipping: String,
+    val totalShipping: String?,
 
     @SerialName("total_shipping_tax")
-    val totalShippingTax: String,
+    val totalShippingTax: String?,
 
     @SerialName("total_price")
     val totalPrice: String,

@@ -11,6 +11,7 @@ import com.hicham.wcstoreapp.models.NetworkFormattable
 import com.hicham.wcstoreapp.models.toDomainModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -45,17 +46,19 @@ class StoreCurrencyFormatProvider @Inject constructor(
             // Refresh the format settings when the flow is restarted
             fetchFormatSettings()
         }
-        .shareIn(coroutineScope, SharingStarted.WhileSubscribed(60000L))
+        .shareIn(coroutineScope, SharingStarted.WhileSubscribed(60000L), replay = 1)
 
-    private suspend fun fetchFormatSettings() {
-        try {
-            val newSettings = wooCommerceApi.getProducts(1)[0].prices as NetworkFormattable
-            dataStore.edit {
-                it[stringPreferencesKey(SETTINGS_KEY)] = json.encodeToString(newSettings)
-            }
-        } catch (e: Exception) {
-            logcat(LogPriority.WARN) {
-                e.asLog()
+    private fun fetchFormatSettings() {
+        coroutineScope.launch {
+            try {
+                val newSettings = wooCommerceApi.getProducts(1)[0].prices as NetworkFormattable
+                dataStore.edit {
+                    it[stringPreferencesKey(SETTINGS_KEY)] = json.encodeToString(newSettings)
+                }
+            } catch (e: Exception) {
+                logcat(LogPriority.WARN) {
+                    e.asLog()
+                }
             }
         }
     }

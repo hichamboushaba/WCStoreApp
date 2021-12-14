@@ -13,12 +13,16 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
     private val _items = MutableStateFlow(emptyList<CartItem>())
     override val items: StateFlow<List<CartItem>> = _items.asStateFlow()
 
+    override suspend fun fetchCart() {
+        // Not needed
+    }
+
     override suspend fun addItem(product: Product) {
         _items.update { list ->
             list.toMutableList().apply {
                 val index = indexOfFirst { it.product == product }
                 if (index == -1) {
-                    add(CartItem(product, 1))
+                    add(CartItem(id = "", product, 1))
                 } else {
                     val currentItem = get(index)
                     set(index, currentItem.copy(quantity = currentItem.quantity + 1))
