@@ -13,11 +13,7 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
     private val _items = MutableStateFlow(emptyList<CartItem>())
     override val items: StateFlow<List<CartItem>> = _items.asStateFlow()
 
-    override suspend fun fetchCart() {
-        // Not needed
-    }
-
-    override suspend fun addItem(product: Product) {
+    override suspend fun addItem(product: Product): Result<Unit> {
         _items.update { list ->
             list.toMutableList().apply {
                 val index = indexOfFirst { it.product == product }
@@ -29,9 +25,10 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
                 }
             }
         }
+        return Result.success(Unit)
     }
 
-    override suspend fun deleteItem(product: Product) {
+    override suspend fun deleteItem(product: Product): Result<Unit> {
         _items.update { list ->
             list
                 .map {
@@ -39,13 +36,16 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
                 }
                 .filter { it.quantity > 0 }
         }
+        return Result.success(Unit)
     }
 
-    override suspend fun clearProduct(product: Product) {
+    override suspend fun clearProduct(product: Product): Result<Unit> {
         _items.update { list -> list.filterNot { it.product == product } }
+        return Result.success(Unit)
     }
 
-    override suspend fun clear() {
+    override suspend fun clear(): Result<Unit> {
         _items.value = emptyList()
+        return Result.success(Unit)
     }
 }
