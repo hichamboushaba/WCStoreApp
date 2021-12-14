@@ -1,7 +1,10 @@
 package com.hicham.wcstoreapp.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.hicham.wcstoreapp.BuildConfig
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.util.NonceInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -31,7 +34,7 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
-        fun providesRetrofit(json: Json): Retrofit {
+        fun providesRetrofit(json: Json, dataStore: DataStore<Preferences>): Retrofit {
             val contentType = "application/json".toMediaType()
             val consumer = OkHttpOAuthConsumer(
                 BuildConfig.WC_CONSUMER_KEY,
@@ -45,6 +48,7 @@ abstract class NetworkModule {
             }
 
             val httpClient = OkHttpClient.Builder()
+                .addInterceptor(NonceInterceptor(dataStore))
                 .addInterceptor(SigningInterceptor(consumer))
                 .addInterceptor(loggingInterceptor)
                 .build()
