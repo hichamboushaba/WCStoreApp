@@ -3,7 +3,7 @@ package com.hicham.wcstoreapp.data.api
 import retrofit2.http.*
 
 interface WooCommerceApi {
-    @GET("/wp-json/wc/v3/products?status=publish")
+    @GET("/wp-json/wc/store/products")
     suspend fun getProducts(
         @Query("per_page") pageSize: Int = 10,
         @Query("offset") offset: Int = 0,
