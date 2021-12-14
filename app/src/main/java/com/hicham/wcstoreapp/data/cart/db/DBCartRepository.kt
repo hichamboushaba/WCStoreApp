@@ -8,6 +8,7 @@ import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.data.db.entities.toEntity
 import com.hicham.wcstoreapp.di.AppCoroutineScope
+import com.hicham.wcstoreapp.models.Cart
 import com.hicham.wcstoreapp.models.CartItem
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.toDomainModel
@@ -30,9 +31,9 @@ class DBCartRepository @Inject constructor(
 
     private var isExecutingOperation: Boolean = false
 
-    override val items: Flow<List<CartItem>> = cartDao.getCartItemsWithProducts()
+    override val cart: Flow<Cart> = cartDao.getCartItemsWithProducts()
         .map { list ->
-            list.mapNotNull { cartItem ->
+            Cart(list.mapNotNull { cartItem ->
                 // Can't happen due to the foreign key we have now
                 // TODO check what's the best way to handle this
                 if (cartItem.product != null) {
@@ -42,7 +43,7 @@ class DBCartRepository @Inject constructor(
                         quantity = cartItem.cartItem.quantity
                     )
                 } else null
-            }
+            })
         }
         .onStart {
             fetchCart()
