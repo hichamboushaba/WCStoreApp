@@ -1,6 +1,7 @@
 package com.hicham.wcstoreapp.data.db
 
 import androidx.room.TypeConverter
+import java.math.BigDecimal
 
 class Converters {
 
@@ -9,4 +10,10 @@ class Converters {
 
     @TypeConverter
     fun stringToList(value: String) = value.split(";")
+
+    @TypeConverter
+    fun bigDecimalToString(value: BigDecimal) = value.toPlainString()
+
+    @TypeConverter
+    fun stringToBigDecimal(value: String) = BigDecimal(value)
 }

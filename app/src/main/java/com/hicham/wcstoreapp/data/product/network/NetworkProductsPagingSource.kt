@@ -5,10 +5,10 @@ import androidx.paging.PagingState
 import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.AppDatabase
-import com.hicham.wcstoreapp.data.db.entities.ProductEntity
+import com.hicham.wcstoreapp.data.db.entities.toEntity
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.models.toProduct
+import com.hicham.wcstoreapp.models.toDomainModel
 import logcat.LogPriority
 import logcat.logcat
 
@@ -34,7 +34,7 @@ class NetworkProductsPagingSource(
             cacheProducts(response)
 
             LoadResult.Page(
-                data = response.map { it.toProduct() },
+                data = response.map { it.toDomainModel() },
                 prevKey = null, // Only paging forward.
                 nextKey = if (response.size < params.loadSize) null else offset + response.size
             )
@@ -48,14 +48,7 @@ class NetworkProductsPagingSource(
 
     private suspend fun cacheProducts(products: List<NetworkProduct>) {
         database.productDao().insertProduct(*products.map {
-            ProductEntity(
-                id = it.id,
-                name = it.name,
-                images = it.images.map { it.src },
-                price = it.price.toPlainString(),
-                shortDescription = it.shortDescription,
-                description = it.description
-            )
+            it.toEntity()
         }.toTypedArray())
     }
 }

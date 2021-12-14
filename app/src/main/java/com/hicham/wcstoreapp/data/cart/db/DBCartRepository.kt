@@ -6,6 +6,7 @@ import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.di.AppCoroutineScope
 import com.hicham.wcstoreapp.models.CartItem
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.models.toDomainModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class DBCartRepository @Inject constructor(
             // TODO check what's the best way to handle this
             if (cartItem.product != null) {
                 CartItem(
-                    cartItem.product.toProduct(),
+                    cartItem.product.toDomainModel(),
                     quantity = cartItem.cartItem.quantity
                 )
             } else null

@@ -36,7 +36,7 @@ class CheckoutViewModel @Inject constructor(
         ) { cartItems, formatSettings ->
             val currencyFormatter = CurrencyFormatter(formatSettings)
             val totalPrice = currencyFormatter.format(
-                price = cartItems.sumOf { it.product.price * it.quantity.toBigDecimal() }
+                price = cartItems.sumOf { it.product.prices.price * it.quantity.toBigDecimal() }
             )
             _uiState.update { state ->
                 state.copy(
