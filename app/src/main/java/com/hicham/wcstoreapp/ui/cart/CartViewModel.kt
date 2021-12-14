@@ -32,10 +32,15 @@ class CartViewModel @Inject constructor(
                 CartItemUiModel(
                     product = it.product,
                     quantity = it.quantity,
-                    totalPriceFormatted = currencyFormatter.format(it.product.prices.price.multiply(it.quantity.toBigDecimal()))
+                    totalPriceFormatted = currencyFormatter.format(
+                        it.product.prices.price.multiply(
+                            it.quantity.toBigDecimal()
+                        )
+                    )
                 )
             }
-            val totalPrice = cartItems.sumOf { it.product.prices.price * it.quantity.toBigDecimal() }
+            val totalPrice =
+                cartItems.sumOf { it.product.prices.price * it.quantity.toBigDecimal() }
             CartUiState(
                 cartItems = items,
                 subtotalFormatted = currencyFormatter.format(totalPrice),

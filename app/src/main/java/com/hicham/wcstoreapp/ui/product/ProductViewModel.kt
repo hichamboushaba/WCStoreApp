@@ -3,9 +3,11 @@ package com.hicham.wcstoreapp.ui.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.cart.CartRepository
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
@@ -19,7 +21,8 @@ class ProductViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productsRepository: ProductsRepository,
     private val cartRepository: CartRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     private val productId = savedStateHandle.get<Long>(Screen.Product.navArguments.first().name)!!
 
@@ -33,11 +36,12 @@ class ProductViewModel @Inject constructor(
         }
         combine(
             productFlow,
-            cartQuantityFlow
-        ) { product, cartQuantity ->
+            cartQuantityFlow,
+            currencyFormatProvider.formatSettings.map { CurrencyFormatter(it) }
+        ) { product, cartQuantity, formatter ->
             _uiState.value = UiState.SuccessState(
                 product = product,
-                priceFormatted = product.prices.formattedPrice,
+                priceFormatted = formatter.format(product.prices.price),
                 quantityInCart = cartQuantity
             )
         }

@@ -31,7 +31,9 @@ class DBProductsRepository @Inject constructor(
                 productDao.pagingSource()
             }.flow
                 .map { pagingData ->
-                    pagingData.map { it.toDomainModel() }
+                    pagingData.map {
+                        it.toDomainModel()
+                    }
                 }
         } else {
             // We don't support offline data when filtering by any
@@ -45,6 +47,7 @@ class DBProductsRepository @Inject constructor(
 
 
     override suspend fun getProduct(id: Long): Product {
-        return productDao.getProduct(id)?.toDomainModel() ?: wooCommerceApi.getProduct(id).toDomainModel()
+        return productDao.getProduct(id)?.toDomainModel() ?: wooCommerceApi.getProduct(id)
+            .toDomainModel()
     }
 }

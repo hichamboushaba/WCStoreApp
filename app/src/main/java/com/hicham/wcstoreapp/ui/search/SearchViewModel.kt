@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.hicham.wcstoreapp.data.cart.CartRepository
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val repository: ProductsRepository,
     private val cartRepository: CartRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
@@ -36,7 +38,7 @@ class SearchViewModel @Inject constructor(
             } else {
                 flowOf(PagingData.from(emptyList<Product>()))
             }
-        }.mapToUiModel(cartRepository)
+        }.mapToUiModel(currencyFormatProvider, cartRepository)
         .cachedIn(viewModelScope)
         .flowOn(Dispatchers.Default)
 
