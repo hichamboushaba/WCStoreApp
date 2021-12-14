@@ -3,6 +3,7 @@ package com.hicham.wcstoreapp.ui.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.cart.CartRepository
+import com.hicham.wcstoreapp.data.cart.items
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
@@ -31,8 +32,10 @@ class ProductViewModel @Inject constructor(
 
     init {
         val productFlow = flow { emit(productsRepository.getProduct(productId)) }
-        val cartQuantityFlow = cartRepository.items.map {
-            it.firstOrNull { it.product.id == productId }?.quantity ?: 0
+        val cartQuantityFlow = cartRepository.items.map { list ->
+            list.firstOrNull {
+                it.product.id == productId
+            }?.quantity ?: 0
         }
         combine(
             productFlow,

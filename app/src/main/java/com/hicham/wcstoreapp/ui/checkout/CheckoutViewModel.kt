@@ -3,6 +3,7 @@ package com.hicham.wcstoreapp.ui.checkout
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.cart.CartRepository
+import com.hicham.wcstoreapp.data.cart.items
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.order.OrderRepository
 import com.hicham.wcstoreapp.models.Address
