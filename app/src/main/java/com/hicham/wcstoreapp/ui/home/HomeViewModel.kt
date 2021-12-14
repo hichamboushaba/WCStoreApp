@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.category.CategoryRepository
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
@@ -22,7 +23,8 @@ class HomeViewModel @Inject constructor(
     repository: ProductsRepository,
     private val cartRepository: CartRepository,
     private val categoryRepository: CategoryRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     companion object {
         val ALL_CATEGORY = Category(-1L, "All")
@@ -35,7 +37,7 @@ class HomeViewModel @Inject constructor(
             repository.getProductList(category = category.takeIf { it != ALL_CATEGORY })
         }
         .cachedIn(viewModelScope)
-        .mapToUiModel(cartRepository)
+        .mapToUiModel(currencyFormatProvider, cartRepository)
         .cachedIn(viewModelScope)
         .flowOn(Dispatchers.Default)
 

@@ -8,10 +8,7 @@ object Fakes {
     val prices = ProductPrices(
         price = BigDecimal.TEN,
         salePrice = BigDecimal.ONE,
-        regularPrice = BigDecimal.TEN,
-        formattedPrice = "10$",
-        formattedSalePrice = "1$",
-        formattedRegularPrice = "10$"
+        regularPrice = BigDecimal.TEN
     )
 
     val product = Product(
