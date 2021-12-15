@@ -32,23 +32,24 @@ class DBCartRepository @Inject constructor(
         .map { (cart, items) ->
             Cart(
                 totals = cart?.totals ?: CartTotals.ZERO,
-                items = items.mapNotNull { cartItem ->
+                items = items.mapNotNull { item ->
                     // Can't happen due to the foreign key we have now
                     // TODO check what's the best way to handle this
-                    if (cartItem.product != null) {
+                    if (item.product != null) {
                         CartItem(
-                            id = cartItem.cartItem.key,
-                            product = cartItem.product.toDomainModel(),
-                            quantity = cartItem.cartItem.quantity
+                            id = item.cartItem.key,
+                            product = item.product.toDomainModel(),
+                            quantity = item.cartItem.quantity,
+                            totals = item.cartItem.totals
                         )
                     } else null
                 })
         }
-        .onStart {
-            fetchCart()
-        }
-        .distinctUntilChanged()
-        .shareIn(appCoroutineScope, started = SharingStarted.WhileSubscribed(60000), replay = 1)
+            .onStart {
+                fetchCart()
+            }
+            .distinctUntilChanged()
+            .shareIn(appCoroutineScope, started = SharingStarted.WhileSubscribed(60000), replay = 1)
 
     private fun fetchCart() = appCoroutineScope.launch {
         try {
@@ -127,7 +128,7 @@ class DBCartRepository @Inject constructor(
             if (currentItem != null) {
                 cartDao.updateItem(currentItem.copy(quantity = currentItem.quantity + 1))
             } else if (cartItemKey != null) {
-                cartDao.insertItem(CartItemEntity(cartItemKey, 1, product.id))
+                cartDao.insertItem(CartItemEntity(cartItemKey, 1, product.id, CartItemTotals.ZERO))
             }
         }
     }

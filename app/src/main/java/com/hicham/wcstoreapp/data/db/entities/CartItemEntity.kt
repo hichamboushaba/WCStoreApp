@@ -2,12 +2,14 @@ package com.hicham.wcstoreapp.data.db.entities
 
 import androidx.room.*
 import com.hicham.wcstoreapp.data.api.NetworkCartItem
+import com.hicham.wcstoreapp.models.CartItemTotals
 
 @Entity
 data class CartItemEntity(
     @PrimaryKey val key: String,
     val quantity: Int,
-    @ColumnInfo(index = true) val productId: Long
+    @ColumnInfo(index = true) val productId: Long,
+    @Embedded val totals: CartItemTotals
 )
 
 
@@ -24,5 +26,12 @@ data class CartItemWithProduct(
 fun NetworkCartItem.toEntity() = CartItemEntity(
     key = key,
     quantity = quantity,
-    productId = id
+    productId = id,
+    totals = with(totals) {
+        CartItemTotals(
+            subtotal = calculatePrice(lineSubtotal),
+            tax = calculatePrice(lineSubtotalTax),
+            total = calculatePrice(lineTotal)
+        )
+    }
 )
