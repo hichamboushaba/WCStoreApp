@@ -8,10 +8,7 @@ import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.data.db.entities.toEntity
 import com.hicham.wcstoreapp.di.AppCoroutineScope
-import com.hicham.wcstoreapp.models.Cart
-import com.hicham.wcstoreapp.models.CartItem
-import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.models.toDomainModel
+import com.hicham.wcstoreapp.models.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -31,19 +28,21 @@ class DBCartRepository @Inject constructor(
 
     private var isExecutingOperation: Boolean = false
 
-    override val cart: Flow<Cart> = cartDao.getCartItemsWithProducts()
-        .map { list ->
-            Cart(list.mapNotNull { cartItem ->
-                // Can't happen due to the foreign key we have now
-                // TODO check what's the best way to handle this
-                if (cartItem.product != null) {
-                    CartItem(
-                        id = cartItem.cartItem.key,
-                        product = cartItem.product.toDomainModel(),
-                        quantity = cartItem.cartItem.quantity
-                    )
-                } else null
-            })
+    override val cart: Flow<Cart> = cartDao.getCart()
+        .map { (cart, items) ->
+            Cart(
+                totals = cart?.totals ?: CartTotals.ZERO,
+                items = items.mapNotNull { cartItem ->
+                    // Can't happen due to the foreign key we have now
+                    // TODO check what's the best way to handle this
+                    if (cartItem.product != null) {
+                        CartItem(
+                            id = cartItem.cartItem.key,
+                            product = cartItem.product.toDomainModel(),
+                            quantity = cartItem.cartItem.quantity
+                        )
+                    } else null
+                })
         }
         .onStart {
             fetchCart()
@@ -157,6 +156,7 @@ class DBCartRepository @Inject constructor(
     private suspend fun saveCart(networkCart: NetworkCart) {
         database.withTransaction {
             cartDao.clear()
+            cartDao.insertCart(networkCart.toEntity())
             cartDao.insertItem(*networkCart.items.map {
                 it.toEntity()
             }.toTypedArray())

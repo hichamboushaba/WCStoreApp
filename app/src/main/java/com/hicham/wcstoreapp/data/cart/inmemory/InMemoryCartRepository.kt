@@ -3,15 +3,28 @@ package com.hicham.wcstoreapp.data.cart.inmemory
 import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.models.Cart
 import com.hicham.wcstoreapp.models.CartItem
+import com.hicham.wcstoreapp.models.CartTotals
 import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class InMemoryCartRepository @Inject constructor() : CartRepository {
-    private val _cart = MutableStateFlow(Cart(emptyList()))
+    private val _cart =
+        MutableStateFlow(
+            Cart(
+                emptyList(),
+                totals = CartTotals(
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO
+                )
+            )
+        )
     override val cart: StateFlow<Cart> = _cart.asStateFlow()
 
     override suspend fun addItem(product: Product): Result<Unit> {
@@ -49,7 +62,15 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
     }
 
     override suspend fun clear(): Result<Unit> {
-        _cart.value = Cart(emptyList())
+        _cart.value = Cart(
+            emptyList(),
+            totals = CartTotals(
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                BigDecimal.ZERO
+            )
+        )
         return Result.success(Unit)
     }
 }
