@@ -1,10 +1,7 @@
 package com.hicham.wcstoreapp.data.cart.inmemory
 
 import com.hicham.wcstoreapp.data.cart.CartRepository
-import com.hicham.wcstoreapp.models.Cart
-import com.hicham.wcstoreapp.models.CartItem
-import com.hicham.wcstoreapp.models.CartTotals
-import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.models.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -32,10 +29,17 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
             list.toMutableList().apply {
                 val index = indexOfFirst { it.product == product }
                 if (index == -1) {
-                    add(CartItem(id = "", product, 1))
+                    add(CartItem(id = "", product, 1, product.calculateItemTotals(1)))
                 } else {
                     val currentItem = get(index)
-                    set(index, currentItem.copy(quantity = currentItem.quantity + 1))
+                    val newQuantity = currentItem.quantity + 1
+                    set(
+                        index,
+                        currentItem.copy(
+                            quantity = newQuantity,
+                            totals = product.calculateItemTotals(newQuantity)
+                        )
+                    )
                 }
             }
         }
@@ -46,7 +50,13 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
         _items.update { list ->
             list
                 .map {
-                    if (it.product == product) it.copy(quantity = it.quantity - 1) else it
+                    if (it.product == product) {
+                        val newQuantity = it.quantity - 1
+                        it.copy(
+                            quantity = it.quantity - 1,
+                            totals = product.calculateItemTotals(newQuantity)
+                        )
+                    } else it
                 }
                 .filter { it.quantity > 0 }
         }
@@ -62,4 +72,10 @@ class InMemoryCartRepository @Inject constructor() : CartRepository {
         _items.value = emptyList()
         return Result.success(Unit)
     }
+
+    private fun Product.calculateItemTotals(quantity: Int) = CartItemTotals(
+        subtotal = prices.price.multiply(quantity.toBigDecimal()),
+        tax = BigDecimal.ZERO,
+        total = prices.price.multiply(quantity.toBigDecimal())
+    )
 }
