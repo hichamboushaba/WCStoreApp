@@ -4,22 +4,14 @@ import androidx.room.*
 import com.hicham.wcstoreapp.data.db.entities.CartEntity
 import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.data.db.entities.CartItemWithProduct
+import com.hicham.wcstoreapp.data.db.entities.CartWithItemsEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 @Dao
 interface CartDao {
     @Transaction
-    @Query(
-        "SELECT * FROM CartEntity " +
-                "JOIN CartItemEntity where id = ${CartEntity.ID}"
-    )
-    fun getCartInternal(): Flow<Map<CartEntity, List<CartItemWithProduct>>>
-
-    fun getCart() = getCartInternal().map {
-        if (it.isEmpty()) Pair(null, emptyList())
-        else Pair(it.keys.first(), it[it.keys.first()].orEmpty())
-    }
+    @Query("SELECT * FROM CartEntity ")
+    fun getCart(): Flow<CartWithItemsEntity?>
 
     @Transaction
     @Query("SELECT * FROM CartItemEntity")
@@ -44,5 +36,14 @@ interface CartDao {
     suspend fun updateItem(cartItemEntity: CartItemEntity)
 
     @Query("DELETE FROM CartItemEntity")
-    suspend fun clear()
+    suspend fun deleteItems()
+
+    @Query("DELETE FROM CartEntity")
+    suspend fun deleteCart()
+
+    @Transaction
+    suspend fun clear() {
+        deleteItems()
+        deleteCart()
+    }
 }

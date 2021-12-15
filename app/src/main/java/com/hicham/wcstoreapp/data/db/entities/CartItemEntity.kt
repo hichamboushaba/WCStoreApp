@@ -10,7 +10,10 @@ data class CartItemEntity(
     val quantity: Int,
     @ColumnInfo(index = true) val productId: Long,
     @Embedded val totals: CartItemTotals
-)
+) {
+    // This is not useful from a business perspective, it's just here for Room's relations
+    var cartId = CartEntity.ID
+}
 
 
 data class CartItemWithProduct(
