@@ -2,7 +2,7 @@
 kotlin = "1.5.30"
 compose = "1.0.3"
 hilt = "2.39.1"
-room = "2.3.0"
+room = "2.4.0-rc01"
 accompanist = "0.19.0"
 
 [libraries]
@@ -37,6 +37,7 @@ datastore = "androidx.datastore:datastore-preferences:1.0.0"
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room"}
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room"}
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 font-tabler-icons = "br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0"
 logcat = "com.squareup.logcat:logcat:0.1"
 
@@ -48,7 +49,7 @@ compose-uitest = { module = "androidx.compose.ui:ui-test-junit4", version.ref = 
 [bundles]
 compose = ["compose-ui", "compose-material", "compose-uipreview", "compose-activity", "compose-constraintLayout"]
 paging = ["paging-runtime", "paging-compose"]
-room = ["room-runtime", "room-ktx"]
+room = ["room-runtime", "room-ktx", "room-paging"]
 networking = ["retrofit", "retrofit-kotlinx-serialization-converter", "okhttp-signpost", "okhttp-logging-interceptor"]
 
 [plugins]

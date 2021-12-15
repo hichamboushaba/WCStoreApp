@@ -7,14 +7,11 @@ import com.hicham.wcstoreapp.data.db.daos.AddressDao
 import com.hicham.wcstoreapp.data.db.daos.CartDao
 import com.hicham.wcstoreapp.data.db.daos.CategoryDao
 import com.hicham.wcstoreapp.data.db.daos.ProductDao
-import com.hicham.wcstoreapp.data.db.entities.AddressEntity
-import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
-import com.hicham.wcstoreapp.data.db.entities.CategoryEntity
-import com.hicham.wcstoreapp.data.db.entities.ProductEntity
+import com.hicham.wcstoreapp.data.db.entities.*
 
 @Database(
-    entities = [ProductEntity::class, CartItemEntity::class, AddressEntity::class, CategoryEntity::class],
-    version = 4
+    entities = [ProductEntity::class, CartItemEntity::class, CartEntity::class, AddressEntity::class, CategoryEntity::class],
+    version = 1
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
