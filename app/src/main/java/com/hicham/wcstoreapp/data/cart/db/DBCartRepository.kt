@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 import logcat.LogPriority
 import logcat.asLog
 import logcat.logcat
+import okio.IOException
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,7 +57,11 @@ class DBCartRepository @Inject constructor(
         try {
             val networkCart = wooCommerceApi.getCart()
             saveCart(networkCart)
-        } catch (e: Exception) {
+        } catch (e: HttpException) {
+            logcat(priority = LogPriority.WARN) {
+                e.asLog()
+            }
+        } catch (e: IOException) {
             logcat(priority = LogPriority.WARN) {
                 e.asLog()
             }
@@ -137,17 +143,26 @@ class DBCartRepository @Inject constructor(
         action: suspend () -> NetworkCart,
         revertAction: suspend () -> Unit
     ): Result<Unit> {
-        isExecutingOperation = true
-        return try {
-            val networkCart = action()
-            saveCart(networkCart)
-            Result.success(Unit)
-        } catch (e: Exception) {
+        suspend fun handleException(e: Exception) {
             logcat(priority = LogPriority.WARN) {
                 e.asLog()
             }
             // Revert changes
             revertAction()
+            // Attempt to refresh cart to fix any inconsistencies
+            fetchCart()
+        }
+
+        isExecutingOperation = true
+        return try {
+            val networkCart = action()
+            saveCart(networkCart)
+            Result.success(Unit)
+        } catch (e: IOException) {
+            handleException(e)
+            Result.failure(e)
+        } catch (e: HttpException) {
+            handleException(e)
             Result.failure(e)
         } finally {
             isExecutingOperation = false
