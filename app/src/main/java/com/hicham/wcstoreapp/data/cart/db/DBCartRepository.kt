@@ -29,10 +29,10 @@ class DBCartRepository @Inject constructor(
     private var isExecutingOperation: Boolean = false
 
     override val cart: Flow<Cart> = cartDao.getCart()
-        .map { (cart, items) ->
+        .map { entity ->
             Cart(
-                totals = cart?.totals ?: CartTotals.ZERO,
-                items = items.mapNotNull { item ->
+                totals = entity?.cartEntity?.totals ?: CartTotals.ZERO,
+                items = entity?.items.orEmpty().mapNotNull { item ->
                     // Can't happen due to the foreign key we have now
                     // TODO check what's the best way to handle this
                     if (item.product != null) {
@@ -45,11 +45,11 @@ class DBCartRepository @Inject constructor(
                     } else null
                 })
         }
-            .onStart {
-                fetchCart()
-            }
-            .distinctUntilChanged()
-            .shareIn(appCoroutineScope, started = SharingStarted.WhileSubscribed(60000), replay = 1)
+        .onStart {
+            fetchCart()
+        }
+        .distinctUntilChanged()
+        .shareIn(appCoroutineScope, started = SharingStarted.WhileSubscribed(60000), replay = 1)
 
     private fun fetchCart() = appCoroutineScope.launch {
         try {

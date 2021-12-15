@@ -3,6 +3,7 @@ package com.hicham.wcstoreapp.data.db.entities
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.models.CartTotals
 
@@ -17,6 +18,17 @@ data class CartEntity(
         const val ID = 0
     }
 }
+
+
+data class CartWithItemsEntity(
+    @Embedded val cartEntity: CartEntity,
+    @Relation(
+        entity = CartItemEntity::class,
+        parentColumn = "id",
+        entityColumn = "cartId"
+    )
+    val items: List<CartItemWithProduct>
+)
 
 fun NetworkCart.toEntity() = CartEntity(
     totals = with(totals) {
