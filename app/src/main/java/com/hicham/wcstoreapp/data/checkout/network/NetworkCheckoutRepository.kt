@@ -38,12 +38,14 @@ class NetworkCheckoutRepository @Inject constructor(
         shippingAddress: Address,
         billingAddress: Address
     ): Result<Long> {
-        val paymentMethod = checkoutState.first().paymentMethod
+        // TODO remove this hardcoding of paymentmethod
+        val paymentMethod = checkoutState.first().paymentMethod.ifEmpty { PaymentMethod.CASH.value }
         return runCatchingNetworkErrors {
             wooCommerceApi.placeOrder(
                 NetworkPlaceOrderRequest(
                     shippingAddress = shippingAddress.toNetworkAddress(),
-                    billingAddress = billingAddress.toNetworkAddress(),
+                    billingAddress = billingAddress.toNetworkAddress()
+                        .copy(email = "email@test.com"), // TODO remove this once the email is handled
                     paymentMethod = paymentMethod
                 )
             ).orderID
