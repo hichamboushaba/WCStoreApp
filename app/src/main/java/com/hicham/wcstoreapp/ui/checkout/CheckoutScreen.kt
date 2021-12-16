@@ -126,7 +126,7 @@ private fun CheckoutScreen(
                 )
 
                 Text(
-                    text = state.selectedPaymentMethod.title,
+                    text = state.selectedPaymentMethod?.title.orEmpty(),
                     style = MaterialTheme.typography.body1
                 )
                 OutlinedButton(

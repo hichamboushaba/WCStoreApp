@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface CheckoutRepository {
     val checkout: Flow<CheckoutData>
-    suspend fun updateShippingAddress(shippingAddress: Address): Result<Unit>
-    suspend fun updateBillingAddress(billingAddress: Address): Result<Unit>
     suspend fun updatePaymentMethod(paymentMethod: PaymentMethod): Result<Unit>
-    suspend fun processCheckout(): Long
+    suspend fun placeOrder(shippingAddress: Address, billingAddress: Address): Result<Long>
 }

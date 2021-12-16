@@ -44,24 +44,28 @@ interface WooCommerceApi {
     @DELETE("/cart/items")
     suspend fun clearCart()
 
+    @POST("/wp-json/wc/store/cart/update-customer")
+    suspend fun updateCustomer(
+        @Body request: NetworkUpdateCustomerRequest
+    ): NetworkCart
+
+
     @POST("/wp-json/wc/v3/orders")
     suspend fun createOrder(
         @Body request: NetworkOrderCreationRequest
     ): NetworkOrder
 
-    @GET("/wp-json/wc/v3/checkout")
+    @GET("/wp-json/wc/store/checkout")
     suspend fun getCheckout(): NetworkCheckout
 
     @FormUrlEncoded
-    @PUT("/wp-json/wc/v3/checkout")
+    @PUT("/wp-json/wc/store/checkout")
     suspend fun updateCheckout(
-        @Field("billing_address") billingAddress: NetworkAddress? = null,
-        @Field("shipping_address") shippingAddress: NetworkAddress? = null,
         @Field("payment_method") paymentMethod: String
     ): NetworkCheckout
 
-    @POST("/wp-json/wc/store/cart/update-customer")
-    suspend fun updateCustomer(
-        @Body request: NetworkUpdateCustomerRequest
-    ): NetworkCart
+    @POST("/wp-json/wc/store/checkout")
+    suspend fun placeOrder(
+        @Body request: NetworkPlaceOrderRequest
+    ): NetworkCheckout
 }

@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.cart.items
+import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
-import com.hicham.wcstoreapp.data.order.OrderRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel
@@ -16,6 +16,8 @@ import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import logcat.asLog
+import logcat.logcat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,28 +26,36 @@ class CheckoutViewModel @Inject constructor(
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val addressRepository: AddressRepository,
     private val navigationManager: NavigationManager,
-    private val orderRepository: OrderRepository
+    private val checkoutRepository: CheckoutRepository
 ) : BaseViewModel() {
-
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
     init {
         combine(
+            checkoutRepository.checkout,
             cartRepository.items,
             currencyFormatProvider.formatSettings
-        ) { cartItems, formatSettings ->
+        ) { checkoutData, cartItems, formatSettings ->
             val currencyFormatter = CurrencyFormatter(formatSettings)
             val totalPrice = currencyFormatter.format(
                 price = cartItems.sumOf { it.product.prices.price * it.quantity.toBigDecimal() }
             )
             _uiState.update { state ->
                 state.copy(
+                    selectedPaymentMethod = checkoutData.paymentMethod,
                     subtotalFormatted = totalPrice,
                     totalFormatted = totalPrice
                 )
             }
-        }.launchIn(viewModelScope)
+        }
+            .onStart { _uiState.update { it.copy(isLoading = true) } }
+            .onEach { _uiState.update { it.copy(isLoading = false) } }
+            .catch {
+                logcat { it.asLog() }
+                TODO("Handle error")
+            }
+            .launchIn(viewModelScope)
 
         observeShippingAddress()
     }
@@ -80,14 +90,11 @@ class CheckoutViewModel @Inject constructor(
     fun onPlacedOrderClicked() {
         viewModelScope.launch {
             _uiState.update { state -> state.copy(isLoading = true) }
-            val cartItems = cartRepository.items.first()
             val shipping = uiState.value.shippingAddress!!
 
-            val result = orderRepository.createOrder(
-                items = cartItems,
+            val result = checkoutRepository.placeOrder(
                 shippingAddress = shipping,
                 billingAddress = uiState.value.billingAddress ?: shipping,
-                paymentMethod = uiState.value.selectedPaymentMethod
             )
 
             _uiState.update { state -> state.copy(isLoading = false) }
@@ -111,7 +118,7 @@ class CheckoutViewModel @Inject constructor(
         val shippingAddress: Address? = null,
         val isBillingSameAsShippingAddress: Boolean = true,
         val billingAddress: Address? = null,
-        val selectedPaymentMethod: PaymentMethod = PaymentMethod.CASH,
+        val selectedPaymentMethod: PaymentMethod? = null,
         val subtotalFormatted: String = "",
         val taxFormatted: String = "",
         val totalFormatted: String = ""
