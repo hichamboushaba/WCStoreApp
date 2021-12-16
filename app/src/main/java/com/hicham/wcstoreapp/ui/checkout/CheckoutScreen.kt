@@ -142,6 +142,7 @@ private fun CheckoutScreen(
         CartTotals(
             subtotal = state.subtotalFormatted,
             total = state.totalFormatted,
+            tax = state.taxFormatted,
             shippingCost = state.shippingCost,
             buttonLabel = "Place Order",
             buttonEnabled = state.shippingAddress != null,
