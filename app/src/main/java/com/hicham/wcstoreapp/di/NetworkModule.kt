@@ -4,12 +4,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.hicham.wcstoreapp.BuildConfig
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.util.DataStoreCookieJar
 import com.hicham.wcstoreapp.util.NonceInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.json.Json
 import logcat.LogPriority
 import logcat.logcat
@@ -32,7 +34,11 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
-        fun providesRetrofit(json: Json, dataStore: DataStore<Preferences>): Retrofit {
+        fun providesRetrofit(
+            json: Json,
+            dataStore: DataStore<Preferences>,
+            @AppCoroutineScope coroutineScope: CoroutineScope
+        ): Retrofit {
             val contentType = "application/json".toMediaType()
 
             val loggingInterceptor = HttpLoggingInterceptor { message ->
@@ -42,6 +48,7 @@ abstract class NetworkModule {
             }
 
             val httpClient = OkHttpClient.Builder()
+                .cookieJar(DataStoreCookieJar(dataStore, json, coroutineScope))
                 .addInterceptor(NonceInterceptor(dataStore))
                 .addInterceptor(loggingInterceptor)
                 .build()
