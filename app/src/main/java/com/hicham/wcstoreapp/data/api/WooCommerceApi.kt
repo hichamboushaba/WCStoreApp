@@ -49,12 +49,6 @@ interface WooCommerceApi {
         @Body request: NetworkUpdateCustomerRequest
     ): NetworkCart
 
-
-    @POST("/wp-json/wc/v3/orders")
-    suspend fun createOrder(
-        @Body request: NetworkOrderCreationRequest
-    ): NetworkOrder
-
     @GET("/wp-json/wc/store/checkout")
     suspend fun getCheckout(): NetworkCheckout
 
