@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface CartDao {
     @Transaction
     @Query("SELECT * FROM CartEntity ")
-    fun getCart(): Flow<CartWithItemsEntity?>
+    fun observeCart(): Flow<CartWithItemsEntity?>
+
+    @Query("SELECT * FROM CartEntity")
+    suspend fun getCart(): CartEntity?
 
     @Transaction
     @Query("SELECT * FROM CartItemEntity")

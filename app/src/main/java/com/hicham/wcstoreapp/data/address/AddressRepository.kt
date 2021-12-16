@@ -2,7 +2,6 @@ package com.hicham.wcstoreapp.data.address
 
 import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface AddressRepository {
     val savedAddresses: Flow<List<Address>>
@@ -11,6 +10,6 @@ interface AddressRepository {
 
     suspend fun addAddress(address: Address)
     suspend fun removeAddress(address: Address)
-    suspend fun setPrimaryShippingAddress(address: Address)
+    suspend fun setPrimaryShippingAddress(address: Address): Result<Unit>
     suspend fun setPrimaryBillingAddress(address: Address)
 }

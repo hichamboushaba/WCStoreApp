@@ -15,6 +15,9 @@ data class NetworkCart(
     @SerialName("shipping_address")
     val shippingAddress: NetworkAddress,
 
+    @SerialName("billing_address")
+    val billingAddress: NetworkAddress,
+
     val items: List<NetworkCartItem>,
 
     @SerialName("items_count")

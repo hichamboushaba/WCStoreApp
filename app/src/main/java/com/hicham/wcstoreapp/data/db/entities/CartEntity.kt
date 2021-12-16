@@ -4,12 +4,13 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.models.CartTotals
 
 @Entity
 data class CartEntity(
-    @Embedded val totals: CartTotals
+    @Embedded val totals: CartTotals,
+    val primaryShippingAddress: Long?,
+    val primaryBillingAddress: Long?
 ) {
     @PrimaryKey
     var id: Int = ID
@@ -28,15 +29,4 @@ data class CartWithItemsEntity(
         entityColumn = "cartId"
     )
     val items: List<CartItemWithProduct>
-)
-
-fun NetworkCart.toEntity() = CartEntity(
-    totals = with(totals) {
-        CartTotals(
-            subtotal = calculatePrice(totalItems),
-            tax = calculatePrice(totalTax),
-            shippingEstimate = totalShipping?.let { calculatePrice(it) },
-            total = calculatePrice(totalPrice)
-        )
-    }
 )

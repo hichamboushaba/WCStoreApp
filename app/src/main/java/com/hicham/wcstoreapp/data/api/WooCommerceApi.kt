@@ -53,10 +53,15 @@ interface WooCommerceApi {
     suspend fun getCheckout(): NetworkCheckout
 
     @FormUrlEncoded
-    @PUT("wp-json/wc/v3/checkout")
+    @PUT("/wp-json/wc/v3/checkout")
     suspend fun updateCheckout(
         @Field("billing_address") billingAddress: NetworkAddress? = null,
         @Field("shipping_address") shippingAddress: NetworkAddress? = null,
         @Field("payment_method") paymentMethod: String
     ): NetworkCheckout
+
+    @POST("/wp-json/wc/store/cart/update-customer")
+    suspend fun updateCustomer(
+        @Body request: NetworkUpdateCustomerRequest
+    ): NetworkCart
 }

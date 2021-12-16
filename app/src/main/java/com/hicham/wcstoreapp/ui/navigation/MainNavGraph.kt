@@ -5,7 +5,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -52,7 +51,7 @@ fun MainNavGraph(
         composable(
             Screen.AddressList.route
         ) {
-            AddressListScreen(viewModel = hiltViewModel())
+            AddressListScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
         }
         composable(
             Screen.AddAddress.route
