@@ -1,14 +1,9 @@
 ## WCStoreApp (wip)
 
-This is just a fun app to learn about Jetpack Compose, and play with WooCommerce's API, it acts as a
+This is just a fun app to learn about Jetpack Compose, and play with WooCommerce's StoreApi, it acts as a
 front for the store to offer a mobile shopping experience.
 
-The project is a work-in-progress, but even when it's done, it wouldn't probably be appropriate for
-production use, since WooCoomerce's API is not ready for a headless usage:
-
-- WooCommerce by itself doesn't support a cart API
-- Rest API keys permissions are too basic, they can't be customized to offer mixed writing and
-  reading permissions.
+The project is a work-in-progress.
 
 ## Demo
 
@@ -54,10 +49,9 @@ patterns, it uses the following technologies/patterns:
 $ git clone https://github.com/woocommerce/woocommerce-android.git
 $ cd woocommerce-android
 ```
-2. Generate REST API key for authentication using this [guide](https://woocommerce.github.io/woocommerce-rest-api-docs/#rest-api-keys)
-3. Generate the local.properties file for this app:
+2. Generate the local.properties file for this app:
 ```
 $ cp ./local.properties-example ./local.properties
 ```
-4. Open and modify the file `local.properties` using your site's URL and the keys you generated above. 
-5. Open the project using Android Studio
+3. Open and modify the file `local.properties` using your site's URL. 
+4. Open the project using Android Studio
