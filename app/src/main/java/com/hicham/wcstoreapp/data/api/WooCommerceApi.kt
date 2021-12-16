@@ -18,6 +18,9 @@ interface WooCommerceApi {
         @Path("productId") productId: Long
     ): NetworkProduct
 
+    @GET("/wp-json/wc/store/products/categories?orderby=count&per_page=30")
+    suspend fun getCategories(): List<NetworkCategory>
+
     @GET("/wp-json/wc/store/cart")
     suspend fun getCart(): NetworkCart
 
@@ -46,6 +49,14 @@ interface WooCommerceApi {
         @Body request: NetworkOrderCreationRequest
     ): NetworkOrder
 
-    @GET("/wp-json/wc/store/products/categories?orderby=count&per_page=30")
-    suspend fun getCategories(): List<NetworkCategory>
+    @GET("/wp-json/wc/v3/checkout")
+    suspend fun getCheckout(): NetworkCheckout
+
+    @FormUrlEncoded
+    @PUT("wp-json/wc/v3/checkout")
+    suspend fun updateCheckout(
+        @Field("billing_address") billingAddress: NetworkAddress? = null,
+        @Field("shipping_address") shippingAddress: NetworkAddress? = null,
+        @Field("payment_method") paymentMethod: String
+    ): NetworkCheckout
 }

@@ -13,7 +13,7 @@ data class NetworkCart(
     val shippingRates: List<NetworkCartShippingRate>,
 
     @SerialName("shipping_address")
-    val shippingAddress: ShippingAddress,
+    val shippingAddress: NetworkAddress,
 
     val items: List<NetworkCartItem>,
 
@@ -130,27 +130,6 @@ data class RawPrices(
     val salePrice: String
 )
 
-@Serializable
-data class ShippingAddress(
-    @SerialName("first_name")
-    val firstName: String,
-
-    @SerialName("last_name")
-    val lastName: String,
-
-    val company: String,
-
-    @SerialName("address_1")
-    val address1: String,
-
-    @SerialName("address_2")
-    val address2: String,
-
-    val city: String,
-    val state: String,
-    val postcode: String,
-    val country: String
-)
 
 @Serializable
 data class NetworkCartShippingRate(

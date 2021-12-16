@@ -6,6 +6,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import com.hicham.wcstoreapp.data.api.NetworkAddress
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -20,7 +21,7 @@ data class Address(
     val state: String?,
     val postCode: String,
     val country: String,
-): Parcelable {
+) : Parcelable {
     fun formatAddress(): AnnotatedString {
         return buildAnnotatedString {
             withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
@@ -53,3 +54,15 @@ data class Address(
         }
     }
 }
+
+fun NetworkAddress.toDomainModel() = Address(
+    firstName = firstName,
+    lastName = lastName,
+    street1 = address1,
+    street2 = address2,
+    city = city,
+    state = state,
+    postCode = postcode,
+    country = country,
+    phone = phone,
+)
