@@ -2,7 +2,6 @@
 
 package com.hicham.wcstoreapp.data.api
 
-import com.hicham.wcstoreapp.models.NetworkFormattable
 import com.hicham.wcstoreapp.util.BigDecimalSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

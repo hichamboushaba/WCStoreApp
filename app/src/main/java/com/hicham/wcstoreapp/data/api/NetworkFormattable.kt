@@ -1,5 +1,6 @@
-package com.hicham.wcstoreapp.models
+package com.hicham.wcstoreapp.data.api
 
+import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
