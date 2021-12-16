@@ -6,7 +6,6 @@ import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
-import com.hicham.wcstoreapp.data.db.entities.toEntity
 import com.hicham.wcstoreapp.di.AppCoroutineScope
 import com.hicham.wcstoreapp.models.*
 import kotlinx.coroutines.CoroutineScope
@@ -24,13 +23,14 @@ import javax.inject.Singleton
 class DBCartRepository @Inject constructor(
     private val database: AppDatabase,
     @AppCoroutineScope private val appCoroutineScope: CoroutineScope,
-    private val wooCommerceApi: WooCommerceApi
+    private val wooCommerceApi: WooCommerceApi,
+    private val cartUpdateService: CartUpdateService
 ) : CartRepository {
     private val cartDao = database.cartDao()
 
     private var isExecutingOperation: Boolean = false
 
-    override val cart: Flow<Cart> = cartDao.getCart()
+    override val cart: Flow<Cart> = cartDao.observeCart()
         .map { entity ->
             Cart(
                 totals = entity?.cartEntity?.totals ?: CartTotals.ZERO,
@@ -56,7 +56,7 @@ class DBCartRepository @Inject constructor(
     private fun fetchCart() = appCoroutineScope.launch {
         try {
             val networkCart = wooCommerceApi.getCart()
-            saveCart(networkCart)
+            cartUpdateService.updateCart(networkCart)
         } catch (e: HttpException) {
             logcat(priority = LogPriority.WARN) {
                 e.asLog()
@@ -156,7 +156,7 @@ class DBCartRepository @Inject constructor(
         isExecutingOperation = true
         return try {
             val networkCart = action()
-            saveCart(networkCart)
+            cartUpdateService.updateCart(networkCart)
             Result.success(Unit)
         } catch (e: IOException) {
             handleException(e)
@@ -166,16 +166,6 @@ class DBCartRepository @Inject constructor(
             Result.failure(e)
         } finally {
             isExecutingOperation = false
-        }
-    }
-
-    private suspend fun saveCart(networkCart: NetworkCart) {
-        database.withTransaction {
-            cartDao.clear()
-            cartDao.insertCart(networkCart.toEntity())
-            cartDao.insertItem(*networkCart.items.map {
-                it.toEntity()
-            }.toTypedArray())
         }
     }
 }

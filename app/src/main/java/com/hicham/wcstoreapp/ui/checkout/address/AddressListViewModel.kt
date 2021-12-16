@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,9 @@ class AddressListViewModel @Inject constructor(
     private val navigationManager: NavigationManager
 ) : BaseViewModel() {
     val items: Flow<List<AddressItemUiModel>>
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
     private val selectedAddress = MutableStateFlow<Address?>(null)
 
@@ -61,8 +65,13 @@ class AddressListViewModel @Inject constructor(
 
     fun onSaveClicked() {
         viewModelScope.launch {
-            addressRepository.setPrimaryShippingAddress(selectedAddress.value!!)
-            navigationManager.navigateUp()
+            _isLoading.value = true
+            val result = addressRepository.setPrimaryShippingAddress(selectedAddress.value!!)
+            _isLoading.value = false
+            result.fold(
+                onSuccess = { navigationManager.navigateUp() },
+                onFailure = { triggerEffect(ShowSnackbar("Updating the selected address failed")) }
+            )
         }
     }
 
