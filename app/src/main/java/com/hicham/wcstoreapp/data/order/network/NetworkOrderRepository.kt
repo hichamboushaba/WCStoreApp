@@ -1,9 +1,9 @@
 package com.hicham.wcstoreapp.data.order.network
 
 import com.hicham.wcstoreapp.data.api.LineItem
-import com.hicham.wcstoreapp.data.api.NetworkAddress
 import com.hicham.wcstoreapp.data.api.NetworkOrderCreationRequest
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.api.toNetworkAddress
 import com.hicham.wcstoreapp.data.order.OrderRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CartItem
@@ -46,16 +46,3 @@ private val PaymentMethod.id: String
         PaymentMethod.WIRE -> "cod"
         PaymentMethod.CASH -> "bacs"
     }
-
-private fun Address.toNetworkAddress(): NetworkAddress {
-    return NetworkAddress(
-        firstName = firstName,
-        lastName = lastName,
-        address1 = street1,
-        address2 = street2,
-        city = city,
-        state = state,
-        postcode = postCode,
-        country = country
-    )
-}
