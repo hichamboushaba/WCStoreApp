@@ -100,7 +100,7 @@ class AddAddressViewModel @Inject constructor(
         val street2: OptionalField = OptionalField(""),
         val phone: PhoneField = PhoneField(""),
         val city: RequiredField = RequiredField(""),
-        val state: OptionalField = OptionalField(""),
+        val state: RequiredField = RequiredField(""),
         val postCode: RequiredField = RequiredField(""),
         val country: RequiredField = RequiredField(""),
         val showDiscardChangesDialog: Boolean = false
