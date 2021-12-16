@@ -12,6 +12,8 @@ import com.hicham.wcstoreapp.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.cart.db.DBCartRepository
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.data.category.db.DBCategoryRepository
+import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
+import com.hicham.wcstoreapp.data.checkout.network.NetworkCheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.StoreCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.db.AppDatabase
@@ -70,4 +72,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindCategoryRepository(repository: DBCategoryRepository): CategoryRepository
+
+    @Binds
+    abstract fun bindCheckoutRepository(repository: NetworkCheckoutRepository): CheckoutRepository
 }
