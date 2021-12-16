@@ -113,6 +113,7 @@ class CheckoutViewModel @Inject constructor(
         val billingAddress: Address? = null,
         val selectedPaymentMethod: PaymentMethod = PaymentMethod.CASH,
         val subtotalFormatted: String = "",
+        val taxFormatted: String = "",
         val totalFormatted: String = ""
     ) {
         val shippingCost: String = "Free" // TODO

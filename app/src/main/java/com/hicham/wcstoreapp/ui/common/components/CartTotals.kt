@@ -13,8 +13,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CartTotals(
     subtotal: String,
+    tax: String,
+    shippingCost: String?,
     total: String,
-    shippingCost: String,
     buttonLabel: String,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -47,12 +48,22 @@ fun CartTotals(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Text(text = "Tax", style = MaterialTheme.typography.subtitle1)
                 Text(
-                    text = "Shipping (TODO)",
+                    text = tax,
+                    style = MaterialTheme.typography.subtitle2
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Shipping",
                     style = MaterialTheme.typography.subtitle1
                 )
                 Text(
-                    text = shippingCost,
+                    text = shippingCost ?: "Calculated during checkout",
                     style = MaterialTheme.typography.subtitle2
                 )
             }
