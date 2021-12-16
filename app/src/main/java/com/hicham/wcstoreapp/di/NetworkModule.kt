@@ -17,8 +17,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer
-import se.akerfeldt.okhttp.signpost.SigningInterceptor
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -36,10 +34,6 @@ abstract class NetworkModule {
         @Singleton
         fun providesRetrofit(json: Json, dataStore: DataStore<Preferences>): Retrofit {
             val contentType = "application/json".toMediaType()
-            val consumer = OkHttpOAuthConsumer(
-                BuildConfig.WC_CONSUMER_KEY,
-                BuildConfig.WC_CONSUMER_SECRET
-            )
 
             val loggingInterceptor = HttpLoggingInterceptor { message ->
                 logcat(priority = LogPriority.DEBUG, message = { message })
@@ -49,7 +43,6 @@ abstract class NetworkModule {
 
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(NonceInterceptor(dataStore))
-                .addInterceptor(SigningInterceptor(consumer))
                 .addInterceptor(loggingInterceptor)
                 .build()
 
