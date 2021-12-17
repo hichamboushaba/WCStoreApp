@@ -118,10 +118,10 @@ class CheckoutViewModel @Inject constructor(
 
             result.fold(
                 onSuccess = {
-                    cartRepository.clear()
                     navigationManager.navigate(Screen.OrderPlaced.createRoute(it)) {
                         popUpTo(Screen.Home.route)
                     }
+                    cartRepository.clear()
                 },
                 onFailure = {
                     triggerEffect(ShowSnackbar("Error while processing the order"))
