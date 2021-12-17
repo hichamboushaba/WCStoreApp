@@ -46,7 +46,7 @@ fun MainNavGraph(
         composable(
             Screen.Checkout.route
         ) {
-            CheckoutScreen(viewModel = hiltViewModel())
+            CheckoutScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
         }
         composable(
             Screen.AddressList.route

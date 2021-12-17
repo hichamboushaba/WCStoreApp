@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,15 +15,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.common.components.CartTotals
+import com.hicham.wcstoreapp.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.ui.common.components.IndeterminateLoadingDialog
 import com.hicham.wcstoreapp.ui.title
+import kotlinx.coroutines.flow.collect
 
 @Composable
-fun CheckoutScreen(viewModel: CheckoutViewModel) {
+fun CheckoutScreen(viewModel: CheckoutViewModel, scaffoldState: ScaffoldState) {
     val state by viewModel.uiState.collectAsState(CheckoutViewModel.UiState())
+
+    LaunchedEffect("effects") {
+        viewModel.effects.collect { effect ->
+            when (effect) {
+                is ShowSnackbar -> scaffoldState.snackbarHostState.showSnackbar(effect.message)
+            }
+        }
+    }
+
     CheckoutScreen(
         state = state,
+        onRetry = viewModel::onRetryClicked,
         onEditShippingAddress = viewModel::onEditShippingAddressClicked,
         onChangePayment = viewModel::onChangePaymentMethodClicked,
         onPaymentMethodSelected = viewModel::onPaymentMethodSelected,
@@ -34,146 +48,164 @@ fun CheckoutScreen(viewModel: CheckoutViewModel) {
 @Composable
 private fun CheckoutScreen(
     state: CheckoutViewModel.UiState,
+    onRetry: () -> Unit = {},
     onEditShippingAddress: () -> Unit = {},
     onChangePayment: () -> Unit = {},
     onPaymentMethodSelected: (PaymentMethod) -> Unit = {},
     onPlaceOrder: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
-    Column(
-        Modifier.fillMaxSize()
-    ) {
+
+    if (state.loadingFailed) {
+        ErrorView(
+            modifier = Modifier
+                .fillMaxSize(),
+            onRetry = onRetry
+        )
+    } else {
         Column(
-            Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .verticalScroll(scrollState)
-                .padding(top = 16.dp)
+            Modifier.fillMaxSize()
         ) {
-            Card(
-                modifier = Modifier
+            Column(
+                Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .weight(1f)
+                    .verticalScroll(scrollState)
+                    .padding(top = 16.dp)
             ) {
-                Column(Modifier.padding(16.dp)) {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text(
-                            text = "Shipping Address",
-                            style = MaterialTheme.typography.subtitle1
-                        )
-
-                        Text(
-                            text = state.shippingAddress?.label.orEmpty(),
-                            style = MaterialTheme.typography.subtitle1,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.size(16.dp))
-                    if (state.shippingAddress == null) {
-                        OutlinedButton(
-                            onClick = onEditShippingAddress, modifier = Modifier
-                                .fillMaxWidth()
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Column(Modifier.padding(16.dp)) {
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("Add new address")
-                        }
-                    } else {
-                        Text(
-                            text = state.shippingAddress.formatAddress(),
-                            style = MaterialTheme.typography.body1
-                        )
-                        Spacer(Modifier.size(16.dp))
-                        OutlinedButton(
-                            onClick = onEditShippingAddress, modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Text("Change address")
-                        }
-                    }
-                }
-            }
-            when {
-                state.isBillingSameAsShippingAddress -> {
-                    Row(modifier = Modifier.padding(16.dp)) {
-                        Checkbox(checked = true, onCheckedChange = {/*TODO*/ })
-                        Text(text = "Billing Address same as shipping")
-                    }
-                }
-                else -> {
-                    Spacer(modifier = Modifier.size(32.dp))
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Column(Modifier.padding(16.dp)) {
                             Text(
-                                text = "Billing Address", style = MaterialTheme.typography.subtitle1
+                                text = "Shipping Address",
+                                style = MaterialTheme.typography.subtitle1,
+                                fontWeight = FontWeight.Bold
                             )
-                            Spacer(modifier = Modifier.size(16.dp))
+
                             Text(
-                                text = state.billingAddress?.formatAddress() ?: AnnotatedString(""),
+                                text = state.shippingAddress?.label.orEmpty(),
+                                style = MaterialTheme.typography.subtitle1,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.size(16.dp))
+                        if (state.shippingAddress == null) {
+                            OutlinedButton(
+                                onClick = onEditShippingAddress, modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                Text("Add new address")
+                            }
+                        } else {
+                            Text(
+                                text = state.shippingAddress.formatAddress(),
                                 style = MaterialTheme.typography.body1
                             )
                             Spacer(Modifier.size(16.dp))
                             OutlinedButton(
-                                onClick = { /*TODO*/ }, modifier = Modifier
+                                onClick = onEditShippingAddress, modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
                             ) {
                                 Text("Change address")
                             }
                         }
                     }
                 }
-            }
-            Spacer(modifier = Modifier.size(32.dp))
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = "Payment",
-                        style = MaterialTheme.typography.subtitle1
-                    )
-
-                    Text(
-                        text = state.selectedPaymentMethod?.title.orEmpty(),
-                        style = MaterialTheme.typography.body1
-                    )
-                    OutlinedButton(
-                        onClick = { onChangePayment() }, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Text("Change payment method")
+                when {
+                    state.isBillingSameAsShippingAddress -> {
+                        Row(modifier = Modifier.padding(16.dp)) {
+                            Checkbox(checked = true, onCheckedChange = {/*TODO*/ })
+                            Text(text = "Billing Address same as shipping")
+                        }
+                    }
+                    else -> {
+                        Spacer(modifier = Modifier.size(32.dp))
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Column(Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "Billing Address",
+                                    style = MaterialTheme.typography.subtitle1
+                                )
+                                Spacer(modifier = Modifier.size(16.dp))
+                                Text(
+                                    text = state.billingAddress?.formatAddress() ?: AnnotatedString(
+                                        ""
+                                    ),
+                                    style = MaterialTheme.typography.body1
+                                )
+                                Spacer(Modifier.size(16.dp))
+                                OutlinedButton(
+                                    onClick = { /*TODO*/ }, modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp)
+                                ) {
+                                    Text("Change address")
+                                }
+                            }
+                        }
                     }
                 }
+                Spacer(modifier = Modifier.size(32.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Payment",
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Text(
+                            text = state.selectedPaymentMethod?.title.orEmpty(),
+                            style = MaterialTheme.typography.body1
+                        )
+                        OutlinedButton(
+                            onClick = { onChangePayment() }, modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Text("Change payment method")
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.size(16.dp))
             }
-            Spacer(modifier = Modifier.size(16.dp))
+            CartTotals(
+                subtotal = state.subtotalFormatted,
+                total = state.totalFormatted,
+                tax = state.taxFormatted,
+                shippingCost = state.shippingCost,
+                buttonLabel = "Place Order",
+                buttonEnabled = state.isValid,
+                onButtonClick = onPlaceOrder
+            )
         }
-        CartTotals(
-            subtotal = state.subtotalFormatted,
-            total = state.totalFormatted,
-            tax = state.taxFormatted,
-            shippingCost = state.shippingCost,
-            buttonLabel = "Place Order",
-            buttonEnabled = state.isValid,
-            onButtonClick = onPlaceOrder
-        )
-    }
 
-    if (state.isLoading) {
-        IndeterminateLoadingDialog()
-    }
+        if (state.isLoading) {
+            IndeterminateLoadingDialog()
+        }
 
-    if (state.isShowingPaymentMethodSelector) {
-        PaymentMethodSelector(onPaymentMethodSelected = onPaymentMethodSelected)
+        if (state.isShowingPaymentMethodSelector) {
+            PaymentMethodSelector(onPaymentMethodSelected = onPaymentMethodSelected)
+        }
     }
 }
 
