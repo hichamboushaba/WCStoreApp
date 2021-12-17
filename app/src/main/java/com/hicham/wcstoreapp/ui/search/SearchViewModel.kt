@@ -8,6 +8,7 @@ import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
@@ -48,13 +49,17 @@ class SearchViewModel @Inject constructor(
 
     fun addItemToCart(product: Product) {
         viewModelScope.launch {
-            cartRepository.addItem(product)
+            cartRepository.addItem(product).onFailure {
+                triggerEffect(ShowSnackbar("Error while updating your cart"))
+            }
         }
     }
 
     fun deleteItemFromCart(product: Product) {
         viewModelScope.launch {
-            cartRepository.deleteItem(product)
+            cartRepository.deleteItem(product).onFailure {
+                triggerEffect(ShowSnackbar("Error while updating your cart"))
+            }
         }
     }
 

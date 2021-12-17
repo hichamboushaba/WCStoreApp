@@ -10,6 +10,7 @@ import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,13 +59,19 @@ class ProductViewModel @Inject constructor(
         viewModelScope.launch {
             val state = uiState.value
             if (state !is UiState.SuccessState) return@launch
-            cartRepository.addItem(state.product)
-            triggerEffect(
-                ShowActionSnackbar(
-                    "Product added to cart",
-                    actionText = "View Cart",
-                    action = ::onViewCartClicked
-                )
+            cartRepository.addItem(state.product).fold(
+                onSuccess = {
+                    triggerEffect(
+                        ShowActionSnackbar(
+                            "Product added to cart",
+                            actionText = "View Cart",
+                            action = ::onViewCartClicked
+                        )
+                    )
+                },
+                onFailure = {
+                    triggerEffect(ShowSnackbar("Error while adding the product to cart"))
+                }
             )
         }
     }

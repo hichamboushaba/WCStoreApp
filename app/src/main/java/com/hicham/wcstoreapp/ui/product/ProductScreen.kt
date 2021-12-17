@@ -36,6 +36,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.hicham.wcstoreapp.R
 import com.hicham.wcstoreapp.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.ui.common.components.WCTopAppBar
 import compose.icons.TablerIcons
@@ -60,6 +61,9 @@ fun ProductScreen(viewModel: ProductViewModel, scaffoldState: ScaffoldState) {
                     if (result == SnackbarResult.ActionPerformed) {
                         it.action()
                     }
+                }
+                is ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(it.message)
                 }
             }
         }
