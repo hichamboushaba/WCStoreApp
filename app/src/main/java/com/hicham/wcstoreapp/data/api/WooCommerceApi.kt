@@ -3,7 +3,8 @@ package com.hicham.wcstoreapp.data.api
 import retrofit2.http.*
 
 interface WooCommerceApi {
-    @GET("/wp-json/wc/store/products")
+    // TODO remove the hardcoding of type simple when other types can be handled
+    @GET("/wp-json/wc/store/products?type=simple")
     suspend fun getProducts(
         @Query("per_page") pageSize: Int = 10,
         @Query("offset") offset: Int = 0,
