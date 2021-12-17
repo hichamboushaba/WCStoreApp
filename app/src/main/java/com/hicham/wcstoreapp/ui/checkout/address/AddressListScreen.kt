@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -111,11 +112,23 @@ private fun AddressCard(
         modifier = modifier.clickable(onClick = onClicked),
         border = if (model.isSelected) BorderStroke(1.dp, MaterialTheme.colors.primary) else null
     ) {
-        Text(
-            text = model.address.formatAddress(),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(16.dp)
-        )
+        Column {
+            if (!model.address.label.isNullOrEmpty()) {
+                Text(
+                    text = model.address.label,
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(2.dp)
+                )
+                Divider(Modifier.height(1.dp))
+            }
+            Text(
+                text = model.address.formatAddress(),
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
 
