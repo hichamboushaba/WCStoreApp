@@ -9,7 +9,6 @@ import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,10 +19,11 @@ class CartViewModel @Inject constructor(
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val navigationManager: NavigationManager
 ) : ViewModel() {
-    val uiState: Flow<CartUiState>
+    private val _uiState = MutableStateFlow(CartUiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
-        uiState = combine(
+        combine(
             cartRepository.cart,
             currencyFormatProvider.formatSettings
         ) { cart, formatSettings ->
@@ -35,35 +35,41 @@ class CartViewModel @Inject constructor(
                     totalPriceFormatted = currencyFormatter.format(it.totals.subtotal)
                 )
             }
-            CartUiState(
-                cartItems = items,
-                subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
-                taxFormatted = currencyFormatter.format(cart.totals.tax),
-                shippingCost = cart.totals.shippingEstimate?.let {
-                    currencyFormatter.format(it)
-                },
-                totalFormatted = currencyFormatter.format(cart.totals.total)
-            )
-        }
-            .flowOn(Dispatchers.Default)
-            .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
+            _uiState.update {
+                it.copy(
+                    cartItems = items,
+                    subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
+                    taxFormatted = currencyFormatter.format(cart.totals.tax),
+                    shippingCost = cart.totals.shippingEstimate?.let {
+                        currencyFormatter.format(it)
+                    },
+                    totalFormatted = currencyFormatter.format(cart.totals.total)
+                )
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun onIncreaseQuantity(product: Product) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isUpdatingCart = true) }
             cartRepository.addItem(product)
+            _uiState.update { it.copy(isUpdatingCart = false) }
         }
     }
 
     fun onDecreaseQuantity(product: Product) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isUpdatingCart = true) }
             cartRepository.deleteItem(product)
+            _uiState.update { it.copy(isUpdatingCart = false) }
         }
     }
 
     fun onRemoveProduct(product: Product) {
         viewModelScope.launch {
+            _uiState.update { it.copy(isUpdatingCart = true) }
             cartRepository.clearProduct(product)
+            _uiState.update { it.copy(isUpdatingCart = false) }
         }
     }
 
@@ -80,6 +86,7 @@ class CartViewModel @Inject constructor(
     }
 
     data class CartUiState(
+        val isUpdatingCart: Boolean = false,
         val cartItems: List<CartItemUiModel> = emptyList(),
         val subtotalFormatted: String = "",
         val taxFormatted: String = "",
