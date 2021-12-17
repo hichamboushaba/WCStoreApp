@@ -196,6 +196,7 @@ private fun CheckoutPreview() {
                 street1 = "street",
                 street2 = null,
                 phone = null,
+                email = null,
                 city = "city",
                 state = "state",
                 postCode = "postCode",

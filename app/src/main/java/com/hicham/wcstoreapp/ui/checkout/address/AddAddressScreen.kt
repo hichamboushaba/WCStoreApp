@@ -12,7 +12,9 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.*
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusOrder
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.RelocationRequester
 import androidx.compose.ui.layout.relocationRequester
@@ -22,7 +24,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.hicham.wcstoreapp.ui.Effect
 import com.hicham.wcstoreapp.ui.common.InputField
 import com.hicham.wcstoreapp.ui.common.RequiredField
@@ -158,6 +159,7 @@ private val AddAddressViewModel.Field.label: String
         AddAddressViewModel.Field.Street1 -> "Street 1"
         AddAddressViewModel.Field.Street2 -> "Street 2"
         AddAddressViewModel.Field.Phone -> "Phone"
+        AddAddressViewModel.Field.Email -> "Email"
         AddAddressViewModel.Field.City -> "City"
         AddAddressViewModel.Field.State -> "State"
         AddAddressViewModel.Field.PostCode -> "Postal Code"

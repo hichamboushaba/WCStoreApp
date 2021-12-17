@@ -65,6 +65,7 @@ class AddAddressViewModel @Inject constructor(
                     street1 = state.street1.content,
                     street2 = state.street2.content,
                     phone = state.phone.content,
+                    email = state.email.content,
                     city = state.city.content,
                     state = state.state.content,
                     postCode = state.postCode.content,
@@ -99,6 +100,7 @@ class AddAddressViewModel @Inject constructor(
         val street1: RequiredField = RequiredField(""),
         val street2: OptionalField = OptionalField(""),
         val phone: PhoneField = PhoneField(""),
+        val email: RequiredField = RequiredField(""),
         val city: RequiredField = RequiredField(""),
         val state: RequiredField = RequiredField(""),
         val postCode: RequiredField = RequiredField(""),
@@ -116,6 +118,7 @@ class AddAddressViewModel @Inject constructor(
                 Field.Street1 -> street1
                 Field.Street2 -> street2
                 Field.Phone -> phone
+                Field.Email -> email
                 Field.City -> city
                 Field.State -> state
                 Field.PostCode -> postCode
@@ -133,6 +136,7 @@ class AddAddressViewModel @Inject constructor(
                 Field.Street1 -> copy(street1 = street1.copy(content = content).validate())
                 Field.Street2 -> copy(street2 = street2.copy(content = content).validate())
                 Field.Phone -> copy(phone = phone.copy(content = content).validate())
+                Field.Email -> copy(email = email.copy(content = content).validate())
                 Field.City -> copy(city = city.copy(content = content).validate())
                 Field.State -> copy(state = state.copy(content = content).validate())
                 Field.PostCode -> copy(postCode = postCode.copy(content = content).validate())
@@ -166,7 +170,7 @@ class AddAddressViewModel @Inject constructor(
     }
 
     enum class Field {
-        AddressLabel, FirstName, LastName, Street1, Street2, Phone, City, State, PostCode, Country
+        AddressLabel, FirstName, LastName, Phone, Email, Street1, Street2, City, State, PostCode, Country
     }
 
     data class FocusOnField(val field: Field) : Effect()

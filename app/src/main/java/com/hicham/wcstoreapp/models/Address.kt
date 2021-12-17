@@ -17,6 +17,7 @@ data class Address(
     val street1: String,
     val street2: String?,
     val phone: String?,
+    val email: String?,
     val city: String,
     val state: String?,
     val postCode: String,
@@ -28,8 +29,8 @@ data class Address(
                 append(firstName)
                 append(" ")
                 append(lastName)
-                append("\n")
                 if (phone != null) {
+                    append("\n")
                     append(phone)
                     append("\n")
                 }
@@ -60,6 +61,7 @@ fun NetworkAddress.toDomainModel() = Address(
     lastName = lastName,
     street1 = address1,
     street2 = address2,
+    email = email,
     city = city,
     state = state,
     postCode = postcode,

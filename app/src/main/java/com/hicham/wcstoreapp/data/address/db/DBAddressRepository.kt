@@ -95,6 +95,7 @@ class DBAddressRepository @Inject constructor(
         street1 = street1,
         street2 = street2,
         phone = phone,
+        email = email,
         city = city,
         state = state,
         postCode = postCode,
