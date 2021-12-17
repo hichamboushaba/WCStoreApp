@@ -87,6 +87,22 @@ class CheckoutViewModel @Inject constructor(
         }
     }
 
+    fun onChangePaymentMethodClicked() {
+        _uiState.update { it.copy(isShowingPaymentMethodSelector = true) }
+    }
+
+    fun onPaymentMethodSelected(paymentMethod: PaymentMethod) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, isShowingPaymentMethodSelector = false) }
+            if (paymentMethod != _uiState.value.selectedPaymentMethod) {
+                checkoutRepository.updatePaymentMethod(paymentMethod).onFailure {
+                    //TODO
+                }
+            }
+            _uiState.update { it.copy(isLoading = false) }
+        }
+    }
+
     fun onPlacedOrderClicked() {
         viewModelScope.launch {
             _uiState.update { state -> state.copy(isLoading = true) }
@@ -115,6 +131,7 @@ class CheckoutViewModel @Inject constructor(
 
     data class UiState(
         val isLoading: Boolean = false,
+        val isShowingPaymentMethodSelector: Boolean = false,
         val shippingAddress: Address? = null,
         val isBillingSameAsShippingAddress: Boolean = true,
         val billingAddress: Address? = null,
