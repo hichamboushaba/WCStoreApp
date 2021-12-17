@@ -3,10 +3,13 @@ package com.hicham.wcstoreapp.ui.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.cart.CartRepository
+import com.hicham.wcstoreapp.data.cart.items
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.*
+import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,9 +21,9 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productsRepository: ProductsRepository,
-    private val currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     private val productId = savedStateHandle.get<Long>(Screen.Product.navArguments.first().name)!!
 
@@ -29,23 +32,22 @@ class ProductViewModel @Inject constructor(
 
     init {
         val productFlow = flow { emit(productsRepository.getProduct(productId)) }
-        val cartQuantityFlow = cartRepository.items.map {
-            it.firstOrNull { it.product.id == productId }?.quantity ?: 0
+        val cartQuantityFlow = cartRepository.items.map { list ->
+            list.firstOrNull {
+                it.product.id == productId
+            }?.quantity ?: 0
         }
         combine(
             productFlow,
             cartQuantityFlow,
-            currencyFormatProvider.formatSettings
-        ) { product, cartQuantity, formatSettings ->
-            Triple(product, cartQuantity, CurrencyFormatter(formatSettings))
+            currencyFormatProvider.formatSettings.map { CurrencyFormatter(it) }
+        ) { product, cartQuantity, formatter ->
+            _uiState.value = UiState.SuccessState(
+                product = product,
+                priceFormatted = formatter.format(product.prices.price),
+                quantityInCart = cartQuantity
+            )
         }
-            .onEach { (product, cartQuantity, currencyFormatter) ->
-                _uiState.value = UiState.SuccessState(
-                    product = product,
-                    priceFormatted = currencyFormatter.format(product.price),
-                    quantityInCart = cartQuantity
-                )
-            }
             .catch {
                 _uiState.value = UiState.ErrorState
             }

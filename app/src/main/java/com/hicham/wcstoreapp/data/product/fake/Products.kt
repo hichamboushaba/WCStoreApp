@@ -4,1476 +4,660 @@ const val PRODUCTS_JSON = """[
     {
         "id": 61,
         "name": "Logo Collection",
-        "slug": "logo-collection",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/logo-collection/",
-        "date_created": "2020-08-10T17:57:53",
-        "date_created_gmt": "2020-08-10T16:57:53",
-        "date_modified": "2021-06-23T15:23:56",
-        "date_modified_gmt": "2021-06-23T14:23:56",
+        "parent": 0,
         "type": "grouped",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a grouped product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/logo-collection/",
         "sku": "logo-collection",
-        "price": "18",
-        "regular_price": "",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a grouped product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": true,
-        "purchasable": false,
-        "total_sales": 0,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "18000",
+            "regular_price": "18000",
+            "sale_price": "18000",
+            "price_range": {
+                "min_amount": "18000",
+                "max_amount": "45000"
+            },
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1375,
-                "name": "Clothing",
-                "slug": "clothing"
-            }
-        ],
-        "tags": [],
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;18.000</span> &ndash; <span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;45.000</span>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 84,
-                "date_created": "2020-08-10T18:58:12",
-                "date_created_gmt": "2020-08-10T16:58:12",
-                "date_modified": "2021-06-23T16:23:56",
-                "date_modified_gmt": "2021-06-23T14:23:56",
                 "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=768%2C767&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=750%2C749&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
                 "name": "logo-1.jpg",
                 "alt": ""
             },
             {
                 "id": 83,
-                "date_created": "2020-08-10T18:58:11",
-                "date_created_gmt": "2020-08-10T16:58:11",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
                 "name": "beanie-with-logo-1.jpg",
                 "alt": ""
             },
             {
                 "id": 82,
-                "date_created": "2020-08-10T18:58:10",
-                "date_created_gmt": "2020-08-10T16:58:10",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
                 "name": "t-shirt-with-logo-1.jpg",
                 "alt": ""
             },
             {
                 "id": 70,
-                "date_created": "2020-08-10T18:57:58",
-                "date_created_gmt": "2020-08-10T16:57:58",
-                "date_modified": "2021-06-23T16:23:56",
-                "date_modified_gmt": "2021-06-23T14:23:56",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?fit=801%2C801&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?fit=801%2C801&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?w=801&ssl=1 801w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-logo-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 801px) 100vw, 801px",
                 "name": "hoodie-with-logo-2.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [],
-        "default_attributes": [],
-        "variations": [],
-        "grouped_products": [
-            41,
-            42,
-            43
-        ],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;18.000</bdi></span> &ndash; <span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;45.000</bdi></span>",
-        "related_ids": [],
-        "meta_data": [
+        "categories": [
             {
-                "id": 565,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 828,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            },
-            {
-                "id": 1341,
-                "key": "_last_editor_used_jetpack",
-                "value": "classic-editor"
+                "id": 1375,
+                "name": "Clothing",
+                "slug": "clothing",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/"
             }
         ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/61"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "tags": [],
+        "attributes": [],
+        "variations": [],
+        "has_options": false,
+        "is_purchasable": false,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "View products",
+            "description": "View products in the &ldquo;Logo Collection&rdquo; group",
+            "url": "https://hichamwootest.wpcomstaging.com/product/logo-collection/"
         }
     },
     {
         "id": 60,
         "name": "Beanie with Logo",
-        "slug": "beanie-with-logo",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/beanie-with-logo/",
-        "date_created": "2020-08-10T17:57:53",
-        "date_created_gmt": "2020-08-10T16:57:53",
-        "date_modified": "2021-09-06T10:10:42",
-        "date_modified_gmt": "2021-09-06T09:10:42",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/beanie-with-logo/",
         "sku": "Woo-beanie-logo",
-        "price": "2",
-        "regular_price": "2",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": false,
-        "purchasable": true,
-        "total_sales": 21,
-        "virtual": false,
-        "downloadable": true,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "1",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "2500",
+            "regular_price": "2500",
+            "sale_price": "2500",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;2.500</span>",
+        "average_rating": "5.00",
+        "review_count": 6,
+        "images": [
+            {
+                "id": 83,
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
+                "name": "beanie-with-logo-1.jpg",
+                "alt": ""
+            },
+            {
+                "id": 1423,
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?fit=2350%2C1230&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?w=2350&ssl=1 2350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=300%2C157&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=1024%2C536&ssl=1 1024w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=768%2C402&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=1536%2C804&ssl=1 1536w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=2048%2C1072&ssl=1 2048w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=1200%2C628&ssl=1 1200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?resize=416%2C218&ssl=1 416w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/11/55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg?w=1960&ssl=1 1960w",
+                "sizes": "(max-width: 2350px) 100vw, 2350px",
+                "name": "55C85DB6-A0B4-4C58-B590-5DDBF1FBB56A-2.jpg",
+                "alt": ""
+            }
+        ],
         "categories": [
             {
                 "id": 1378,
                 "name": "Accessories",
-                "slug": "accessories"
+                "slug": "accessories",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/accessories/"
             }
         ],
         "tags": [],
-        "images": [
-            {
-                "id": 83,
-                "date_created": "2020-08-10T18:58:11",
-                "date_created_gmt": "2020-08-10T16:58:11",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?fit=800%2C800&ssl=1",
-                "name": "beanie-with-logo-1.jpg",
-                "alt": ""
-            }
-        ],
-        "attributes": [
-            {
-                "id": 1,
-                "name": "Color",
-                "position": 0,
-                "visible": true,
-                "variation": false,
-                "options": [
-                    "Red"
-                ]
-            }
-        ],
-        "default_attributes": [],
+        "attributes": [],
         "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;2.000</bdi></span>",
-        "related_ids": [
-            46,
-            45,
-            44,
-            43
-        ],
-        "meta_data": [
-            {
-                "id": 547,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 818,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            },
-            {
-                "id": 1566,
-                "key": "wc_connect_customs_info",
-                "value": {
-                    "description": "Beanie with Logo",
-                    "hs_tariff_number": "",
-                    "origin_country": "US"
-                }
-            },
-            {
-                "id": 3178,
-                "key": "_last_editor_used_jetpack",
-                "value": "classic-editor"
-            },
-            {
-                "id": 5471,
-                "key": "_product_addons",
-                "value": [
-                    {
-                        "name": "Logo",
-                        "title_format": "label",
-                        "description_enable": 0,
-                        "description": "",
-                        "type": "multiple_choice",
-                        "display": "select",
-                        "position": 0,
-                        "required": 0,
-                        "restrictions": 0,
-                        "restrictions_type": "any_text",
-                        "adjust_price": 0,
-                        "price_type": "flat_fee",
-                        "price": "",
-                        "min": 0,
-                        "max": 0,
-                        "options": [
-                            {
-                                "label": "A8C",
-                                "price": "6",
-                                "image": "",
-                                "price_type": "flat_fee"
-                            },
-                            {
-                                "label": "Woo",
-                                "price": "3",
-                                "image": "",
-                                "price_type": "flat_fee"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": 5472,
-                "key": "_product_addons_exclude_global",
-                "value": "0"
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/60"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Beanie with Logo&rdquo; to your cart",
+            "url": "?add-to-cart=60"
         }
     },
     {
         "id": 59,
         "name": "T-Shirt with Logo",
-        "slug": "t-shirt-with-logo",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/t-shirt-with-logo/",
-        "date_created": "2020-08-10T17:57:53",
-        "date_created_gmt": "2020-08-10T16:57:53",
-        "date_modified": "2020-11-16T13:35:20",
-        "date_modified_gmt": "2020-11-16T12:35:20",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/t-shirt-with-logo/",
         "sku": "Woo-tshirt-logo",
-        "price": "18",
-        "regular_price": "18",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": false,
-        "purchasable": true,
-        "total_sales": 1,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "18000",
+            "regular_price": "18000",
+            "sale_price": "18000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1376,
-                "name": "Tshirts",
-                "slug": "tshirts"
-            }
-        ],
-        "tags": [],
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;18.000</span>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 82,
-                "date_created": "2020-08-10T18:58:10",
-                "date_created_gmt": "2020-08-10T16:58:10",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?fit=800%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
                 "name": "t-shirt-with-logo-1.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [
+        "categories": [
             {
-                "id": 1,
-                "name": "Color",
-                "position": 0,
-                "visible": true,
-                "variation": false,
-                "options": [
-                    "Gray"
-                ]
+                "id": 1376,
+                "name": "Tshirts",
+                "slug": "tshirts",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/tshirts/"
             }
         ],
-        "default_attributes": [],
+        "tags": [],
+        "attributes": [],
         "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;18.000</bdi></span>",
-        "related_ids": [
-            51,
-            39,
-            50,
-            42,
-            49
-        ],
-        "meta_data": [
-            {
-                "id": 529,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 809,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            },
-            {
-                "id": 1181,
-                "key": "_last_editor_used_jetpack",
-                "value": "classic-editor"
-            },
-            {
-                "id": 1183,
-                "key": "_wapf_fieldgroup",
-                "value": {
-                    "id": "p_59",
-                    "type": "wapf_product",
-                    "layout": {
-                        "labels_position": "above",
-                        "instructions_position": "field",
-                        "mark_required": true
-                    },
-                    "fields": [
-                        {
-                            "id": "5fb271ffb337c",
-                            "label": "Size",
-                            "description": null,
-                            "type": "text",
-                            "required": false,
-                            "class": null,
-                            "width": null,
-                            "options": [],
-                            "conditionals": [],
-                            "pricing": {
-                                "type": "fixed",
-                                "amount": 0,
-                                "enabled": false
-                            }
-                        }
-                    ],
-                    "rule_groups": [
-                        {
-                            "rules": [
-                                {
-                                    "value": [
-                                        {
-                                            "id": "59",
-                                            "text": ""
-                                        }
-                                    ],
-                                    "condition": "product",
-                                    "subject": "product"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/59"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;T-Shirt with Logo&rdquo; to your cart",
+            "url": "?add-to-cart=59"
         }
     },
     {
         "id": 52,
         "name": "Single",
-        "slug": "single",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/single/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2020-08-10T17:58:09",
-        "date_modified_gmt": "2020-08-10T16:58:09",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac odio dictum tincidunt. Donec ut metus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus, dui eu sagittis sodales, nulla nibh sagittis augue, vel porttitor diam enim non metus. Vestibulum aliquam augue neque. Phasellus tincidunt odio eget ullamcorper efficitur. Cras placerat ut turpis pellentesque vulputate. Nam sed consequat tortor. Curabitur finibus sapien dolor. Ut eleifend tellus nec erat pulvinar dignissim. Nam non arcu purus. Vivamus et massa massa.</p>\n",
-        "short_description": "<p>This is a simple, virtual product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/single/",
         "sku": "woo-single",
-        "price": "2",
-        "regular_price": "3",
-        "sale_price": "2",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple, virtual product.</p>",
+        "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac odio dictum tincidunt. Donec ut metus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus, dui eu sagittis sodales, nulla nibh sagittis augue, vel porttitor diam enim non metus. Vestibulum aliquam augue neque. Phasellus tincidunt odio eget ullamcorper efficitur. Cras placerat ut turpis pellentesque vulputate. Nam sed consequat tortor. Curabitur finibus sapien dolor. Ut eleifend tellus nec erat pulvinar dignissim. Nam non arcu purus. Vivamus et massa massa.</p>",
         "on_sale": true,
-        "purchasable": true,
-        "total_sales": 3,
-        "virtual": true,
-        "downloadable": true,
-        "downloads": [
-            {
-                "id": "ca46f013-d6ff-4cdd-a76e-3db9a515bd4c",
-                "name": "Single",
-                "file": "https://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2017/08/single.jpg"
-            }
-        ],
-        "download_limit": 1,
-        "download_expiry": 1,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "2000",
+            "regular_price": "3000",
+            "sale_price": "2000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": false,
-        "shipping_taxable": false,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1379,
-                "name": "Music",
-                "slug": "music"
-            }
-        ],
-        "tags": [],
+        "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;3.000</span></del> <ins><span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;2.000</span></ins>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 81,
-                "date_created": "2020-08-10T18:58:08",
-                "date_created_gmt": "2020-08-10T16:58:08",
-                "date_modified": "2020-08-10T18:58:08",
-                "date_modified_gmt": "2020-08-10T16:58:08",
-                "src": "https://i2.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?fit=800%2C800&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?fit=800%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/single-1.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
                 "name": "single-1.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [],
-        "default_attributes": [],
-        "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;3.000</bdi></span></del> <ins><span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;2.000</bdi></span></ins>",
-        "related_ids": [
-            51
-        ],
-        "meta_data": [
-            {
-                "id": 403,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 750,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/52"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
-        }
-    },
-    {
-        "id": 51,
-        "name": "Album",
-        "slug": "album",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/album/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2021-09-10T10:24:40",
-        "date_modified_gmt": "2021-09-10T09:24:40",
-        "type": "simple",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac odio dictum tincidunt. Donec ut metus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus, dui eu sagittis sodales, nulla nibh sagittis augue, vel porttitor diam enim non metus. Vestibulum aliquam augue neque. Phasellus tincidunt odio eget ullamcorper efficitur. Cras placerat ut turpis pellentesque vulputate. Nam sed consequat tortor. Curabitur finibus sapien dolor. Ut eleifend tellus nec erat pulvinar dignissim. Nam non arcu purus. Vivamus et massa massa.</p>\n",
-        "short_description": "<p>This is a simple, virtual product.</p>\n",
-        "sku": "woo-album",
-        "price": "-1",
-        "regular_price": "-1",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
-        "on_sale": false,
-        "purchasable": true,
-        "total_sales": 10,
-        "virtual": true,
-        "downloadable": true,
-        "downloads": [],
-        "download_limit": 1,
-        "download_expiry": 5,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
-        },
-        "shipping_required": false,
-        "shipping_taxable": false,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "5.00",
-        "rating_count": 11,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
         "categories": [
             {
                 "id": 1379,
                 "name": "Music",
-                "slug": "music"
-            },
-            {
-                "id": 1376,
-                "name": "Tshirts",
-                "slug": "tshirts"
+                "slug": "music",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/music/"
             }
         ],
         "tags": [],
-        "images": [
-            {
-                "id": 80,
-                "date_created": "2020-08-10T18:58:08",
-                "date_created_gmt": "2020-08-10T16:58:08",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i2.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/album-1.jpg?fit=800%2C800&ssl=1",
-                "name": "album-1.jpg",
-                "alt": ""
-            },
-            {
-                "id": 82,
-                "date_created": "2020-08-10T18:58:10",
-                "date_created_gmt": "2020-08-10T16:58:10",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/t-shirt-with-logo-1.jpg?fit=800%2C800&ssl=1",
-                "name": "t-shirt-with-logo-1.jpg",
-                "alt": ""
-            },
-            {
-                "id": 83,
-                "date_created": "2020-08-10T18:58:11",
-                "date_created_gmt": "2020-08-10T16:58:11",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/beanie-with-logo-1.jpg?fit=800%2C800&ssl=1",
-                "name": "beanie-with-logo-1.jpg",
-                "alt": ""
-            },
-            {
-                "id": 85,
-                "date_created": "2020-08-10T18:58:12",
-                "date_created_gmt": "2020-08-10T16:58:12",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/pennant-1.jpg?fit=800%2C800&ssl=1",
-                "name": "pennant-1.jpg",
-                "alt": ""
-            },
-            {
-                "id": 1276,
-                "date_created": "2021-09-10T11:24:37",
-                "date_created_gmt": "2021-09-10T09:24:37",
-                "date_modified": "2021-09-10T11:24:40",
-                "date_modified_gmt": "2021-09-10T09:24:40",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2021/09/Screenshot_20210812-162623.png?fit=1080%2C2220&ssl=1",
-                "name": "Screenshot_20210812-162623.png",
-                "alt": ""
-            }
-        ],
         "attributes": [],
-        "default_attributes": [],
         "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;0.000</bdi></span>",
-        "related_ids": [
-            52,
-            39,
-            59,
-            42,
-            49
-        ],
-        "meta_data": [
-            {
-                "id": 385,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 741,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            },
-            {
-                "id": 1570,
-                "key": "_last_editor_used_jetpack",
-                "value": "classic-editor"
-            },
-            {
-                "id": 4639,
-                "key": "_wpas_done_all",
-                "value": "1"
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/51"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Single&rdquo; to your cart",
+            "url": "?add-to-cart=52"
         }
     },
     {
         "id": 50,
         "name": "Polo",
-        "slug": "polo",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/polo/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2020-08-10T17:58:07",
-        "date_modified_gmt": "2020-08-10T16:58:07",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/polo/",
         "sku": "woo-polo",
-        "price": "20",
-        "regular_price": "20",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": false,
-        "purchasable": true,
-        "total_sales": 6,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "20000",
+            "regular_price": "20000",
+            "sale_price": "20000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1376,
-                "name": "Tshirts",
-                "slug": "tshirts"
-            }
-        ],
-        "tags": [],
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;20.000</span>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 79,
-                "date_created": "2020-08-10T18:58:07",
-                "date_created_gmt": "2020-08-10T16:58:07",
-                "date_modified": "2020-12-03T16:25:43",
-                "date_modified_gmt": "2020-12-03T14:25:43",
                 "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?fit=801%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?w=801&ssl=1 801w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=768%2C767&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=750%2C749&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/polo-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 801px) 100vw, 801px",
                 "name": "polo-2.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [
+        "categories": [
             {
-                "id": 1,
-                "name": "Color",
-                "position": 0,
-                "visible": true,
-                "variation": false,
-                "options": [
-                    "Blue"
-                ]
+                "id": 1376,
+                "name": "Tshirts",
+                "slug": "tshirts",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/tshirts/"
             }
         ],
-        "default_attributes": [],
+        "tags": [],
+        "attributes": [],
         "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;20.000</bdi></span>",
-        "related_ids": [
-            39,
-            42,
-            51,
-            49,
-            59
-        ],
-        "meta_data": [
-            {
-                "id": 367,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 732,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            },
-            {
-                "id": 4500,
-                "key": "wc_connect_customs_info",
-                "value": {
-                    "description": "Polo",
-                    "hs_tariff_number": "",
-                    "origin_country": "US"
-                }
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/50"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Polo&rdquo; to your cart",
+            "url": "?add-to-cart=50"
         }
     },
     {
         "id": 49,
         "name": "Long Sleeve Tee",
-        "slug": "long-sleeve-tee",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/long-sleeve-tee/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2020-08-10T17:58:06",
-        "date_modified_gmt": "2020-08-10T16:58:06",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": false,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/long-sleeve-tee/",
         "sku": "woo-long-sleeve-tee",
-        "price": "25",
-        "regular_price": "25",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": false,
-        "purchasable": true,
-        "total_sales": 5,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "25000",
+            "regular_price": "25000",
+            "sale_price": "25000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1376,
-                "name": "Tshirts",
-                "slug": "tshirts"
-            }
-        ],
-        "tags": [],
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;25.000</span>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 78,
-                "date_created": "2020-08-10T18:58:06",
-                "date_created_gmt": "2020-08-10T16:58:06",
-                "date_modified": "2020-08-10T18:58:06",
-                "date_modified_gmt": "2020-08-10T16:58:06",
                 "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?fit=801%2C801&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?w=801&ssl=1 801w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/long-sleeve-tee-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 801px) 100vw, 801px",
                 "name": "long-sleeve-tee-2.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [
+        "categories": [
             {
-                "id": 1,
-                "name": "Color",
-                "position": 0,
-                "visible": true,
-                "variation": false,
-                "options": [
-                    "Green"
-                ]
+                "id": 1376,
+                "name": "Tshirts",
+                "slug": "tshirts",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/tshirts/"
             }
         ],
-        "default_attributes": [],
+        "tags": [],
+        "attributes": [],
         "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;25.000</bdi></span>",
-        "related_ids": [
-            50,
-            39,
-            42,
-            59,
-            51
-        ],
-        "meta_data": [
-            {
-                "id": 349,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 723,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/49"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Long Sleeve Tee&rdquo; to your cart",
+            "url": "?add-to-cart=49"
         }
     },
     {
         "id": 48,
         "name": "Hoodie with Zipper",
-        "slug": "hoodie-with-zipper",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/hoodie-with-zipper/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2020-08-10T17:58:06",
-        "date_modified_gmt": "2020-08-10T16:58:06",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": true,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/hoodie-with-zipper/",
         "sku": "woo-hoodie-with-zipper",
-        "price": "45",
-        "regular_price": "45",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": false,
-        "purchasable": true,
-        "total_sales": 1,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "45000",
+            "regular_price": "45000",
+            "sale_price": "45000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1377,
-                "name": "Hoodies",
-                "slug": "hoodies"
-            }
-        ],
-        "tags": [],
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;45.000</span>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 77,
-                "date_created": "2020-08-10T18:58:05",
-                "date_created_gmt": "2020-08-10T16:58:05",
-                "date_modified": "2020-08-10T18:58:05",
-                "date_modified_gmt": "2020-08-10T16:58:05",
-                "src": "https://i1.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?fit=800%2C800&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?fit=800%2C800&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?w=800&ssl=1 800w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-zipper-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 800px) 100vw, 800px",
                 "name": "hoodie-with-zipper-2.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [],
-        "default_attributes": [],
-        "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;45.000</bdi></span>",
-        "related_ids": [
-            41,
-            40
-        ],
-        "meta_data": [
+        "categories": [
             {
-                "id": 331,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 715,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
+                "id": 1377,
+                "name": "Hoodies",
+                "slug": "hoodies",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/hoodies/"
             }
         ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/48"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "tags": [],
+        "attributes": [],
+        "variations": [],
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Hoodie with Zipper&rdquo; to your cart",
+            "url": "?add-to-cart=48"
         }
     },
     {
         "id": 47,
         "name": "Hoodie with Pocket",
-        "slug": "hoodie-with-pocket",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/hoodie-with-pocket/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2020-08-10T17:58:05",
-        "date_modified_gmt": "2020-08-10T16:58:05",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": true,
-        "catalog_visibility": "hidden",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/hoodie-with-pocket/",
         "sku": "woo-hoodie-with-pocket",
-        "price": "35",
-        "regular_price": "45",
-        "sale_price": "35",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": true,
-        "purchasable": true,
-        "total_sales": 0,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "35000",
+            "regular_price": "45000",
+            "sale_price": "35000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "0.00",
-        "rating_count": 0,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1377,
-                "name": "Hoodies",
-                "slug": "hoodies"
-            }
-        ],
-        "tags": [],
+        "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;45.000</span></del> <ins><span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;35.000</span></ins>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 76,
-                "date_created": "2020-08-10T18:58:04",
-                "date_created_gmt": "2020-08-10T16:58:04",
-                "date_modified": "2020-08-10T18:58:04",
-                "date_modified_gmt": "2020-08-10T16:58:04",
-                "src": "https://i2.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?fit=801%2C801&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?fit=801%2C801&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?w=801&ssl=1 801w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/hoodie-with-pocket-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 801px) 100vw, 801px",
                 "name": "hoodie-with-pocket-2.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [
+        "categories": [
             {
-                "id": 1,
-                "name": "Color",
-                "position": 0,
-                "visible": true,
-                "variation": false,
-                "options": [
-                    "Gray"
-                ]
+                "id": 1377,
+                "name": "Hoodies",
+                "slug": "hoodies",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/hoodies/"
             }
         ],
-        "default_attributes": [],
+        "tags": [],
+        "attributes": [],
         "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;45.000</bdi></span></del> <ins><span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;35.000</bdi></span></ins>",
-        "related_ids": [
-            41,
-            48,
-            40
-        ],
-        "meta_data": [
-            {
-                "id": 313,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 705,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
-            }
-        ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/47"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Hoodie with Pocket&rdquo; to your cart",
+            "url": "?add-to-cart=47"
         }
     },
     {
         "id": 46,
         "name": "Sunglasses",
-        "slug": "sunglasses",
-        "permalink": "https://hichamwootest.wpcomstaging.com/product/sunglasses/",
-        "date_created": "2020-08-10T17:57:52",
-        "date_created_gmt": "2020-08-10T16:57:52",
-        "date_modified": "2021-08-31T15:00:48",
-        "date_modified_gmt": "2021-08-31T14:00:48",
+        "parent": 0,
         "type": "simple",
-        "status": "publish",
-        "featured": true,
-        "catalog_visibility": "visible",
-        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
-        "short_description": "<p>This is a simple product.</p>\n",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/sunglasses/",
         "sku": "woo-sunglasses",
-        "price": "90",
-        "regular_price": "90",
-        "sale_price": "",
-        "date_on_sale_from": null,
-        "date_on_sale_from_gmt": null,
-        "date_on_sale_to": null,
-        "date_on_sale_to_gmt": null,
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
         "on_sale": false,
-        "purchasable": true,
-        "total_sales": 2,
-        "virtual": false,
-        "downloadable": false,
-        "downloads": [],
-        "download_limit": 0,
-        "download_expiry": 0,
-        "external_url": "",
-        "button_text": "",
-        "tax_status": "taxable",
-        "tax_class": "",
-        "manage_stock": false,
-        "stock_quantity": null,
-        "backorders": "no",
-        "backorders_allowed": false,
-        "backordered": false,
-        "low_stock_amount": null,
-        "sold_individually": false,
-        "weight": "",
-        "dimensions": {
-            "length": "",
-            "width": "",
-            "height": ""
+        "prices": {
+            "price": "90000",
+            "regular_price": "90000",
+            "sale_price": "90000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
         },
-        "shipping_required": true,
-        "shipping_taxable": true,
-        "shipping_class": "",
-        "shipping_class_id": 0,
-        "reviews_allowed": true,
-        "average_rating": "5.00",
-        "rating_count": 3,
-        "upsell_ids": [],
-        "cross_sell_ids": [],
-        "parent_id": 0,
-        "purchase_note": "",
-        "categories": [
-            {
-                "id": 1378,
-                "name": "Accessories",
-                "slug": "accessories"
-            }
-        ],
-        "tags": [],
+        "price_html": "<span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;90.000</span>",
+        "average_rating": "0",
+        "review_count": 0,
         "images": [
             {
                 "id": 75,
-                "date_created": "2020-08-10T18:58:03",
-                "date_created_gmt": "2020-08-10T16:58:03",
-                "date_modified": "2020-08-10T18:58:03",
-                "date_modified_gmt": "2020-08-10T16:58:03",
-                "src": "https://i2.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?fit=801%2C801&ssl=1",
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?fit=801%2C801&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?w=801&ssl=1 801w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/sunglasses-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 801px) 100vw, 801px",
                 "name": "sunglasses-2.jpg",
                 "alt": ""
             }
         ],
-        "attributes": [],
-        "default_attributes": [],
-        "variations": [],
-        "grouped_products": [],
-        "menu_order": 0,
-        "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;90.000</bdi></span>",
-        "related_ids": [
-            44,
-            45,
-            43,
-            60
-        ],
-        "meta_data": [
+        "categories": [
             {
-                "id": 295,
-                "key": "_created_via",
-                "value": "ajax-product-importer"
-            },
-            {
-                "id": 697,
-                "key": "_wpcom_is_markdown",
-                "value": "1"
+                "id": 1378,
+                "name": "Accessories",
+                "slug": "accessories",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/accessories/"
             }
         ],
-        "stock_status": "instock",
-        "jetpack_publicize_connections": [],
-        "jetpack_likes_enabled": true,
-        "jetpack_sharing_enabled": true,
-        "amp_enabled": true,
-        "_links": {
-            "self": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products/46"
-                }
-            ],
-            "collection": [
-                {
-                    "href": "https://hichamwootest.wpcomstaging.com/wp-json/wc/v3/products"
-                }
-            ]
+        "tags": [],
+        "attributes": [],
+        "variations": [],
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Sunglasses&rdquo; to your cart",
+            "url": "?add-to-cart=46"
+        }
+    },
+    {
+        "id": 45,
+        "name": "Cap",
+        "parent": 0,
+        "type": "simple",
+        "variation": "",
+        "permalink": "https://hichamwootest.wpcomstaging.com/product/cap/",
+        "sku": "woo-cap",
+        "short_description": "<p>This is a simple product.</p>",
+        "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>",
+        "on_sale": true,
+        "prices": {
+            "price": "16000",
+            "regular_price": "18000",
+            "sale_price": "16000",
+            "price_range": null,
+            "currency_code": "USD",
+            "currency_symbol": "${'$'}",
+            "currency_minor_unit": 3,
+            "currency_decimal_separator": ".",
+            "currency_thousand_separator": ",",
+            "currency_prefix": "${'$'} ",
+            "currency_suffix": ""
+        },
+        "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;18.000</span></del> <ins><span class=\"woocommerce-Price-amount amount\"><span class=\"woocommerce-Price-currencySymbol\">&#036;</span>&nbsp;16.000</span></ins>",
+        "average_rating": "5.00",
+        "review_count": 2,
+        "images": [
+            {
+                "id": 74,
+                "src": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?fit=801%2C801&ssl=1",
+                "thumbnail": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=324%2C324&ssl=1",
+                "srcset": "https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?w=801&ssl=1 801w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=300%2C300&ssl=1 300w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=150%2C150&ssl=1 150w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=768%2C768&ssl=1 768w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=400%2C400&ssl=1 400w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=200%2C200&ssl=1 200w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=350%2C350&ssl=1 350w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=750%2C750&ssl=1 750w, https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/cap-2.jpg?resize=100%2C100&ssl=1 100w",
+                "sizes": "(max-width: 801px) 100vw, 801px",
+                "name": "cap-2.jpg",
+                "alt": ""
+            }
+        ],
+        "categories": [
+            {
+                "id": 1378,
+                "name": "Accessories",
+                "slug": "accessories",
+                "link": "https://hichamwootest.wpcomstaging.com/product-category/clothing/accessories/"
+            }
+        ],
+        "tags": [],
+        "attributes": [],
+        "variations": [],
+        "has_options": false,
+        "is_purchasable": true,
+        "is_in_stock": true,
+        "is_on_backorder": false,
+        "low_stock_remaining": null,
+        "sold_individually": false,
+        "quantity_limit": 99,
+        "add_to_cart": {
+            "text": "Add to cart",
+            "description": "Add &ldquo;Cap&rdquo; to your cart",
+            "url": "?add-to-cart=45"
         }
     }
 ]

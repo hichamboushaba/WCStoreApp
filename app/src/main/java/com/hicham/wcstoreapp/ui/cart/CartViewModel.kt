@@ -24,22 +24,25 @@ class CartViewModel @Inject constructor(
 
     init {
         uiState = combine(
-            cartRepository.items,
+            cartRepository.cart,
             currencyFormatProvider.formatSettings
-        ) { cartItems, formatSettings ->
+        ) { cart, formatSettings ->
             val currencyFormatter = CurrencyFormatter(formatSettings)
-            val items = cartItems.map {
+            val items = cart.items.map {
                 CartItemUiModel(
                     product = it.product,
                     quantity = it.quantity,
-                    totalPriceFormatted = currencyFormatter.format(it.product.price.multiply(it.quantity.toBigDecimal()))
+                    totalPriceFormatted = currencyFormatter.format(it.totals.subtotal)
                 )
             }
-            val totalPrice = cartItems.sumOf { it.product.price * it.quantity.toBigDecimal() }
             CartUiState(
                 cartItems = items,
-                subtotalFormatted = currencyFormatter.format(totalPrice),
-                totalFormatted = currencyFormatter.format(totalPrice)
+                subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
+                taxFormatted = currencyFormatter.format(cart.totals.tax),
+                shippingCost = cart.totals.shippingEstimate?.let {
+                    currencyFormatter.format(it)
+                },
+                totalFormatted = currencyFormatter.format(cart.totals.total)
             )
         }
             .flowOn(Dispatchers.Default)
@@ -79,10 +82,10 @@ class CartViewModel @Inject constructor(
     data class CartUiState(
         val cartItems: List<CartItemUiModel> = emptyList(),
         val subtotalFormatted: String = "",
+        val taxFormatted: String = "",
+        val shippingCost: String? = null,
         val totalFormatted: String = ""
-    ) {
-        val shippingCost: String = "Free" // TODO
-    }
+    )
 
     data class CartItemUiModel(
         val product: Product,

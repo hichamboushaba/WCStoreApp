@@ -8,7 +8,7 @@ import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.data.product.network.NetworkProductsPagingSource
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.models.toProduct
+import com.hicham.wcstoreapp.models.toDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -31,7 +31,9 @@ class DBProductsRepository @Inject constructor(
                 productDao.pagingSource()
             }.flow
                 .map { pagingData ->
-                    pagingData.map { it.toProduct() }
+                    pagingData.map {
+                        it.toDomainModel()
+                    }
                 }
         } else {
             // We don't support offline data when filtering by any
@@ -45,6 +47,7 @@ class DBProductsRepository @Inject constructor(
 
 
     override suspend fun getProduct(id: Long): Product {
-        return productDao.getProduct(id)?.toProduct() ?: wooCommerceApi.getProduct(id).toProduct()
+        return productDao.getProduct(id)?.toDomainModel() ?: wooCommerceApi.getProduct(id)
+            .toDomainModel()
     }
 }
