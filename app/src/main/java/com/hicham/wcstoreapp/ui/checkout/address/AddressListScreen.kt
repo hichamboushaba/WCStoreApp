@@ -1,7 +1,6 @@
 package com.hicham.wcstoreapp.ui.checkout.address
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,15 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.Effect
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.common.components.IndeterminateLoadingDialog
 import com.hicham.wcstoreapp.ui.common.components.ToolbarScreen
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -67,25 +64,7 @@ private fun AddressListScreen(
         onNavigationClick = onBack
     ) { paddingValues ->
         if (isLoading) {
-            Dialog(
-                onDismissRequest = {},
-                properties = DialogProperties(
-                    dismissOnBackPress = false,
-                    dismissOnClickOutside = false
-                )
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .background(
-                            MaterialTheme.colors.surface,
-                            shape = MaterialTheme.shapes.small
-                        )
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
+            IndeterminateLoadingDialog()
         }
         Column(
             Modifier
