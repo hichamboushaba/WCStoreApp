@@ -19,7 +19,7 @@ data class Address(
     val phone: String?,
     val email: String?,
     val city: String,
-    val state: String?,
+    val state: String,
     val postCode: String,
     val country: String,
 ) : Parcelable {
@@ -29,7 +29,7 @@ data class Address(
                 append(firstName)
                 append(" ")
                 append(lastName)
-                if (phone != null) {
+                if (!phone.isNullOrEmpty()) {
                     append("\n")
                     append(phone)
                     append("\n")
@@ -38,16 +38,14 @@ data class Address(
             append("\n")
             append(street1)
             append("\n")
-            street2?.let {
-                append(it)
+            if (!street2.isNullOrEmpty()) {
+                append(street2)
                 append("\n")
             }
             append(city)
             append(",")
-            state?.let {
-                append(" ")
-                append(it)
-            }
+            append(" ")
+            append(state)
             append(" ")
             append(postCode)
             append("\n")
@@ -63,7 +61,7 @@ fun NetworkAddress.toDomainModel() = Address(
     street2 = address2,
     email = email,
     city = city,
-    state = state,
+    state = state.orEmpty(),
     postCode = postcode,
     country = country,
     phone = phone,

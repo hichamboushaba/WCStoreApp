@@ -15,7 +15,7 @@ data class AddressEntity(
     val phone: String?,
     val email: String?,
     val city: String,
-    val state: String?,
+    val state: String,
     val postCode: String,
     val country: String
 ) {
