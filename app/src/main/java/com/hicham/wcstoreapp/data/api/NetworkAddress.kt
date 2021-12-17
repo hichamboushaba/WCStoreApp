@@ -3,9 +3,6 @@ package com.hicham.wcstoreapp.data.api
 import com.hicham.wcstoreapp.models.Address
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.json.jsonObject
 
 @Serializable
 data class NetworkAddress(
@@ -27,12 +24,7 @@ data class NetworkAddress(
     val country: String,
     val email: String? = null,
     val phone: String? = null
-) {
-    // TODO check if this override is enough for Retrofit's use
-    override fun toString(): String {
-        return Json.encodeToJsonElement(this).jsonObject.toMap().toString()
-    }
-}
+)
 
 fun Address.toNetworkAddress(): NetworkAddress {
     return NetworkAddress(
