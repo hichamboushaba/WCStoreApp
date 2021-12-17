@@ -40,10 +40,8 @@ class CartViewModel @Inject constructor(
                     cartItems = items,
                     subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
                     taxFormatted = currencyFormatter.format(cart.totals.tax),
-                    shippingCost = cart.totals.shippingEstimate?.let {
-                        currencyFormatter.format(it)
-                    },
-                    totalFormatted = currencyFormatter.format(cart.totals.total)
+                    // Since we don't show shipping cost here, let's calculate the total manually
+                    totalFormatted = currencyFormatter.format(cart.totals.subtotal + cart.totals.tax)
                 )
             }
         }.launchIn(viewModelScope)
@@ -90,7 +88,6 @@ class CartViewModel @Inject constructor(
         val cartItems: List<CartItemUiModel> = emptyList(),
         val subtotalFormatted: String = "",
         val taxFormatted: String = "",
-        val shippingCost: String? = null,
         val totalFormatted: String = ""
     )
 

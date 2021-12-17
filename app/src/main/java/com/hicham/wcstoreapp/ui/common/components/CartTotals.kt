@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 fun CartTotals(
     subtotal: String,
     tax: String,
-    shippingCost: String?,
     total: String,
     buttonLabel: String,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    shippingCost: String? = null,
     buttonEnabled: Boolean = true,
 ) {
     Surface(

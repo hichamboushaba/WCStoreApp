@@ -124,7 +124,6 @@ fun CartScreen(
                 CartTotals(
                     subtotal = state.subtotalFormatted,
                     tax = state.taxFormatted,
-                    shippingCost = state.shippingCost,
                     total = state.totalFormatted,
                     buttonLabel = "Checkout",
                     onButtonClick = onCheckout
