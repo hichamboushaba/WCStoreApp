@@ -54,18 +54,20 @@ fun CartTotals(
                     style = MaterialTheme.typography.subtitle2
                 )
             }
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Shipping",
-                    style = MaterialTheme.typography.subtitle1
-                )
-                Text(
-                    text = shippingCost ?: "Calculated during checkout",
-                    style = MaterialTheme.typography.subtitle2
-                )
+            if (shippingCost != null) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Shipping",
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                    Text(
+                        text = shippingCost,
+                        style = MaterialTheme.typography.subtitle2
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.size(16.dp))

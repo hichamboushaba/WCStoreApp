@@ -3,7 +3,6 @@ package com.hicham.wcstoreapp.ui.checkout
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.cart.CartRepository
-import com.hicham.wcstoreapp.data.cart.items
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Address
@@ -34,18 +33,17 @@ class CheckoutViewModel @Inject constructor(
     init {
         combine(
             checkoutRepository.checkout,
-            cartRepository.items,
+            cartRepository.cart,
             currencyFormatProvider.formatSettings
-        ) { checkoutData, cartItems, formatSettings ->
+        ) { checkoutData, cart, formatSettings ->
             val currencyFormatter = CurrencyFormatter(formatSettings)
-            val totalPrice = currencyFormatter.format(
-                price = cartItems.sumOf { it.product.prices.price * it.quantity.toBigDecimal() }
-            )
             _uiState.update { state ->
                 state.copy(
                     selectedPaymentMethod = checkoutData.paymentMethod,
-                    subtotalFormatted = totalPrice,
-                    totalFormatted = totalPrice
+                    subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
+                    taxFormatted = currencyFormatter.format(cart.totals.tax),
+                    shippingCost = cart.totals.shippingEstimate?.let { currencyFormatter.format(it) },
+                    totalFormatted = currencyFormatter.format(cart.totals.total)
                 )
             }
         }
@@ -135,11 +133,12 @@ class CheckoutViewModel @Inject constructor(
         val shippingAddress: Address? = null,
         val isBillingSameAsShippingAddress: Boolean = true,
         val billingAddress: Address? = null,
+        val shippingCost: String? = null,
         val selectedPaymentMethod: PaymentMethod? = null,
         val subtotalFormatted: String = "",
         val taxFormatted: String = "",
         val totalFormatted: String = ""
     ) {
-        val shippingCost: String = "Free" // TODO
+        val isValid = shippingAddress != null && selectedPaymentMethod != null
     }
 }

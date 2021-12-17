@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -58,9 +59,19 @@ private fun CheckoutScreen(
                     .padding(horizontal = 16.dp)
             ) {
                 Column(Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Shipping Address", style = MaterialTheme.typography.subtitle1
-                    )
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text(
+                            text = "Shipping Address",
+                            style = MaterialTheme.typography.subtitle1
+                        )
+
+                        Text(
+                            text = state.shippingAddress?.label.orEmpty(),
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
                     Spacer(modifier = Modifier.size(16.dp))
                     if (state.shippingAddress == null) {
                         OutlinedButton(
@@ -155,7 +166,7 @@ private fun CheckoutScreen(
             tax = state.taxFormatted,
             shippingCost = state.shippingCost,
             buttonLabel = "Place Order",
-            buttonEnabled = state.shippingAddress != null,
+            buttonEnabled = state.isValid,
             onButtonClick = onPlaceOrder
         )
     }
