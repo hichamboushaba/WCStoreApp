@@ -10,6 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.consumeAllChanges
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.data.api.NetworkProduct
@@ -127,6 +131,22 @@ fun CartScreen(
                 )
             }
         }
+        if (state.isUpdatingCart) {
+            Box(modifier = Modifier
+                .pointerInput(Unit) {
+                    // Consume all events to prevent clicking on other views
+                    awaitPointerEventScope {
+                        while (true) {
+                            awaitPointerEvent(pass = PointerEventPass.Initial)
+                                .changes
+                                .forEach(PointerInputChange::consumeAllChanges)
+                        }
+                    }
+                }
+                .fillMaxSize()) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
     }
 }
 
@@ -160,6 +180,39 @@ private fun CartPreview() {
         )
     }
     val state = CartViewModel.CartUiState(
+        cartItems = items + items,
+        subtotalFormatted = "10$",
+        totalFormatted = "10$"
+    )
+    CartScreen(
+        state = state,
+        onIncreaseQuantity = {},
+        onDecreaseQuantity = {},
+        onRemoveProduct = {},
+        onCheckout = {},
+        onBack = {},
+        onGoToProducts = {}
+    )
+}
+
+@Preview
+@Composable
+private fun CartUpdatingPreview() {
+    val productsList = Json {
+        ignoreUnknownKeys = true
+    }.decodeFromString(ListSerializer(NetworkProduct.serializer()), PRODUCTS_JSON)
+        .map { it.toDomainModel() }
+        .take(3)
+
+    val items = productsList.map {
+        CartViewModel.CartItemUiModel(
+            product = it,
+            totalPriceFormatted = "10 $",
+            quantity = 1
+        )
+    }
+    val state = CartViewModel.CartUiState(
+        isUpdatingCart = true,
         cartItems = items + items,
         subtotalFormatted = "10$",
         totalFormatted = "10$"
