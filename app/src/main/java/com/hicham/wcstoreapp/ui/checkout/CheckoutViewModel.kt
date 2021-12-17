@@ -9,14 +9,13 @@ import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
 import com.hicham.wcstoreapp.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import logcat.asLog
-import logcat.logcat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +29,8 @@ class CheckoutViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _retryTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+
     init {
         combine(
             checkoutRepository.checkout,
@@ -39,6 +40,8 @@ class CheckoutViewModel @Inject constructor(
             val currencyFormatter = CurrencyFormatter(formatSettings)
             _uiState.update { state ->
                 state.copy(
+                    isLoading = false,
+                    loadingFailed = false,
                     selectedPaymentMethod = checkoutData.paymentMethod,
                     subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
                     taxFormatted = currencyFormatter.format(cart.totals.tax),
@@ -48,10 +51,10 @@ class CheckoutViewModel @Inject constructor(
             }
         }
             .onStart { _uiState.update { it.copy(isLoading = true) } }
-            .onEach { _uiState.update { it.copy(isLoading = false) } }
-            .catch {
-                logcat { it.asLog() }
-                TODO("Handle error")
+            .retry {
+                _uiState.update { it.copy(loadingFailed = true) }
+                _retryTrigger.first()
+                true
             }
             .launchIn(viewModelScope)
 
@@ -94,7 +97,7 @@ class CheckoutViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, isShowingPaymentMethodSelector = false) }
             if (paymentMethod != _uiState.value.selectedPaymentMethod) {
                 checkoutRepository.updatePaymentMethod(paymentMethod).onFailure {
-                    //TODO
+                    triggerEffect(ShowSnackbar("Error while updating the payment method"))
                 }
             }
             _uiState.update { it.copy(isLoading = false) }
@@ -121,14 +124,19 @@ class CheckoutViewModel @Inject constructor(
                     }
                 },
                 onFailure = {
-                    //TODO show a snackbar
+                    triggerEffect(ShowSnackbar("Error while processing the order"))
                 }
             )
         }
     }
 
+    fun onRetryClicked() {
+        _retryTrigger.tryEmit(Unit)
+    }
+
     data class UiState(
         val isLoading: Boolean = false,
+        val loadingFailed: Boolean = false,
         val isShowingPaymentMethodSelector: Boolean = false,
         val shippingAddress: Address? = null,
         val isBillingSameAsShippingAddress: Boolean = true,
