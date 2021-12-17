@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import com.hicham.wcstoreapp.data.api.NetworkAddress
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class Address(
@@ -49,7 +50,7 @@ data class Address(
             append(" ")
             append(postCode)
             append("\n")
-            append(country)
+            append(Locale("", country).displayCountry)
         }
     }
 }

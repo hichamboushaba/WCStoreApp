@@ -32,6 +32,8 @@ fun Address.toNetworkAddress(): NetworkAddress {
         lastName = lastName,
         address1 = street1,
         address2 = street2,
+        phone = phone,
+        email = email,
         city = city,
         state = state,
         postcode = postCode,
