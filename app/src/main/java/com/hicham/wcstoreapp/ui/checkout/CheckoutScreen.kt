@@ -126,7 +126,7 @@ private fun CheckoutScreen(
                 )
 
                 Text(
-                    text = state.selectedPaymentMethod.title,
+                    text = state.selectedPaymentMethod?.title.orEmpty(),
                     style = MaterialTheme.typography.body1
                 )
                 OutlinedButton(
@@ -142,6 +142,7 @@ private fun CheckoutScreen(
         CartTotals(
             subtotal = state.subtotalFormatted,
             total = state.totalFormatted,
+            tax = state.taxFormatted,
             shippingCost = state.shippingCost,
             buttonLabel = "Place Order",
             buttonEnabled = state.shippingAddress != null,

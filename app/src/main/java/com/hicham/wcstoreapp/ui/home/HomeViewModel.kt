@@ -21,10 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     repository: ProductsRepository,
-    currencyFormatProvider: CurrencyFormatProvider,
     private val cartRepository: CartRepository,
     private val categoryRepository: CategoryRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     companion object {
         val ALL_CATEGORY = Category(-1L, "All")

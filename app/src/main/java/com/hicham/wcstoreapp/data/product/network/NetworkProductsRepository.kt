@@ -8,7 +8,7 @@ import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.models.toProduct
+import com.hicham.wcstoreapp.models.toDomainModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -27,6 +27,6 @@ class NetworkProductsRepository @Inject constructor(
     }
 
     override suspend fun getProduct(id: Long): Product {
-        return wooCommerceApi.getProduct(id).toProduct()
+        return wooCommerceApi.getProduct(id).toDomainModel()
     }
 }

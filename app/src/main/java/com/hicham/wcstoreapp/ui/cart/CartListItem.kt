@@ -15,12 +15,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.size.Scale
 import com.hicham.wcstoreapp.R
-import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.data.Fakes
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Minus
 import compose.icons.tablericons.Plus
 import compose.icons.tablericons.Trash
-import java.math.BigDecimal
 
 @Composable
 fun CartListItem(
@@ -51,7 +50,11 @@ fun CartListItem(
                 Text(text = item.product.name, style = MaterialTheme.typography.subtitle1)
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(text = item.totalPriceFormatted, style = MaterialTheme.typography.subtitle2)
-                ItemQuantity(quantity = item.quantity, onAdd = onIncreaseQuantity, onDecrease = onDecreaseQuantity)
+                ItemQuantity(
+                    quantity = item.quantity,
+                    onAdd = onIncreaseQuantity,
+                    onDecrease = onDecreaseQuantity
+                )
             }
 
             IconButton(onClick = onRemove) {
@@ -88,14 +91,7 @@ private fun ItemQuantity(quantity: Int, onAdd: () -> Unit, onDecrease: () -> Uni
 @Composable
 fun CartListItemPreview() {
     val item = CartViewModel.CartItemUiModel(
-        product = Product(
-            id = 0L,
-            name = "product",
-            images = listOf("https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1"),
-            price = BigDecimal.TEN,
-            shortDescription = "",
-            description = ""
-        ),
+        product = Fakes.product,
         totalPriceFormatted = "20 $",
         quantity = 1
     )

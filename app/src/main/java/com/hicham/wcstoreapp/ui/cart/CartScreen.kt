@@ -12,10 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hicham.wcstoreapp.data.product.fake.PRODUCTS_JSON
 import com.hicham.wcstoreapp.data.api.NetworkProduct
+import com.hicham.wcstoreapp.data.product.fake.PRODUCTS_JSON
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.models.toProduct
+import com.hicham.wcstoreapp.models.toDomainModel
 import com.hicham.wcstoreapp.ui.common.components.CartTotals
 import com.hicham.wcstoreapp.ui.common.components.WCTopAppBar
 import compose.icons.TablerIcons
@@ -119,6 +119,7 @@ fun CartScreen(
 
                 CartTotals(
                     subtotal = state.subtotalFormatted,
+                    tax = state.taxFormatted,
                     shippingCost = state.shippingCost,
                     total = state.totalFormatted,
                     buttonLabel = "Checkout",
@@ -148,7 +149,7 @@ private fun EmptyCartPreview() {
 private fun CartPreview() {
     val productsList =
         Json.decodeFromString(ListSerializer(NetworkProduct.serializer()), PRODUCTS_JSON)
-            .map { it.toProduct() }
+            .map { it.toDomainModel() }
             .take(3)
 
     val items = productsList.map {

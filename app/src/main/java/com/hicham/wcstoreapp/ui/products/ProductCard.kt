@@ -26,9 +26,9 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberImagePainter
 import coil.size.Scale
 import com.hicham.wcstoreapp.R
+import com.hicham.wcstoreapp.data.Fakes
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.theme.WCStoreAppTheme
-import java.math.BigDecimal
 
 @Composable
 fun ProductCard(
@@ -163,14 +163,7 @@ fun DefaultCard() {
     WCStoreAppTheme {
         ProductCard(
             uiModel = ProductUiModel(
-                product = Product(
-                    id = 0L,
-                    name = "product",
-                    images = listOf("https://i0.wp.com/hichamwootest.wpcomstaging.com/wp-content/uploads/2020/08/logo-1.jpg?fit=800%2C799&ssl=1"),
-                    price = BigDecimal.TEN,
-                    shortDescription = "",
-                    description = ""
-                ),
+                product = Fakes.product,
                 priceFormatted = "20 USD",
                 quantityInCart = 1
             ),

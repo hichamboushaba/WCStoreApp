@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,6 +53,10 @@ class AddAddressViewModel @Inject constructor(
                 return@let
             }
 
+            // Check country
+            val countryCode = Locale.getISOCountries()
+                .firstOrNull { Locale("", it).displayCountry == state.country.content } ?: TODO()
+
             viewModelScope.launch {
                 val address = Address(
                     label = state.addressLabel.content,
@@ -63,7 +68,7 @@ class AddAddressViewModel @Inject constructor(
                     city = state.city.content,
                     state = state.state.content,
                     postCode = state.postCode.content,
-                    country = state.country.content
+                    country = countryCode
                 )
                 addressRepository.addAddress(address)
                 navigationManager.navigateBackWithResult(ADDRESS_RESULT, address)
@@ -95,7 +100,7 @@ class AddAddressViewModel @Inject constructor(
         val street2: OptionalField = OptionalField(""),
         val phone: PhoneField = PhoneField(""),
         val city: RequiredField = RequiredField(""),
-        val state: OptionalField = OptionalField(""),
+        val state: RequiredField = RequiredField(""),
         val postCode: RequiredField = RequiredField(""),
         val country: RequiredField = RequiredField(""),
         val showDiscardChangesDialog: Boolean = false
