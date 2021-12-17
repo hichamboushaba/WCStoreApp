@@ -38,8 +38,8 @@ class NetworkCheckoutRepository @Inject constructor(
         shippingAddress: Address,
         billingAddress: Address
     ): Result<Long> {
-        // TODO remove this hardcoding of paymentmethod
-        val paymentMethod = checkoutState.first().paymentMethod.ifEmpty { PaymentMethod.CASH.value }
+        val paymentMethod = checkoutState.first().paymentMethod
+            .ifEmpty { error("Empty payment method") }
         return runCatchingNetworkErrors {
             wooCommerceApi.placeOrder(
                 NetworkPlaceOrderRequest(
