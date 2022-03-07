@@ -11,6 +11,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ktor.client.*
+import io.ktor.client.features.logging.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.json.Json
 import logcat.LogPriority
@@ -63,6 +65,16 @@ abstract class NetworkModule {
         @Provides
         fun providesApi(retrofit: Retrofit): WooCommerceApi {
             return retrofit.create(WooCommerceApi::class.java)
+        }
+
+        @Provides
+        @Singleton
+        fun providesKtorClient(): HttpClient {
+            return HttpClient {
+                install(Logging) {
+                    level = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
+                }
+            }
         }
     }
 }
