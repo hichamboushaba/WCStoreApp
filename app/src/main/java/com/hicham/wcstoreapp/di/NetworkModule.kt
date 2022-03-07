@@ -69,10 +69,10 @@ abstract class NetworkModule {
                 .build()
         }
 
-        @Provides
-        fun providesApi(retrofit: Retrofit): WooCommerceApi {
-            return retrofit.create(WooCommerceApi::class.java)
-        }
+//        @Provides
+//        fun providesApiLegacy(retrofit: Retrofit): WooCommerceApi {
+//            return retrofit.create(WooCommerceApi::class.java)
+//        }
 
         @Provides
         @Singleton
@@ -88,11 +88,19 @@ abstract class NetworkModule {
                 install(Logging) {
                     level = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
                 }
+                install(JsonFeature) {
+                    serializer = KotlinxSerializer(json)
+                }
 
                 HttpResponseValidator {
                     handleResponseException {  }
                 }
             }
+        }
+
+        @Provides
+        fun providesApi(httpClient: HttpClient): WooCommerceApi {
+            return WooCommerceApiKtorImpl(httpClient)
         }
     }
 }
