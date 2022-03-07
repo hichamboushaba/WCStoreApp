@@ -14,6 +14,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.features.*
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -74,7 +76,7 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
-        fun providesKtorClient(): HttpClient {
+        fun providesKtorClient(json: Json): HttpClient {
             val baseUrl = URL(BuildConfig.WC_URL)
             return HttpClient {
                 defaultRequest {
