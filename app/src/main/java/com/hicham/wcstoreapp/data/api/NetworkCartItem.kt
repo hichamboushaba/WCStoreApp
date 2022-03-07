@@ -15,8 +15,8 @@ data class NetworkCartItem(
     val id: Long,
     val quantity: Int,
 
-    @SerialName("quantity_limit")
-    val quantityLimit: Long,
+    @SerialName("quantity_limits")
+    val quantityLimits: QuantityLimits,
 
     val name: String,
     val summary: String? = null,
@@ -60,3 +60,9 @@ data class NetworkItemTotals(
     @SerialName("line_total_tax")
     val lineTotalTax: BigDecimal
 ) : NetworkFormattable()
+
+@Serializable
+data class QuantityLimits(
+    @SerialName("maximum")
+    val maximum: Long
+)
