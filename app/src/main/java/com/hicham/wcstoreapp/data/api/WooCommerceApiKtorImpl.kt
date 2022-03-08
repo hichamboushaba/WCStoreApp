@@ -2,7 +2,6 @@ package com.hicham.wcstoreapp.data.api
 
 import io.ktor.client.*
 import io.ktor.client.request.*
-import io.ktor.client.request.forms.*
 import io.ktor.http.*
 
 class WooCommerceApiKtorImpl(private val client: HttpClient) : WooCommerceApi {
@@ -68,12 +67,6 @@ class WooCommerceApiKtorImpl(private val client: HttpClient) : WooCommerceApi {
 
     override suspend fun getCheckout(): NetworkCheckout {
         return client.get(ApiRoutes.CHECKOUT)
-    }
-
-    override suspend fun updateCheckout(paymentMethod: String): NetworkCheckout {
-        return client.put(ApiRoutes.CHECKOUT) {
-            body = FormDataContent(parametersOf("payment_method", paymentMethod))
-        }
     }
 
     override suspend fun placeOrder(request: NetworkPlaceOrderRequest): NetworkCheckout {

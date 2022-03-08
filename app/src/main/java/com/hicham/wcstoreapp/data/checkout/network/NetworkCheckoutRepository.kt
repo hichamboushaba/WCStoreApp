@@ -26,12 +26,9 @@ class NetworkCheckoutRepository @Inject constructor(
         }
 
     override suspend fun updatePaymentMethod(paymentMethod: PaymentMethod): Result<Unit> =
-        runCatchingNetworkErrors {
-            checkoutState.emit(
-                wooCommerceApi.updateCheckout(
-                    paymentMethod = paymentMethod.value
-                )
-            )
+        runCatching {
+            val currentCheckout = checkoutState.first()
+            checkoutState.emit(currentCheckout.copy(paymentMethod = paymentMethod.value))
         }
 
     override suspend fun placeOrder(

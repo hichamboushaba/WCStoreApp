@@ -47,12 +47,6 @@ interface WooCommerceApi {
     @GET(ApiRoutes.CHECKOUT)
     suspend fun getCheckout(): NetworkCheckout
 
-    @FormUrlEncoded
-    @PUT(ApiRoutes.CHECKOUT)
-    suspend fun updateCheckout(
-        @Field("payment_method") paymentMethod: String
-    ): NetworkCheckout
-
     @POST(ApiRoutes.CHECKOUT)
     suspend fun placeOrder(
         @Body request: NetworkPlaceOrderRequest
