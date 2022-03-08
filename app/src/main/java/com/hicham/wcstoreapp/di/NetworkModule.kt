@@ -6,7 +6,9 @@ import com.hicham.wcstoreapp.BuildConfig
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.WooCommerceApiKtorImpl
 import com.hicham.wcstoreapp.util.DataStoreCookieJar
+import com.hicham.wcstoreapp.util.KtorDataStorCookiesStorage
 import com.hicham.wcstoreapp.util.NonceInterceptor
+import com.hicham.wcstoreapp.util.NonceKtorPlugin
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -14,6 +16,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.features.*
+import io.ktor.client.features.cookies.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
@@ -76,7 +79,7 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
-        fun providesKtorClient(json: Json): HttpClient {
+        fun providesKtorClient(json: Json, dataStore: DataStore<Preferences>): HttpClient {
             val baseUrl = URL(BuildConfig.WC_URL)
             return HttpClient {
                 defaultRequest {
@@ -91,9 +94,13 @@ abstract class NetworkModule {
                 install(JsonFeature) {
                     serializer = KotlinxSerializer(json)
                 }
+                install(NonceKtorPlugin(dataStore))
+                install(HttpCookies) {
+                    storage = KtorDataStorCookiesStorage(dataStore)
+                }
 
                 HttpResponseValidator {
-                    handleResponseException {  }
+                    handleResponseException { }
                 }
             }
         }
