@@ -31,43 +31,42 @@ interface WooCommerceApi {
         @Query("quantity") quantity: Int = 1
     ): NetworkCart
 
-    @POST("/wp-json/wc/store/cart/remove-item")
+    @POST(ApiRoutes.CART_REMOVE)
     suspend fun removeItemFromCart(
         @Query("key") key: String
     ): NetworkCart
 
-    @POST("/wp-json/wc/store/cart/remove-item")
-    suspend fun updateCartItem(
-        @Query("key") key: String,
-        @Query("quantity") quantity: Int
-    )
-
-    @DELETE("/cart/items")
+    @DELETE(ApiRoutes.CART_ITEMS)
     suspend fun clearCart()
 
-    @POST("/wp-json/wc/store/cart/update-customer")
+    @POST(ApiRoutes.UPDATE_CUSTOMER)
     suspend fun updateCustomer(
         @Body request: NetworkUpdateCustomerRequest
     ): NetworkCart
 
-    @GET("/wp-json/wc/store/checkout")
+    @GET(ApiRoutes.CHECKOUT)
     suspend fun getCheckout(): NetworkCheckout
 
     @FormUrlEncoded
-    @PUT("/wp-json/wc/store/checkout")
+    @PUT(ApiRoutes.CHECKOUT)
     suspend fun updateCheckout(
         @Field("payment_method") paymentMethod: String
     ): NetworkCheckout
 
-    @POST("/wp-json/wc/store/checkout")
+    @POST(ApiRoutes.CHECKOUT)
     suspend fun placeOrder(
         @Body request: NetworkPlaceOrderRequest
     ): NetworkCheckout
 }
 
 object ApiRoutes {
-    const val PRODUCTS = "/wp-json/wc/store/products"
-    const val CATEGORIES = "/wp-json/wc/store/products/categories"
-    const val CART = "/wp-json/wc/store/cart"
-    const val CART_ADD = "/wp-json/wc/store/cart/add-item"
+    private const val STORE = "/wp-json/wc/store"
+    const val PRODUCTS = "$STORE/products"
+    const val CATEGORIES = "$STORE/products/categories"
+    const val CART = "$STORE/cart"
+    const val CART_ADD = "$CART/add-item"
+    const val CART_REMOVE = "$CART/remove-item"
+    const val CART_ITEMS = "$CART/items"
+    const val UPDATE_CUSTOMER = "$CART/update-customer"
+    const val CHECKOUT = "$STORE/checkout"
 }

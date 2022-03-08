@@ -2,8 +2,8 @@ package com.hicham.wcstoreapp.data.api
 
 import io.ktor.client.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
-import java.io.FileNotFoundException
 
 class WooCommerceApiKtorImpl(private val client: HttpClient) : WooCommerceApi {
     override suspend fun getProducts(
@@ -50,30 +50,36 @@ class WooCommerceApiKtorImpl(private val client: HttpClient) : WooCommerceApi {
     }
 
     override suspend fun removeItemFromCart(key: String): NetworkCart {
-        throw FileNotFoundException()
-    }
-
-    override suspend fun updateCartItem(key: String, quantity: Int) {
-        throw FileNotFoundException()
+        return client.post(ApiRoutes.CART_REMOVE) {
+            parameter("key", key)
+        }
     }
 
     override suspend fun clearCart() {
-        throw FileNotFoundException()
+        return client.delete(ApiRoutes.CART_ITEMS)
     }
 
     override suspend fun updateCustomer(request: NetworkUpdateCustomerRequest): NetworkCart {
-        throw FileNotFoundException()
+        return client.post(ApiRoutes.UPDATE_CUSTOMER) {
+            contentType(ContentType.Application.Json)
+            body = request
+        }
     }
 
     override suspend fun getCheckout(): NetworkCheckout {
-        throw FileNotFoundException()
+        return client.get(ApiRoutes.CHECKOUT)
     }
 
     override suspend fun updateCheckout(paymentMethod: String): NetworkCheckout {
-        throw FileNotFoundException()
+        return client.put(ApiRoutes.CHECKOUT) {
+            body = FormDataContent(parametersOf("payment_method", paymentMethod))
+        }
     }
 
     override suspend fun placeOrder(request: NetworkPlaceOrderRequest): NetworkCheckout {
-        throw FileNotFoundException()
+        return client.post(ApiRoutes.CHECKOUT) {
+            contentType(ContentType.Application.Json)
+            body = request
+        }
     }
 }
