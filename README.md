@@ -38,7 +38,7 @@ patterns, it uses the following technologies/patterns:
 - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
 - [Navigation Component](https://developer.android.com/guide/navigation)
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) for dependency injection
-- [Retrofit](https://square.github.io/retrofit/) for API calls
+- [Ktor](https://ktor.io/) for API calls
 - [Coil](https://coil-kt.github.io/coil/) for image's loading
 - [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html)
 - ...

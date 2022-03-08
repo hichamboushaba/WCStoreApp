@@ -1,55 +1,43 @@
 package com.hicham.wcstoreapp.data.api
 
-import retrofit2.http.*
-
 interface WooCommerceApi {
     // TODO remove the hardcoding of type simple when other types can be handled
-    @GET("${ApiRoutes.PRODUCTS}?type=simple")
     suspend fun getProducts(
-        @Query("per_page") pageSize: Int = 10,
-        @Query("offset") offset: Int = 0,
-        @Query("orderby") orderBy: String = "title",
-        @Query("order") order: String = "asc",
-        @Query("search") query: String? = null,
-        @Query("category") categoryId: String? = null,
+        pageSize: Int = 10,
+        offset: Int = 0,
+        orderBy: String = "title",
+        order: String = "asc",
+        query: String? = null,
+        categoryId: String? = null,
     ): List<NetworkProduct>
 
-    @GET("${ApiRoutes.PRODUCTS}/{productId}")
     suspend fun getProduct(
-        @Path("productId") productId: Long
+        productId: Long
     ): NetworkProduct
 
-    @GET("${ApiRoutes.CATEGORIES}?orderby=count&per_page=30")
     suspend fun getCategories(): List<NetworkCategory>
 
-    @GET(ApiRoutes.CART)
     suspend fun getCart(): NetworkCart
 
-    @POST(ApiRoutes.CART_ADD)
     suspend fun addItemToCart(
-        @Query("id") productId: Long,
-        @Query("quantity") quantity: Int = 1
+        productId: Long,
+        quantity: Int = 1
     ): NetworkCart
 
-    @POST(ApiRoutes.CART_REMOVE)
     suspend fun removeItemFromCart(
-        @Query("key") key: String
+        key: String
     ): NetworkCart
 
-    @DELETE(ApiRoutes.CART_ITEMS)
     suspend fun clearCart()
 
-    @POST(ApiRoutes.UPDATE_CUSTOMER)
     suspend fun updateCustomer(
-        @Body request: NetworkUpdateCustomerRequest
+        request: NetworkUpdateCustomerRequest
     ): NetworkCart
 
-    @GET(ApiRoutes.CHECKOUT)
     suspend fun getCheckout(): NetworkCheckout
 
-    @POST(ApiRoutes.CHECKOUT)
     suspend fun placeOrder(
-        @Body request: NetworkPlaceOrderRequest
+        request: NetworkPlaceOrderRequest
     ): NetworkCheckout
 }
 
