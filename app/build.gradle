@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation project(':shared')
+
     implementation libs.kotlin.reflect
 
     implementation libs.androidx.core
