@@ -8,14 +8,10 @@ import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.di.AppCoroutineScope
 import com.hicham.wcstoreapp.models.*
+import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import logcat.LogPriority
-import logcat.asLog
-import logcat.logcat
-import okio.IOException
-import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,17 +50,9 @@ class DBCartRepository @Inject constructor(
         .shareIn(appCoroutineScope, started = SharingStarted.WhileSubscribed(60000), replay = 1)
 
     private fun fetchCart() = appCoroutineScope.launch {
-        try {
+        runCatchingNetworkErrors {
             val networkCart = wooCommerceApi.getCart()
             cartUpdateService.updateCart(networkCart)
-        } catch (e: HttpException) {
-            logcat(priority = LogPriority.WARN) {
-                e.asLog()
-            }
-        } catch (e: IOException) {
-            logcat(priority = LogPriority.WARN) {
-                e.asLog()
-            }
         }
     }
 
@@ -143,27 +131,19 @@ class DBCartRepository @Inject constructor(
         action: suspend () -> NetworkCart,
         revertAction: suspend () -> Unit
     ): Result<Unit> {
-        suspend fun handleException(e: Exception) {
-            logcat(priority = LogPriority.WARN) {
-                e.asLog()
-            }
-            // Revert changes
-            revertAction()
-            // Attempt to refresh cart to fix any inconsistencies
-            fetchCart()
-        }
-
         isExecutingOperation = true
-        return try {
-            val networkCart = action()
-            cartUpdateService.updateCart(networkCart)
-            Result.success(Unit)
-        } catch (e: IOException) {
-            handleException(e)
-            Result.failure(e)
-        } catch (e: HttpException) {
-            handleException(e)
-            Result.failure(e)
+        try {
+            return runCatchingNetworkErrors(action)
+                .onSuccess {
+                    cartUpdateService.updateCart(it)
+                }
+                .onFailure {
+                    // Revert changes
+                    revertAction()
+                    // Attempt to refresh cart to fix any inconsistencies
+                    fetchCart()
+                }
+                .map { }
         } finally {
             isExecutingOperation = false
         }

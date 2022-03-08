@@ -9,9 +9,8 @@ import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.AppDatabase
 import com.hicham.wcstoreapp.data.db.entities.ProductEntity
 import com.hicham.wcstoreapp.data.db.entities.toEntity
+import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import logcat.logcat
-import retrofit2.HttpException
-import java.io.IOException
 
 @ExperimentalPagingApi
 class ProductRemoteMediator(
@@ -34,11 +33,13 @@ class ProductRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, ProductEntity>
     ): MediatorResult {
-        try {
+        return runCatchingNetworkErrors {
             // Calculate the offset of next call
             offset = when (loadType) {
                 LoadType.REFRESH -> 0
-                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+                LoadType.PREPEND -> return@runCatchingNetworkErrors MediatorResult.Success(
+                    endOfPaginationReached = true
+                )
                 LoadType.APPEND -> {
                     offset
                 }
@@ -73,11 +74,12 @@ class ProductRemoteMediator(
                 productDao.insertProduct(*products.toTypedArray())
             }
 
-            return MediatorResult.Success(endOfPaginationReached)
-        } catch (e: IOException) {
-            return MediatorResult.Error(e)
-        } catch (e: HttpException) {
-            return MediatorResult.Error(e)
-        }
+            return@runCatchingNetworkErrors MediatorResult.Success(endOfPaginationReached)
+        }.fold(
+            onSuccess = { it },
+            onFailure = {
+                MediatorResult.Error(it)
+            }
+        )
     }
 }

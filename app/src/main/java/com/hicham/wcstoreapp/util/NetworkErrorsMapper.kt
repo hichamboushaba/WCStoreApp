@@ -1,20 +1,21 @@
 package com.hicham.wcstoreapp.util
 
+import io.ktor.client.features.*
 import logcat.LogPriority
 import logcat.asLog
 import logcat.logcat
-import okio.IOException
-import retrofit2.HttpException
 
 suspend fun <T> Any.runCatchingNetworkErrors(block: suspend () -> T): Result<T> {
     return try {
         val result = block()
         Result.success(result)
-    } catch (e: IOException) {
+    } catch (e: ResponseException) {
         logcat(LogPriority.WARN) { e.asLog() }
         Result.failure(e)
-    } catch (e: HttpException) {
+    } catch (e: KtorNetworkException) {
         logcat(LogPriority.WARN) { e.asLog() }
         Result.failure(e)
     }
 }
+
+class KtorNetworkException(cause: Throwable): Exception(cause)

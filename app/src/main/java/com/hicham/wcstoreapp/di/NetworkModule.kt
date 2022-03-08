@@ -5,10 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import com.hicham.wcstoreapp.BuildConfig
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.WooCommerceApiKtorImpl
-import com.hicham.wcstoreapp.util.DataStoreCookieJar
-import com.hicham.wcstoreapp.util.KtorDataStorCookiesStorage
-import com.hicham.wcstoreapp.util.NonceInterceptor
-import com.hicham.wcstoreapp.util.NonceKtorPlugin
+import com.hicham.wcstoreapp.util.*
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -100,7 +97,18 @@ abstract class NetworkModule {
                 }
 
                 HttpResponseValidator {
-                    handleResponseException { }
+                    handleResponseException {
+                        when (it) {
+                            is ResponseException -> throw it
+                            else -> {
+                                // Ktor seems to throw whatever exceptions the engine throws in case
+                                // of network connections, let's map it to a wrapper exception to be
+                                // able to catch it without a broad [Throwable] catch block.
+                                // TODO remove this when this is fixed https://youtrack.jetbrains.com/issue/KTOR-2630
+                                throw KtorNetworkException(it)
+                            }
+                        }
+                    }
                 }
             }
         }
