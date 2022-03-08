@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hicham.wcstoreapp">
+    package="com.hicham.wcstoreapp.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.hicham.wcstoreapp.WCStoreApp"
+        android:name="com.hicham.wcstoreapp.android.WCStoreApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

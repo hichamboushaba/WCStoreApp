@@ -1,13 +1,12 @@
-package com.hicham.wcstoreapp
+package com.hicham.wcstoreapp.android
 
-import com.hicham.wcstoreapp.data.Status
-import com.hicham.wcstoreapp.data.product.ProductsRepository
-import com.hicham.wcstoreapp.data.source.network.FakeWooCommerceApi
+import com.hicham.wcstoreapp.android.data.Status
+import com.hicham.wcstoreapp.android.data.product.ProductsRepository
+import com.hicham.wcstoreapp.android.data.source.network.FakeWooCommerceApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
