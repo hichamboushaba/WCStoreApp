@@ -5,7 +5,7 @@ import com.hicham.wcstoreapp.android.data.api.NetworkCart
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.CartEntity
 import com.hicham.wcstoreapp.android.data.db.entities.toEntity
-import com.hicham.wcstoreapp.android.models.CartTotals
+import com.hicham.wcstoreapp.models.CartTotals
 import javax.inject.Inject
 
 class CartUpdateService @Inject constructor(private val database: AppDatabase) {

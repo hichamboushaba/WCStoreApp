@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.ui.products
 
-import com.hicham.wcstoreapp.android.models.Product
+import com.hicham.wcstoreapp.models.Product
 
 data class ProductUiModel(
     val product: Product,

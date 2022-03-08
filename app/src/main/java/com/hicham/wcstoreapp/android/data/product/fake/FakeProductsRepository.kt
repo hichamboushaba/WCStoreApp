@@ -2,10 +2,10 @@ package com.hicham.wcstoreapp.android.data.product.fake
 
 import androidx.paging.PagingData
 import com.hicham.wcstoreapp.android.data.api.NetworkProduct
+import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.data.product.ProductsRepository
-import com.hicham.wcstoreapp.android.models.Category
-import com.hicham.wcstoreapp.android.models.Product
-import com.hicham.wcstoreapp.android.models.toDomainModel
+import com.hicham.wcstoreapp.models.Category
+import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.serialization.builtins.ListSerializer

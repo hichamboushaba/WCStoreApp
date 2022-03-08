@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.ui
 
-import com.hicham.wcstoreapp.android.models.PaymentMethod
+import com.hicham.wcstoreapp.models.PaymentMethod
 
 val PaymentMethod.title: String
     get() = when (this) {

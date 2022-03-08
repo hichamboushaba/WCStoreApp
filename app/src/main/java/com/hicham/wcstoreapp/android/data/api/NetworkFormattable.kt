@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.data.api
 
-import com.hicham.wcstoreapp.android.models.CurrencyFormatSettings
+import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal

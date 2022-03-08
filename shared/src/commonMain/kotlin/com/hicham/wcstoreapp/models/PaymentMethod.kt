@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.models
+package com.hicham.wcstoreapp.models
 
 enum class PaymentMethod(val value: String) {
     WIRE("bacs"), CASH("cod");

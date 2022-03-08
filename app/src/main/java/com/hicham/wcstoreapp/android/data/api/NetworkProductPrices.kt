@@ -3,6 +3,7 @@
 package com.hicham.wcstoreapp.android.data.api
 
 import com.hicham.wcstoreapp.android.util.BigDecimalSerializer
+import com.hicham.wcstoreapp.models.ProductPrices
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
@@ -18,3 +19,11 @@ data class NetworkProductPrices(
     @SerialName("sale_price")
     val salePrice: BigDecimal
 ) : NetworkFormattable()
+
+fun NetworkProductPrices.toDomainModel(): ProductPrices {
+    return ProductPrices(
+        price = calculatePrice(price),
+        regularPrice = calculatePrice(regularPrice),
+        salePrice = calculatePrice(salePrice),
+    )
+}

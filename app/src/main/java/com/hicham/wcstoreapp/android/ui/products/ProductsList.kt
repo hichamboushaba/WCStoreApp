@@ -19,9 +19,9 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.map
 import com.hicham.wcstoreapp.android.data.product.fake.FakeProductsRepository
-import com.hicham.wcstoreapp.android.models.Product
 import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
+import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

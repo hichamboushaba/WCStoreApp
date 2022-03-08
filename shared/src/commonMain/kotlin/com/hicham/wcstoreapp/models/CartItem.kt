@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.models
+package com.hicham.wcstoreapp.models
 
 import java.math.BigDecimal
 

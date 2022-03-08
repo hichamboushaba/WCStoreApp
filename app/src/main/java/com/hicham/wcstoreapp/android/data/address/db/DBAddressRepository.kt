@@ -8,8 +8,8 @@ import com.hicham.wcstoreapp.android.data.cart.db.CartUpdateService
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.AddressEntity
 import com.hicham.wcstoreapp.android.di.AppCoroutineScope
-import com.hicham.wcstoreapp.android.models.Address
 import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
+import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

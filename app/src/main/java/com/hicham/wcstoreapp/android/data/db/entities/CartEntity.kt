@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-import com.hicham.wcstoreapp.android.models.CartTotals
+import com.hicham.wcstoreapp.models.CartTotals
 
 @Entity
 data class CartEntity(

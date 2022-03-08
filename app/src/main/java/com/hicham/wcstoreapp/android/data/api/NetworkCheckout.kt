@@ -1,5 +1,7 @@
 package com.hicham.wcstoreapp.android.data.api
 
+import com.hicham.wcstoreapp.models.CheckoutData
+import com.hicham.wcstoreapp.models.PaymentMethod
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray
@@ -67,4 +69,8 @@ data class NetworkPaymentResult(
 
     @SerialName("redirect_url")
     val redirectURL: String
+)
+
+fun NetworkCheckout.toDomainModel() = CheckoutData(
+    paymentMethod = PaymentMethod.fromNetworkPaymentMethod(paymentMethod)
 )

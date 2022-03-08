@@ -13,13 +13,14 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hicham.wcstoreapp.android.models.Address
-import com.hicham.wcstoreapp.android.models.PaymentMethod
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.common.components.CartTotals
 import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.android.ui.common.components.IndeterminateLoadingDialog
+import com.hicham.wcstoreapp.android.ui.common.formatAddress
 import com.hicham.wcstoreapp.android.ui.title
+import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.models.PaymentMethod
 import kotlinx.coroutines.flow.collect
 
 @Composable

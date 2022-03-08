@@ -5,8 +5,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.hicham.wcstoreapp.android.data.api.NetworkProduct
-import com.hicham.wcstoreapp.android.models.ProductPrices
-import com.hicham.wcstoreapp.android.models.toDomainModel
+import com.hicham.wcstoreapp.android.data.api.toDomainModel
+import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.models.ProductPrices
 
 @Entity
 data class ProductEntity(
@@ -24,6 +25,17 @@ fun NetworkProduct.toEntity(): ProductEntity {
         name = name,
         images = images.map { it.src },
         prices = prices.toDomainModel(),
+        shortDescription = shortDescription,
+        description = description
+    )
+}
+
+fun ProductEntity.toDomainModel(): Product {
+    return Product(
+        id = id,
+        name = name,
+        images = images,
+        prices = prices,
         shortDescription = shortDescription,
         description = description
     )

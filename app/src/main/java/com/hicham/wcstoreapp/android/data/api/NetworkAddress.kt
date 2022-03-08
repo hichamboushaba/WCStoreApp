@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.data.api
 
-import com.hicham.wcstoreapp.android.models.Address
+import com.hicham.wcstoreapp.models.Address
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -40,3 +40,16 @@ fun Address.toNetworkAddress(): NetworkAddress {
         country = country
     )
 }
+
+fun NetworkAddress.toDomainModel() = Address(
+    firstName = firstName,
+    lastName = lastName,
+    street1 = address1,
+    street2 = address2,
+    email = email,
+    city = city,
+    state = state.orEmpty(),
+    postCode = postcode,
+    country = country,
+    phone = phone,
+)

@@ -1,15 +1,11 @@
 package com.hicham.wcstoreapp.android.data.checkout.network
 
-import com.hicham.wcstoreapp.android.data.api.NetworkCheckout
-import com.hicham.wcstoreapp.android.data.api.NetworkPlaceOrderRequest
-import com.hicham.wcstoreapp.android.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.android.data.api.toNetworkAddress
+import com.hicham.wcstoreapp.android.data.api.*
 import com.hicham.wcstoreapp.android.data.checkout.CheckoutRepository
-import com.hicham.wcstoreapp.android.models.Address
-import com.hicham.wcstoreapp.android.models.CheckoutData
-import com.hicham.wcstoreapp.android.models.PaymentMethod
-import com.hicham.wcstoreapp.android.models.toDomainModel
 import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
+import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.models.CheckoutData
+import com.hicham.wcstoreapp.models.PaymentMethod
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -21,9 +17,7 @@ class NetworkCheckoutRepository @Inject constructor(
         .onSubscription {
             checkoutState.emit(wooCommerceApi.getCheckout())
         }
-        .map {
-            it.toDomainModel()
-        }
+        .map { it.toDomainModel() }
 
     override suspend fun updatePaymentMethod(paymentMethod: PaymentMethod): Result<Unit> =
         runCatching {

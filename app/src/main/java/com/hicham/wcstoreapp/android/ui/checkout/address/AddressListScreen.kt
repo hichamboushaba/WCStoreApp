@@ -14,11 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hicham.wcstoreapp.android.models.Address
 import com.hicham.wcstoreapp.android.ui.Effect
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.common.components.IndeterminateLoadingDialog
 import com.hicham.wcstoreapp.android.ui.common.components.ToolbarScreen
+import com.hicham.wcstoreapp.android.ui.common.formatAddress
+import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
@@ -113,9 +114,9 @@ private fun AddressCard(
         border = if (model.isSelected) BorderStroke(1.dp, MaterialTheme.colors.primary) else null
     ) {
         Column {
-            if (!model.address.label.isNullOrEmpty()) {
+            model.address.label?.let { label ->
                 Text(
-                    text = model.address.label,
+                    text = label,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)

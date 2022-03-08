@@ -2,7 +2,7 @@ package com.hicham.wcstoreapp.android.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hicham.wcstoreapp.android.models.Address
+import com.hicham.wcstoreapp.models.Address
 
 @Entity
 data class AddressEntity(

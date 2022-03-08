@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.ui
 
-import com.hicham.wcstoreapp.android.models.CurrencyFormatSettings
+import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import java.math.BigDecimal
 import java.text.DecimalFormat
 

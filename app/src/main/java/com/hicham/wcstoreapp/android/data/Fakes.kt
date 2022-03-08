@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.android.data
 
-import com.hicham.wcstoreapp.android.models.Product
-import com.hicham.wcstoreapp.android.models.ProductPrices
+import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.models.ProductPrices
 import java.math.BigDecimal
 
 object Fakes {

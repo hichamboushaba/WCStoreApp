@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.android.data.cart.inmemory
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.models.*
+import com.hicham.wcstoreapp.models.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map

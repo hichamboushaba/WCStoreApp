@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.data.category
 
-import com.hicham.wcstoreapp.android.models.Category
+import com.hicham.wcstoreapp.models.Category
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {

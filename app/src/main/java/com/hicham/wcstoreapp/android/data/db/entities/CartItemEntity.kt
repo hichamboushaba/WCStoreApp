@@ -2,7 +2,7 @@ package com.hicham.wcstoreapp.android.data.db.entities
 
 import androidx.room.*
 import com.hicham.wcstoreapp.android.data.api.NetworkCartItem
-import com.hicham.wcstoreapp.android.models.CartItemTotals
+import com.hicham.wcstoreapp.models.CartItemTotals
 
 @Entity
 data class CartItemEntity(

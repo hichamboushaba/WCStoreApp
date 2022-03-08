@@ -6,12 +6,12 @@ import androidx.paging.cachedIn
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.android.data.product.ProductsRepository
-import com.hicham.wcstoreapp.android.models.Product
 import com.hicham.wcstoreapp.android.ui.BaseViewModel
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.android.ui.products.mapToUiModel
+import com.hicham.wcstoreapp.models.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

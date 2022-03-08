@@ -4,11 +4,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hicham.wcstoreapp.android.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.product.ProductsRepository
-import com.hicham.wcstoreapp.android.models.Category
-import com.hicham.wcstoreapp.android.models.Product
-import com.hicham.wcstoreapp.android.models.toDomainModel
+import com.hicham.wcstoreapp.models.Category
+import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

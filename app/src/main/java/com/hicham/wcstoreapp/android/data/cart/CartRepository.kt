@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.android.data.cart
 
-import com.hicham.wcstoreapp.android.models.Cart
-import com.hicham.wcstoreapp.android.models.Product
+import com.hicham.wcstoreapp.models.Cart
+import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

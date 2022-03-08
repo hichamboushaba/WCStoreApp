@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.android.data.api
 
+import com.hicham.wcstoreapp.models.Product
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -61,4 +62,13 @@ data class Image(
     val sizes: String,
     val name: String,
     val alt: String
+)
+
+fun NetworkProduct.toDomainModel() = Product(
+    id = id,
+    name = name,
+    shortDescription = shortDescription,
+    description = description,
+    images = images.map { it.src },
+    prices = prices.toDomainModel()
 )

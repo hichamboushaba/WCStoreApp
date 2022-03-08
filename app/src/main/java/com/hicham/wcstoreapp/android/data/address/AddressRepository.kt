@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.data.address
 
-import com.hicham.wcstoreapp.android.models.Address
+import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.flow.Flow
 
 interface AddressRepository {

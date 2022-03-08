@@ -8,7 +8,7 @@ import com.hicham.wcstoreapp.android.data.api.NetworkFormattable
 import com.hicham.wcstoreapp.android.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.di.AppCoroutineScope
-import com.hicham.wcstoreapp.android.models.CurrencyFormatSettings
+import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

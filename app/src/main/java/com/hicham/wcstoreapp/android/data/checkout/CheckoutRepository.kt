@@ -1,8 +1,8 @@
 package com.hicham.wcstoreapp.android.data.checkout
 
-import com.hicham.wcstoreapp.android.models.Address
-import com.hicham.wcstoreapp.android.models.CheckoutData
-import com.hicham.wcstoreapp.android.models.PaymentMethod
+import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.models.CheckoutData
+import com.hicham.wcstoreapp.models.PaymentMethod
 import kotlinx.coroutines.flow.Flow
 
 interface CheckoutRepository {
