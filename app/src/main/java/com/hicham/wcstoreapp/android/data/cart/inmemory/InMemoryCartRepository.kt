@@ -2,11 +2,13 @@ package com.hicham.wcstoreapp.android.data.cart.inmemory
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.models.*
+import com.hicham.wcstoreapp.util.sumOf
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
+import com.ionspin.kotlin.bignum.decimal.toBigDecimal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import java.math.BigDecimal
 import javax.inject.Inject
 
 class InMemoryCartRepository @Inject constructor() : CartRepository {

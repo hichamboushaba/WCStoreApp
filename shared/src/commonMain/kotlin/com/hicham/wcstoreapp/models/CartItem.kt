@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.models
 
-import java.math.BigDecimal
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 
 data class CartItem(
     val id: String,

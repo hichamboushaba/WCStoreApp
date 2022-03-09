@@ -1,11 +1,12 @@
 package com.hicham.wcstoreapp.android.ui
 
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
-import java.math.BigDecimal
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import java.text.DecimalFormat
 
 class CurrencyFormatter(private val currencyFormatSettings: CurrencyFormatSettings) {
     fun format(price: BigDecimal): String = with(currencyFormatSettings) {
+        val price = java.math.BigDecimal(price.toString())
         val decimalFormat = if (currencyDecimalNumber > 0) {
             DecimalFormat("#,##0.${"0".repeat(currencyDecimalNumber)}")
         } else {

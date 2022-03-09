@@ -3,11 +3,11 @@
 package com.hicham.wcstoreapp.android.data.api
 
 import com.hicham.wcstoreapp.android.util.BigDecimalSerializer
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.json.JsonArray
-import java.math.BigDecimal
 
 @Serializable
 data class NetworkCartItem(

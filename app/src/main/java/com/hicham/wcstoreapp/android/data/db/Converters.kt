@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.android.data.db
 
 import androidx.room.TypeConverter
-import java.math.BigDecimal
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 
 class Converters {
     @TypeConverter
@@ -14,5 +14,5 @@ class Converters {
     fun bigDecimalToString(value: BigDecimal?) = value?.toPlainString()
 
     @TypeConverter
-    fun stringToBigDecimal(value: String?) = value?.let { BigDecimal(it) }
+    fun stringToBigDecimal(value: String?) = value?.let { BigDecimal.parseString(it) }
 }

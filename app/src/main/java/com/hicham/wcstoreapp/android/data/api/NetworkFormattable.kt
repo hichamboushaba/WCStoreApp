@@ -1,9 +1,9 @@
 package com.hicham.wcstoreapp.android.data.api
 
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.math.BigDecimal
 
 @Serializable
 open class NetworkFormattable {

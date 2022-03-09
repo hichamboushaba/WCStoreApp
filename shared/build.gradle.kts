@@ -27,6 +27,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.multiplatform.paging)
+                api(libs.bignum)
             }
         }
         val commonTest by getting {

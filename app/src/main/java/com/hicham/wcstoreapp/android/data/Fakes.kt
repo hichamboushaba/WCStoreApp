@@ -2,7 +2,7 @@ package com.hicham.wcstoreapp.android.data
 
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.ProductPrices
-import java.math.BigDecimal
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 
 object Fakes {
     val prices = ProductPrices(
