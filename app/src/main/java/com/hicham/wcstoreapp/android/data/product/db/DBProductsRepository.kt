@@ -6,8 +6,8 @@ import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.toDomainModel
 import com.hicham.wcstoreapp.android.data.product.ProductRemoteMediator
-import com.hicham.wcstoreapp.android.data.product.ProductsRepository
 import com.hicham.wcstoreapp.android.data.product.network.NetworkProductsPagingSource
+import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.flow.Flow

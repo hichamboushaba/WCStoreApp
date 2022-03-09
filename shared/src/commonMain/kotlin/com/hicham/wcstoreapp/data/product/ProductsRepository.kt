@@ -1,8 +1,8 @@
-package com.hicham.wcstoreapp.android.data.product
+package com.hicham.wcstoreapp.data.product
 
-import androidx.paging.PagingData
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.kuuurt.paging.multiplatform.PagingData
 import kotlinx.coroutines.flow.Flow
 
 interface ProductsRepository {

@@ -1,8 +1,8 @@
 package com.hicham.wcstoreapp.android
 
 import com.hicham.wcstoreapp.android.data.Status
-import com.hicham.wcstoreapp.android.data.product.ProductsRepository
 import com.hicham.wcstoreapp.android.data.source.network.FakeWooCommerceApi
+import com.hicham.wcstoreapp.data.product.ProductsRepository
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.junit.Assert.*
