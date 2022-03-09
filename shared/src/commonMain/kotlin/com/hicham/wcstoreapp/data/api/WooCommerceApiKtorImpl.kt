@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.api
+package com.hicham.wcstoreapp.data.api
 
 import io.ktor.client.*
 import io.ktor.client.request.*

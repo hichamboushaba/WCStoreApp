@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hicham.wcstoreapp.android.data.api.NetworkProduct
-import com.hicham.wcstoreapp.android.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.api.NetworkProduct
+import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.models.ProductPrices
 

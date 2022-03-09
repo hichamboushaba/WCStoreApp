@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.api
+package com.hicham.wcstoreapp.data.api
 
 import com.hicham.wcstoreapp.models.Address
 import kotlinx.serialization.SerialName

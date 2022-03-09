@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.util
+package com.hicham.wcstoreapp.data.api
 
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlinx.serialization.KSerializer

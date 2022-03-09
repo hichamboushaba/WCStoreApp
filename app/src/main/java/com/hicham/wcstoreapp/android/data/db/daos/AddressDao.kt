@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.hicham.wcstoreapp.android.data.api.NetworkAddress
 import com.hicham.wcstoreapp.android.data.db.entities.AddressEntity
+import com.hicham.wcstoreapp.data.api.NetworkAddress
 import kotlinx.coroutines.flow.Flow
 
 @Dao

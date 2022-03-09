@@ -81,9 +81,10 @@ dependencies {
 
     implementation libs.datastore
 
-    implementation libs.bundles.networking
+    implementation libs.ktor.client.cio
+    implementation libs.slf4j.android
     implementation libs.kotlinx.serialization
-    
+
     implementation libs.logcat
 
     implementation(libs.bignum)

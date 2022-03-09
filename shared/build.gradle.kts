@@ -1,8 +1,11 @@
+// Remove this when https://youtrack.jetbrains.com/issue/KTIJ-19369 gets fixed
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
     id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 version = "1.0"
@@ -26,6 +29,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization)
+                api(libs.ktor)
+                api(libs.ktor.serialization)
+                api(libs.ktor.logging)
                 implementation(libs.multiplatform.paging)
                 implementation(libs.bignum)
             }

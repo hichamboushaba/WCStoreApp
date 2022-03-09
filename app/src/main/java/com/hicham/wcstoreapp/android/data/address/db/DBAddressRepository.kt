@@ -1,14 +1,14 @@
 package com.hicham.wcstoreapp.android.data.address.db
 
-import com.hicham.wcstoreapp.android.data.api.NetworkUpdateCustomerRequest
-import com.hicham.wcstoreapp.android.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.android.data.api.toNetworkAddress
 import com.hicham.wcstoreapp.android.data.cart.db.CartUpdateService
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.AddressEntity
 import com.hicham.wcstoreapp.android.di.AppCoroutineScope
 import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
 import com.hicham.wcstoreapp.data.address.AddressRepository
+import com.hicham.wcstoreapp.data.api.NetworkUpdateCustomerRequest
+import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.api.toNetworkAddress
 import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*

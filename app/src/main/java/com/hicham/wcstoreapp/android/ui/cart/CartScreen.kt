@@ -16,11 +16,11 @@ import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hicham.wcstoreapp.android.data.api.NetworkProduct
-import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.data.product.fake.PRODUCTS_JSON
 import com.hicham.wcstoreapp.android.ui.common.components.CartTotals
 import com.hicham.wcstoreapp.android.ui.common.components.WCTopAppBar
+import com.hicham.wcstoreapp.data.api.NetworkProduct
+import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.models.Product
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart

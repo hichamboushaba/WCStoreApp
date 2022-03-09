@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.api
+package com.hicham.wcstoreapp.data.api
 
 interface WooCommerceApi {
     // TODO remove the hardcoding of type simple when other types can be handled

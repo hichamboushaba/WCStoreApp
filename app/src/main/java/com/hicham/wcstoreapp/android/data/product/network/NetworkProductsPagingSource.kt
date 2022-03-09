@@ -2,11 +2,11 @@ package com.hicham.wcstoreapp.android.data.product.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.hicham.wcstoreapp.android.data.api.NetworkProduct
-import com.hicham.wcstoreapp.android.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.toEntity
+import com.hicham.wcstoreapp.data.api.NetworkProduct
+import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import logcat.LogPriority

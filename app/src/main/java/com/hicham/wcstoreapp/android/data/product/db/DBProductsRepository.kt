@@ -1,12 +1,12 @@
 package com.hicham.wcstoreapp.android.data.product.db
 
 import androidx.paging.*
-import com.hicham.wcstoreapp.android.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.android.data.api.toDomainModel
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.toDomainModel
 import com.hicham.wcstoreapp.android.data.product.ProductRemoteMediator
 import com.hicham.wcstoreapp.android.data.product.network.NetworkProductsPagingSource
+import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product

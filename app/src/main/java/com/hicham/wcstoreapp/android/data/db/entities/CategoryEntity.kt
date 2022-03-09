@@ -2,7 +2,7 @@ package com.hicham.wcstoreapp.android.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hicham.wcstoreapp.android.data.api.NetworkCategory
+import com.hicham.wcstoreapp.data.api.NetworkCategory
 import com.hicham.wcstoreapp.models.Category
 
 @Entity
