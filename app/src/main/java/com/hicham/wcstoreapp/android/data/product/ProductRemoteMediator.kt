@@ -8,8 +8,8 @@ import androidx.room.withTransaction
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.ProductEntity
 import com.hicham.wcstoreapp.android.data.db.entities.toEntity
-import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import logcat.logcat
 
 @ExperimentalPagingApi

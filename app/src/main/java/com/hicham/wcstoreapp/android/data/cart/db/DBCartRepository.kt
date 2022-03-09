@@ -6,10 +6,10 @@ import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.android.data.db.entities.toDomainModel
 import com.hicham.wcstoreapp.android.di.AppCoroutineScope
-import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
 import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.models.*
+import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

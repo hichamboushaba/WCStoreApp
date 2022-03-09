@@ -10,15 +10,15 @@ import com.hicham.wcstoreapp.android.data.address.db.DBAddressRepository
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.cart.db.DBCartRepository
 import com.hicham.wcstoreapp.android.data.category.db.DBCategoryRepository
-import com.hicham.wcstoreapp.android.data.checkout.network.NetworkCheckoutRepository
 import com.hicham.wcstoreapp.android.data.currencyformat.StoreCurrencyFormatProvider
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
-import com.hicham.wcstoreapp.android.data.product.db.DBProductsRepository
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
+import com.hicham.wcstoreapp.data.checkout.network.NetworkCheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
+import com.hicham.wcstoreapp.data.product.network.NetworkProductsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -53,7 +53,7 @@ abstract class DataModule {
     }
 
     @Binds
-    abstract fun bindProductsRepository(repository: DBProductsRepository): ProductsRepository
+    abstract fun bindProductsRepository(repository: NetworkProductsRepository): ProductsRepository
 
     @Binds
     abstract fun bindCurrencyFormatProvider(provider: StoreCurrencyFormatProvider): CurrencyFormatProvider

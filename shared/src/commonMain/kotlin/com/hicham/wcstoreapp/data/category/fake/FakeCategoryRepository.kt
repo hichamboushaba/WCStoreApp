@@ -1,10 +1,10 @@
-package com.hicham.wcstoreapp.android.data.category.fake
+package com.hicham.wcstoreapp.data.category.fake
 
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.models.Category
+import com.hicham.wcstoreapp.util.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
 
 class FakeCategoryRepository @Inject constructor() : CategoryRepository {
     override val categories: Flow<List<Category>>

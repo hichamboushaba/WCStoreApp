@@ -4,12 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.CombinedLoadStates
@@ -17,14 +19,10 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.map
-import com.hicham.wcstoreapp.android.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
-import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
 import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @Composable
@@ -168,21 +166,21 @@ private fun LazyListScope.renderList(
 }
 
 // TODO check why the preview is not working
-@Preview
-@Composable
-fun DefaultList() {
-    val productsFlow = FakeProductsRepository().getProductList()
-        .map { data ->
-            data.map { ProductUiModel(it, "10 USD") }
-        }
-
-    WCStoreAppTheme {
-        ProductsList(
-            productsFlow = productsFlow,
-            addItemToCart = {},
-            removeItemFromCart = {},
-            onProductClicked = {},
-            scaffoldState = rememberScaffoldState()
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun DefaultList() {
+//    val productsFlow = FakeProductsRepository().getProductList()
+//        .map { data ->
+//            data.map { ProductUiModel(it, "10 USD") }
+//        }
+//
+//    WCStoreAppTheme {
+//        ProductsList(
+//            productsFlow = productsFlow,
+//            addItemToCart = {},
+//            removeItemFromCart = {},
+//            onProductClicked = {},
+//            scaffoldState = rememberScaffoldState()
+//        )
+//    }
+//}

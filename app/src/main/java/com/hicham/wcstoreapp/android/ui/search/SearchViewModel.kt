@@ -34,7 +34,8 @@ class SearchViewModel @Inject constructor(
             // debounce using a simple delay
             delay(500L)
             return@flatMapLatest if (query.trim().length >= 3) {
-                repository.getProductList(query = query)
+                repository.getProductList(scope = viewModelScope, query = query)
+                    .pagingData
                     .cachedIn(viewModelScope)
             } else {
                 flowOf(PagingData.from(emptyList<Product>()))

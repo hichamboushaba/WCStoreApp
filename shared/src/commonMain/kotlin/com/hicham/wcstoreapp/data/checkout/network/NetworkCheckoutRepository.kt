@@ -1,13 +1,13 @@
-package com.hicham.wcstoreapp.android.data.checkout.network
+package com.hicham.wcstoreapp.data.checkout.network
 
-import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
 import com.hicham.wcstoreapp.data.api.*
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CheckoutData
 import com.hicham.wcstoreapp.models.PaymentMethod
+import com.hicham.wcstoreapp.util.Inject
+import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
 class NetworkCheckoutRepository @Inject constructor(
     private val wooCommerceApi: WooCommerceApi

@@ -1,7 +1,6 @@
 package com.hicham.wcstoreapp.android.ui.home
 
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.ui.BaseViewModel
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
@@ -13,6 +12,7 @@ import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.kuuurt.paging.multiplatform.helpers.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -35,7 +35,10 @@ class HomeViewModel @Inject constructor(
 
     val products = selectedCategory
         .flatMapLatest { category ->
-            repository.getProductList(category = category.takeIf { it != ALL_CATEGORY })
+            repository.getProductList(
+                scope = viewModelScope,
+                category = category.takeIf { it != ALL_CATEGORY }
+            ).pagingData
         }
         .cachedIn(viewModelScope)
         .mapToUiModel(currencyFormatProvider, cartRepository)

@@ -2,10 +2,10 @@ package com.hicham.wcstoreapp.data.product
 
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
-import com.kuuurt.paging.multiplatform.PagingData
-import kotlinx.coroutines.flow.Flow
+import com.kuuurt.paging.multiplatform.Pager
+import kotlinx.coroutines.CoroutineScope
 
 interface ProductsRepository {
-    fun getProductList(query: String? = null, category: Category? = null): Flow<PagingData<Product>>
+    fun getProductList(scope: CoroutineScope, query: String? = null, category: Category? = null): Pager<Int, Product>
     suspend fun getProduct(id: Long): Product
 }

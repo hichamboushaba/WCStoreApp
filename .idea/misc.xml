@@ -6,11 +6,9 @@
         <entry key="../../../../../layout/compose-model-1631290737670.xml" value="0.2953703703703704" />
         <entry key="../../../../../layout/compose-model-1646761867665.xml" value="0.2766047297297297" />
         <entry key="../../../../../layout/compose-model-1646764548955.xml" value="0.2766047297297297" />
+        <entry key="../../../../../layout/compose-model-1646841150388.xml" value="0.1" />
       </map>
     </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/hicham/wcstoreapp/android/data/Resource.kt" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

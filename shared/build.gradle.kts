@@ -33,7 +33,7 @@ kotlin {
                 api(libs.ktor)
                 api(libs.ktor.serialization)
                 api(libs.ktor.logging)
-                implementation(libs.multiplatform.paging)
+                api(libs.multiplatform.paging)
                 implementation(libs.bignum)
             }
         }
@@ -42,7 +42,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.hilt.android)
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
