@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.address
+package com.hicham.wcstoreapp.data.address
 
 import com.hicham.wcstoreapp.models.Address
 import kotlinx.coroutines.flow.Flow

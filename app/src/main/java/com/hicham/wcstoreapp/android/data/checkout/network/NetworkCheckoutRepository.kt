@@ -1,8 +1,8 @@
 package com.hicham.wcstoreapp.android.data.checkout.network
 
 import com.hicham.wcstoreapp.android.data.api.*
-import com.hicham.wcstoreapp.android.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.android.util.runCatchingNetworkErrors
+import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CheckoutData
 import com.hicham.wcstoreapp.models.PaymentMethod

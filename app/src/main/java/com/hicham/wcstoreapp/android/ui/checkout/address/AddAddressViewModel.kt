@@ -3,13 +3,13 @@ package com.hicham.wcstoreapp.android.ui.checkout.address
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.android.R
-import com.hicham.wcstoreapp.android.data.address.AddressRepository
 import com.hicham.wcstoreapp.android.ui.BaseViewModel
 import com.hicham.wcstoreapp.android.ui.Effect
 import com.hicham.wcstoreapp.android.ui.common.InputField
 import com.hicham.wcstoreapp.android.ui.common.OptionalField
 import com.hicham.wcstoreapp.android.ui.common.RequiredField
 import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
+import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

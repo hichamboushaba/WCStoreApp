@@ -4,8 +4,8 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.cart.items
-import com.hicham.wcstoreapp.android.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.android.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

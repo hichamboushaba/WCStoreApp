@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.category
+package com.hicham.wcstoreapp.data.category
 
 import com.hicham.wcstoreapp.models.Category
 import kotlinx.coroutines.flow.Flow

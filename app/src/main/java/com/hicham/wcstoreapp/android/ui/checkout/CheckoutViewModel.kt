@@ -1,16 +1,16 @@
 package com.hicham.wcstoreapp.android.ui.checkout
 
 import androidx.lifecycle.viewModelScope
-import com.hicham.wcstoreapp.android.data.address.AddressRepository
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.data.checkout.CheckoutRepository
-import com.hicham.wcstoreapp.android.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.android.ui.BaseViewModel
 import com.hicham.wcstoreapp.android.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.checkout.address.AddAddressViewModel
 import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.Screen
+import com.hicham.wcstoreapp.data.address.AddressRepository
+import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import dagger.hilt.android.lifecycle.HiltViewModel

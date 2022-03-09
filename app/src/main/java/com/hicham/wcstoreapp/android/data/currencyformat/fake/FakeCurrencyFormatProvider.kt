@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.data.currencyformat.fake
 
-import com.hicham.wcstoreapp.android.data.currencyformat.CurrencyFormatProvider
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

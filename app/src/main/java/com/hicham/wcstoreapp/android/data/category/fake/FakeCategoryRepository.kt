@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.android.data.category.fake
 
-import com.hicham.wcstoreapp.android.data.category.CategoryRepository
+import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.models.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

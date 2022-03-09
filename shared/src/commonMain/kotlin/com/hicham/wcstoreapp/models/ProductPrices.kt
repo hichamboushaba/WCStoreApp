@@ -1,9 +1,7 @@
 package com.hicham.wcstoreapp.models
 
-import java.math.BigDecimal
-
 data class ProductPrices(
-    val price: BigDecimal,
-    val regularPrice: BigDecimal,
-    val salePrice: BigDecimal
+    val price: Double,
+    val regularPrice: Double,
+    val salePrice: Double
 )

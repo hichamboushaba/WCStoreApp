@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.checkout
+package com.hicham.wcstoreapp.data.checkout
 
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CheckoutData
