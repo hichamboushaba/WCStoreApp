@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.models
 
-import com.hicham.wcstoreapp.parcel.Parcelable
-import com.hicham.wcstoreapp.parcel.Parcelize
+import com.hicham.wcstoreapp.util.Parcelable
+import com.hicham.wcstoreapp.util.Parcelize
 
 @Parcelize
 data class Address(

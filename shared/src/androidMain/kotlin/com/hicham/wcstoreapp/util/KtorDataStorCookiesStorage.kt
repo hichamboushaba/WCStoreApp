@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.util
+package com.hicham.wcstoreapp.util
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

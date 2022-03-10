@@ -1,7 +1,10 @@
 package com.hicham.wcstoreapp.android.ui.checkout.address
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,8 +19,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusOrder
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.RelocationRequester
-import androidx.compose.ui.layout.relocationRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -186,7 +187,7 @@ private val AddAddressViewModel.Field.helperText: String
  * Even ProvideWindowInsets(windowInsetsAnimationsEnabled = true) doesn't handle it well now
  * when the column is scrollable
  */
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun AddressTextField(
     label: String,
@@ -197,7 +198,7 @@ private fun AddressTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
 ) {
     val isError = inputField.error != null
-    val relocationRequester = remember { RelocationRequester() }
+    val relocationRequester = remember { BringIntoViewRequester() }
     val scope = rememberCoroutineScope()
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -226,7 +227,7 @@ private fun AddressTextField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .relocationRequester(relocationRequester)
+                .bringIntoViewRequester(relocationRequester)
                 .onFocusChanged {
                     if (it.isFocused) {
                         scope.launch {

@@ -3,11 +3,11 @@ package com.hicham.wcstoreapp.android.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.hicham.wcstoreapp.android.BuildConfig
-import com.hicham.wcstoreapp.android.util.KtorDataStorCookiesStorage
-import com.hicham.wcstoreapp.android.util.NonceKtorPlugin
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.WooCommerceApiKtorImpl
+import com.hicham.wcstoreapp.util.KtorDataStorCookiesStorage
 import com.hicham.wcstoreapp.util.KtorNetworkException
+import com.hicham.wcstoreapp.util.NonceKtorPlugin
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

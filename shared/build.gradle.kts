@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+
 // Remove this when https://youtrack.jetbrains.com/issue/KTIJ-19369 gets fixed
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -6,6 +9,7 @@ plugins {
     id("com.android.library")
     id("kotlin-parcelize")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.buildkonfig)
 }
 
 version = "1.0"
@@ -24,7 +28,7 @@ kotlin {
             baseName = "shared"
         }
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -35,6 +39,7 @@ kotlin {
                 api(libs.ktor.logging)
                 api(libs.multiplatform.paging)
                 implementation(libs.bignum)
+                api(libs.koin.core)
             }
         }
         val commonTest by getting {
@@ -45,6 +50,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.hilt.android)
+                implementation(libs.datastore)
             }
         }
         val androidTest by getting
@@ -56,6 +62,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
 //            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.client.ios)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -75,5 +84,18 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
+    }
+}
+
+buildkonfig {
+    packageName = "com.hicham.wcstoreapp"
+
+    defaultConfigs {
+        buildConfigField(
+            STRING,
+            "WC_URL",
+            gradleLocalProperties(rootDir).getProperty("WC_URL", "")
+        )
+
     }
 }

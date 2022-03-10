@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.parcel
+package com.hicham.wcstoreapp.util
 
 expect interface Parcelable
 
