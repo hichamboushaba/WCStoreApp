@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.ui.BaseViewModel
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
-import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.android.ui.products.mapToUiModel
 import com.hicham.wcstoreapp.data.category.CategoryRepository
@@ -12,6 +11,7 @@ import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.kuuurt.paging.multiplatform.helpers.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

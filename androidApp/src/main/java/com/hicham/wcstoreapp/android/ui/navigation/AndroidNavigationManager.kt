@@ -5,12 +5,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
+import com.hicham.wcstoreapp.ui.NavigationManager
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NavigationManager @Inject constructor() {
+class AndroidNavigationManager @Inject constructor(): NavigationManager {
     // We use a StateFlow here to allow ViewModels to start observing navigation results before the initial composition,
     // and still get the navigation result later
     private val navControllerFlow = MutableStateFlow<NavController?>(null)
@@ -21,8 +22,8 @@ class NavigationManager @Inject constructor() {
 
     suspend fun handleNavigationCommands(navController: NavController) {
         navigationCommands
-            .onSubscription { this@NavigationManager.navControllerFlow.value = navController }
-            .onCompletion { this@NavigationManager.navControllerFlow.value = null }
+            .onSubscription { this@AndroidNavigationManager.navControllerFlow.value = navController }
+            .onCompletion { this@AndroidNavigationManager.navControllerFlow.value = null }
             .collect { navController.handleNavigationCommand(it) }
     }
 
@@ -31,11 +32,15 @@ class NavigationManager @Inject constructor() {
         navigationCommands.tryEmit(NavigationCommand.NavigateToRoute(route, options))
     }
 
-    fun navigateUp() {
+    override fun navigate(route: String) {
+        navigate(route, null)
+    }
+
+    override fun navigateUp() {
         navigationCommands.tryEmit(NavigationCommand.NavigateUp)
     }
 
-    fun popUpTo(route: String, inclusive: Boolean = false) {
+    override fun popUpTo(route: String, inclusive: Boolean) {
         navigationCommands.tryEmit(NavigationCommand.PopUpToRoute(route, inclusive))
     }
 

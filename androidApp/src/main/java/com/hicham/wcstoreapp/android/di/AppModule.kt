@@ -1,5 +1,8 @@
 package com.hicham.wcstoreapp.android.di
 
+import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
+import com.hicham.wcstoreapp.ui.NavigationManager
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,4 +18,7 @@ abstract class AppModule {
         @AppCoroutineScope
         fun providesAppCoroutineScope(): CoroutineScope = GlobalScope
     }
+
+    @Binds
+    abstract fun bindNavigationManager(navigationManager: AndroidNavigationManager): NavigationManager
 }
