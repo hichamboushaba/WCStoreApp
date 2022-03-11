@@ -6,7 +6,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-expect val ktorModule: Module
+expect fun Module.ktor()
 
 val networkModule = module {
     single {
@@ -16,5 +16,6 @@ val networkModule = module {
             isLenient = true
         }
     }
+    ktor()
     factory<WooCommerceApi> { WooCommerceApiKtorImpl(get()) }
 }

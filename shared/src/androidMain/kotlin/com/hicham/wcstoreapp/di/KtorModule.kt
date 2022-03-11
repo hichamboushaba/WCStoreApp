@@ -13,10 +13,10 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import org.koin.dsl.module
+import org.koin.core.module.Module
 import java.net.URL
 
-actual val ktorModule = module {
+actual fun Module.ktor() {
     single {
         val baseUrl = URL(BuildKonfig.WC_URL)
         HttpClient {

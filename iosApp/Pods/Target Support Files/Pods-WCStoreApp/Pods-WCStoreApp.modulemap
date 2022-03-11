@@ -1,0 +1,6 @@
+framework module Pods_WCStoreApp {
+  umbrella header "Pods-WCStoreApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

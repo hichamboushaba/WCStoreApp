@@ -21,18 +21,18 @@ kotlin {
 //    iosSimulatorArm64()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
+        summary = "WCStoreApp business logic"
+        homepage = "localhost"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "shared"
+            baseName = "WCStoreAppKmm"
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.kotlinx.coroutines.core)
+                api(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization)
                 api(libs.ktor)
                 api(libs.ktor.serialization)
@@ -96,6 +96,5 @@ buildkonfig {
             "WC_URL",
             gradleLocalProperties(rootDir).getProperty("WC_URL", "")
         )
-
     }
 }
