@@ -8,6 +8,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("kotlin-parcelize")
+    id("com.rickclephas.kmp.nativecoroutines") version("0.11.3")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildkonfig)
 }

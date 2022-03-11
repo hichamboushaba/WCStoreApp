@@ -12,14 +12,13 @@ import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
 import com.hicham.wcstoreapp.util.HiltViewModel
 import com.hicham.wcstoreapp.util.Inject
-import com.kuuurt.paging.multiplatform.helpers.cachedIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    repository: ProductsRepository,
+    private val repository: ProductsRepository,
     private val cartRepository: CartRepository,
     private val categoryRepository: CategoryRepository,
     private val navigationManager: NavigationManager,
@@ -31,18 +30,11 @@ class HomeViewModel @Inject constructor(
 
     private val selectedCategory = MutableStateFlow(ALL_CATEGORY)
 
-    val products = selectedCategory
-        .flatMapLatest { category ->
-            repository.getProductList(
-                scope = viewModelScope,
-                category = category.takeIf { it != ALL_CATEGORY }
-            ).pagingData
-        }
-        .cachedIn(viewModelScope)
+    val products = repository.products
         .mapToUiModel(currencyFormatProvider, cartRepository)
-        .cachedIn(viewModelScope)
         .flowOn(Dispatchers.Default)
 
+    val hasNext = repository.hasNext
 
     private val _categories = categoryRepository.categories.map { list ->
         list.toMutableList().apply { add(0, ALL_CATEGORY) }
@@ -57,6 +49,10 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             categoryRepository.refresh()
         }
+
+        selectedCategory
+            .onEach { repository.fetch(category = it.takeIf { it != ALL_CATEGORY }) }
+            .launchIn(viewModelScope)
     }
 
     fun addItemToCart(product: Product) {
@@ -72,6 +68,12 @@ class HomeViewModel @Inject constructor(
             cartRepository.deleteItem(product).onFailure {
                 triggerEffect(ShowSnackbar("Error while updating your cart"))
             }
+        }
+    }
+
+    fun loadNext() {
+        viewModelScope.launch {
+            repository.loadNext()
         }
     }
 

@@ -5,18 +5,16 @@ import com.hicham.wcstoreapp.android.data.cart.items
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
-import com.kuuurt.paging.multiplatform.PagingData
-import com.kuuurt.paging.multiplatform.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
-fun Flow<PagingData<Product>>.mapToUiModel(
+fun Flow<List<Product>>.mapToUiModel(
     currencyFormatProvider: CurrencyFormatProvider,
     cartRepository: CartRepository
-): Flow<PagingData<ProductUiModel>> {
+): Flow<List<ProductUiModel>> {
     return combine(
         this,
         cartRepository.items,

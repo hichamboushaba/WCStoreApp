@@ -6,21 +6,46 @@
 //
 
 import SwiftUI
+import Combine
 import WCStoreAppKmm
+import KMPNativeCoroutinesCombine
+
+class HomeViewModelProxy: ObservableObject {
+    let viewModel = KoinWrapper.shared.get(objCClass: HomeViewModel.self) as! HomeViewModel
+    
+    @Published private(set) var products: [ProductUiModel] = []
+    @Published private(set) var hasNext: Bool = true
+    
+    init() {
+        createPublisher(for: viewModel.productsNative)
+            .assertNoFailure()
+            .receive(on: RunLoop.main)
+            .assign(to: &$products)
+        
+        createPublisher(for: viewModel.hasNextNative)
+            .assertNoFailure()
+            .map { $0.boolValue }
+            .assign(to: &$hasNext)
+    }
+}
+
 
 struct ProductsList: View {
-    @StateObject private var viewModel = ProductsViewModel()
+    @StateObject private var viewModelProxy = HomeViewModelProxy()
     
     var body: some View {
         List {
-            ForEach(viewModel.products, id: \.id) { product in
-                ProductsListRowView(product: product)
+            ForEach(viewModelProxy.products, id: \.product.id) { productUiModel in
+                ProductsListRowView(uiModel: productUiModel)
             }
-            if viewModel.shouldDisplayNextPage {
+            if viewModelProxy.hasNext {
                 nextPageView
             }
         }
         .navigationTitle("Products")
+        .onDisappear(perform: {
+            viewModelProxy.viewModel.close()
+        })
     }
     
     private var nextPageView: some View {
@@ -28,22 +53,21 @@ struct ProductsList: View {
             Spacer()
             VStack {
                 ProgressView()
-                Text("Loading next page...")
             }
             Spacer()
         }
         .onAppear(perform: {
-            viewModel.fetchNextData()
+            viewModelProxy.viewModel.loadNext()
         })
     }
 }
 
 struct ProductsListRowView: View {
-    let product: Product
+    let uiModel: ProductUiModel
     
     var body: some View {
         HStack {
-            if let image = product.images.first,
+            if let image = uiModel.product.images.first,
                let url = URL(string: image) {
                 AsyncImage(url: url) { image in
                     image.resizable()
@@ -58,10 +82,10 @@ struct ProductsListRowView: View {
                     .foregroundColor(.gray)
             }
             VStack(alignment: .leading) {
-                Text(product.name )
+                Text(uiModel.product.name )
                     .font(.title3)
                     .foregroundColor(.accentColor)
-                Text(product.prices.price.toString(base: 10))
+                Text(uiModel.priceFormatted)
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
@@ -70,8 +94,8 @@ struct ProductsListRowView: View {
 }
 
 
-struct ProductsList_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductsList()
-    }
-}
+//struct ProductsList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProductsList()
+//    }
+//}

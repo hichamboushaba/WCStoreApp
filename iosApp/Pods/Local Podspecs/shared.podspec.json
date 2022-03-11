@@ -9,7 +9,7 @@
   "authors": "",
   "license": "",
   "summary": "WCStoreApp business logic",
-  "vendored_frameworks": "build/cocoapods/framework/wcstoreapp.framework",
+  "vendored_frameworks": "build/cocoapods/framework/WCStoreAppKmm.framework",
   "libraries": "c++",
   "module_name": "shared_umbrella",
   "platforms": {
