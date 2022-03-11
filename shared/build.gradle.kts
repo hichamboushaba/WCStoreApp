@@ -51,6 +51,7 @@ kotlin {
             dependencies {
                 implementation(libs.hilt.android)
                 implementation(libs.datastore)
+                implementation(libs.lifecycle.viewmodel)
             }
         }
         val androidTest by getting
