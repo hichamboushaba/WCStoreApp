@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.ui.products
+package com.hicham.wcstoreapp.ui.products
 
 import com.hicham.wcstoreapp.models.Product
 

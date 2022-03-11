@@ -15,11 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.common.components.CategoryChip
-import com.hicham.wcstoreapp.android.ui.products.ProductUiModel
 import com.hicham.wcstoreapp.android.ui.products.ProductsList
 import com.hicham.wcstoreapp.data.category.fake.FakeCategoryRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.home.CategoryUiModel
+import com.hicham.wcstoreapp.ui.home.HomeViewModel
+import com.hicham.wcstoreapp.ui.products.ProductUiModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 

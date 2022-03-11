@@ -1,16 +1,15 @@
 package com.hicham.wcstoreapp.android.ui.checkout.address
 
 import android.util.Patterns
-import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.android.R
-import com.hicham.wcstoreapp.android.ui.BaseViewModel
-import com.hicham.wcstoreapp.android.ui.Effect
 import com.hicham.wcstoreapp.android.ui.common.InputField
 import com.hicham.wcstoreapp.android.ui.common.OptionalField
 import com.hicham.wcstoreapp.android.ui.common.RequiredField
-import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
+import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.Effect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddAddressViewModel @Inject constructor(
     private val addressRepository: AddressRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: AndroidNavigationManager
 ) : BaseViewModel() {
     companion object {
         const val ADDRESS_RESULT = "address"

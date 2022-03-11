@@ -4,13 +4,10 @@ import kotlinx.cinterop.ObjCClass
 import kotlinx.cinterop.ObjCProtocol
 import kotlinx.cinterop.getOriginalKotlinClass
 import org.koin.core.qualifier.Qualifier
-import org.koin.dsl.module
 
 object KoinWrapper {
     val koinApplication by lazy {
-        initKoin(
-            module { }
-        )
+        initKoin(appModule)
     }
 
     fun get(objCProtocol: ObjCProtocol): Any {

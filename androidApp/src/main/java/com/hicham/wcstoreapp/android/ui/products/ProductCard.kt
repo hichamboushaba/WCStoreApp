@@ -29,6 +29,7 @@ import com.hicham.wcstoreapp.android.R
 import com.hicham.wcstoreapp.android.data.Fakes
 import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.products.ProductUiModel
 
 @Composable
 fun ProductCard(

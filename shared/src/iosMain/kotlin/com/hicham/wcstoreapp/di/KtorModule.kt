@@ -14,7 +14,7 @@ actual fun Module.ktor() {
     single {
         HttpClient(Ios) {
             defaultRequest {
-                host = "hichamwootest.wpcomstaging.com"
+                host = "hichamwootest.wpcomstaging.com" //TODO
                 url {
                     protocol = URLProtocol.HTTPS
                 }

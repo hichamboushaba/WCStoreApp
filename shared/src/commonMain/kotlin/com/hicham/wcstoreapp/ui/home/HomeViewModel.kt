@@ -1,23 +1,21 @@
-package com.hicham.wcstoreapp.android.ui.home
+package com.hicham.wcstoreapp.ui.home
 
-import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.ui.BaseViewModel
-import com.hicham.wcstoreapp.android.ui.ShowSnackbar
-import com.hicham.wcstoreapp.android.ui.navigation.Screen
-import com.hicham.wcstoreapp.android.ui.products.mapToUiModel
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.NavigationManager
+import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.products.mapToUiModel
+import com.hicham.wcstoreapp.util.HiltViewModel
+import com.hicham.wcstoreapp.util.Inject
 import com.kuuurt.paging.multiplatform.helpers.cachedIn
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -77,10 +75,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onProductClicked(product: Product) {
-        val route = Screen.Product.createRoute(product.id)
-        navigationManager.navigate(route)
-    }
+//    fun onProductClicked(product: Product) {
+//        val route = Screen.Product.createRoute(product.id)
+//        navigationManager.navigate(route)
+//    }
 
     fun onCategorySelected(category: Category) {
         selectedCategory.value = category

@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
-import com.hicham.wcstoreapp.android.ui.ShowSnackbar
-import com.hicham.wcstoreapp.android.ui.products.ProductUiModel
 import com.hicham.wcstoreapp.android.ui.products.ProductsList
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.products.ProductUiModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Search
 import compose.icons.tablericons.X

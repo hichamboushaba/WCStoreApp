@@ -1,13 +1,12 @@
 package com.hicham.wcstoreapp.android.ui.checkout.address
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import com.hicham.wcstoreapp.android.ui.BaseViewModel
-import com.hicham.wcstoreapp.android.ui.ShowSnackbar
-import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
+import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class AddressListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val addressRepository: AddressRepository,
-    private val navigationManager: NavigationManager
+    private val navigationManager: AndroidNavigationManager
 ) : BaseViewModel() {
     val items: Flow<List<AddressItemUiModel>>
 
