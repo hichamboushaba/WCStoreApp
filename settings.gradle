@@ -7,5 +7,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "WCStoreApp"
-include ':app'
+include ':androidApp'
 include ':shared'
