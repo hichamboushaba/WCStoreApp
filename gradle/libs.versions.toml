@@ -10,7 +10,7 @@ koin = "3.1.5"
 [libraries]
 ### shared Libraries
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.5"
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = { strictly = "1.5.2-native-mt" } }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = { strictly = "1.6.0-native-mt" } }
 ktor = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
