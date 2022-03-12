@@ -9,6 +9,7 @@ import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -74,8 +75,8 @@ class HomeViewModel constructor(
     }
 
     fun onProductClicked(product: Product) {
-//        val route = Screen.Product.createRoute(product.id)
-//        navigationManager.navigate(route)
+        val route = Screen.Product.createRoute(product.id)
+        navigationManager.navigate(route)
     }
 
     fun onCategorySelected(category: Category) {

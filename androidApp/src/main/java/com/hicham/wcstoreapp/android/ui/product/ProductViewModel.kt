@@ -1,6 +1,5 @@
 package com.hicham.wcstoreapp.android.ui.product
 
-import androidx.lifecycle.SavedStateHandle
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.cart.items
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
@@ -16,14 +15,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class ProductViewModel(
-    savedStateHandle: SavedStateHandle,
+    private val productId: Long,
     private val productsRepository: ProductsRepository,
     private val cartRepository: CartRepository,
     private val navigationManager: AndroidNavigationManager,
     currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
-    private val productId = savedStateHandle.get<Long>(Screen.Product.navArguments.first().name)!!
-
     private val _uiState = MutableStateFlow<UiState>(UiState.LoadingState)
     val uiState = _uiState.asStateFlow()
 

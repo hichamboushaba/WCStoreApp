@@ -9,5 +9,13 @@ import org.koin.dsl.module
 val viewModelsModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
-    viewModel { ProductViewModel(get(), get(), get(), get(), get()) }
+    viewModel { parameters ->
+        ProductViewModel(
+            productId = parameters.get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
 }

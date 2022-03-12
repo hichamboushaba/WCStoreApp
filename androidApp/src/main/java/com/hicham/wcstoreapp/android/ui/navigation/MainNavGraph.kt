@@ -17,6 +17,7 @@ import com.hicham.wcstoreapp.android.ui.product.ProductScreen
 import com.hicham.wcstoreapp.android.ui.search.SearchScreen
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainNavGraph(
@@ -41,8 +42,16 @@ fun MainNavGraph(
         composable(
             Screen.Product.route,
             arguments = Screen.Product.navArguments.toNamedNavArguments()
-        ) {
-            ProductScreen(viewModel = getViewModel(), scaffoldState)
+        ) { backStackEntry ->
+            ProductScreen(
+                viewModel = getViewModel {
+                    parametersOf(
+                        backStackEntry
+                            .arguments
+                            ?.getLong(Screen.Product.navArguments.first().name)
+                    )
+                }, scaffoldState
+            )
         }
         composable(
             Screen.Checkout.route
