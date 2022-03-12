@@ -1,5 +1,7 @@
 package com.hicham.wcstoreapp.android.data.address.db
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.hicham.wcstoreapp.android.data.cart.db.CartUpdateService
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.AddressEntity
@@ -12,14 +14,13 @@ import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
-class DBAddressRepository @Inject constructor(
+class DBAddressRepository(
     private val database: AppDatabase,
     @HiltAppCoroutineScope private val appCoroutineScope: CoroutineScope,
     private val api: WooCommerceApi,
     private val cartUpdateService: CartUpdateService
-) : AddressRepository {
+) : AddressRepository, Parcelable {
     private val addressDao = database.addressDao()
     private val cartDao = database.cartDao()
 
@@ -44,6 +45,14 @@ class DBAddressRepository @Inject constructor(
         .distinctUntilChanged()
 
     override val primaryBillingAddress = MutableStateFlow(null)
+
+    constructor(parcel: Parcel) : this(
+        TODO("database"),
+        TODO("appCoroutineScope"),
+        TODO("api"),
+        TODO("cartUpdateService")
+    ) {
+    }
 
     override suspend fun addAddress(address: Address) {
         addressDao.insertAddress(address.toEntity())
@@ -101,4 +110,22 @@ class DBAddressRepository @Inject constructor(
         postCode = postCode,
         country = country
     )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<DBAddressRepository> {
+        override fun createFromParcel(parcel: Parcel): DBAddressRepository {
+            return DBAddressRepository(parcel)
+        }
+
+        override fun newArray(size: Int): Array<DBAddressRepository?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

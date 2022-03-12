@@ -5,11 +5,10 @@ import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.CheckoutData
 import com.hicham.wcstoreapp.models.PaymentMethod
-import com.hicham.wcstoreapp.util.Inject
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.flow.*
 
-class NetworkCheckoutRepository @Inject constructor(
+class NetworkCheckoutRepository  constructor(
     private val wooCommerceApi: WooCommerceApi
 ) : CheckoutRepository {
     private val checkoutState = MutableSharedFlow<NetworkCheckout>(replay = 1)

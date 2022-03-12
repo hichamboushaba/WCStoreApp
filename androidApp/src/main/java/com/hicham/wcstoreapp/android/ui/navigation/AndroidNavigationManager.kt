@@ -7,11 +7,8 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
 import com.hicham.wcstoreapp.ui.NavigationManager
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class AndroidNavigationManager @Inject constructor(): NavigationManager {
+class AndroidNavigationManager : NavigationManager {
     // We use a StateFlow here to allow ViewModels to start observing navigation results before the initial composition,
     // and still get the navigation result later
     private val navControllerFlow = MutableStateFlow<NavController?>(null)
@@ -22,7 +19,9 @@ class AndroidNavigationManager @Inject constructor(): NavigationManager {
 
     suspend fun handleNavigationCommands(navController: NavController) {
         navigationCommands
-            .onSubscription { this@AndroidNavigationManager.navControllerFlow.value = navController }
+            .onSubscription {
+                this@AndroidNavigationManager.navControllerFlow.value = navController
+            }
             .onCompletion { this@AndroidNavigationManager.navControllerFlow.value = null }
             .collect { navController.handleNavigationCommand(it) }
     }

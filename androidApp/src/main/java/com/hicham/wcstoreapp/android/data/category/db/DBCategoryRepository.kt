@@ -10,9 +10,8 @@ import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class DBCategoryRepository @Inject constructor(
+class DBCategoryRepository(
     private val database: AppDatabase,
     private val api: WooCommerceApi
 ) : CategoryRepository {

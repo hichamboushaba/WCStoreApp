@@ -10,14 +10,11 @@ import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
-import com.hicham.wcstoreapp.util.HiltViewModel
-import com.hicham.wcstoreapp.util.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel constructor(
     private val repository: ProductsRepository,
     private val cartRepository: CartRepository,
     private val categoryRepository: CategoryRepository,

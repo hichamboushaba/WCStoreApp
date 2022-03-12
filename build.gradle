@@ -11,7 +11,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:${libs.versions.hilt.get()}"
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.0"
         classpath 'com.github.ben-manes:gradle-versions-plugin:+'
 

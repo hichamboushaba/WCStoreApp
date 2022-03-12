@@ -2,7 +2,6 @@ package com.hicham.wcstoreapp.data.cart.inmemory
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.models.*
-import com.hicham.wcstoreapp.util.Inject
 import com.hicham.wcstoreapp.util.sumOf
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.toBigDecimal
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
-class InMemoryCartRepository @Inject constructor() : CartRepository {
+class InMemoryCartRepository : CartRepository {
     private val _items = MutableStateFlow(emptyList<CartItem>())
     override val cart: Flow<Cart> = _items.map {
         val totalPrice = it.sumOf { it.product.prices.price }

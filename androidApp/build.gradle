@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
     alias(libs.plugins.kotlin.serialization)
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'kotlin-parcelize'
@@ -78,9 +77,6 @@ dependencies {
 
     implementation libs.koin.android
     implementation libs.koin.compose
-    implementation libs.hilt.android
-    implementation libs.hilt.navigation.compose
-    kapt libs.hilt.compiler
 
     implementation libs.datastore
 

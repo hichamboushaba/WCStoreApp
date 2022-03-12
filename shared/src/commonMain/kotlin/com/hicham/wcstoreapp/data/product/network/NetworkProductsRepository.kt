@@ -7,7 +7,6 @@ import com.hicham.wcstoreapp.data.product.ProductsListState
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.util.Inject
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,7 +15,7 @@ import kotlinx.coroutines.sync.withLock
 
 private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
 
-class NetworkProductsRepository @Inject constructor(
+class NetworkProductsRepository  constructor(
     private val wooCommerceApi: WooCommerceApi
 ) : ProductsRepository {
     private val mutex = Mutex()

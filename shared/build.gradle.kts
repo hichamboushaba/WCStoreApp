@@ -12,7 +12,6 @@ plugins {
     id("com.rickclephas.kmp.nativecoroutines") version ("0.11.3")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildkonfig)
-    id("dagger.hilt.android.plugin")
 }
 
 version = "1.0"
@@ -87,17 +86,6 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
-    }
-
-    dependencies {
-        configurations.get("kapt").dependencies.add(
-            org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                "com.google.dagger",
-                "hilt-compiler",
-                libs.versions.hilt.get()
-            )
-        )
-        implementation(libs.hilt.android)
     }
 }
 

@@ -13,11 +13,8 @@ import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class DBCartRepository @Inject constructor(
+class DBCartRepository  constructor(
     private val database: AppDatabase,
     @HiltAppCoroutineScope private val appCoroutineScope: CoroutineScope,
     private val wooCommerceApi: WooCommerceApi,

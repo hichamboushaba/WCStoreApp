@@ -4,7 +4,6 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,31 +32,31 @@ fun MainNavGraph(
             HomeScreen(viewModel = getViewModel(), scaffoldState = scaffoldState)
         }
         composable(Screen.Search.route) {
-            SearchScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
+            SearchScreen(viewModel = getViewModel(), scaffoldState = scaffoldState)
         }
         composable(Screen.Cart.route) {
-            CartScreen(viewModel = hiltViewModel())
+            CartScreen(viewModel = getViewModel())
         }
         composable(
             Screen.Product.route,
             arguments = Screen.Product.navArguments
         ) {
-            ProductScreen(viewModel = hiltViewModel(), scaffoldState)
+            ProductScreen(viewModel = getViewModel(), scaffoldState)
         }
         composable(
             Screen.Checkout.route
         ) {
-            CheckoutScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
+            CheckoutScreen(viewModel = getViewModel(), scaffoldState = scaffoldState)
         }
         composable(
             Screen.AddressList.route
         ) {
-            AddressListScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
+            AddressListScreen(viewModel = getViewModel(), scaffoldState = scaffoldState)
         }
         composable(
             Screen.AddAddress.route
         ) {
-            AddAddressScreen(viewModel = hiltViewModel())
+            AddAddressScreen(viewModel = getViewModel())
         }
         composable(
             Screen.OrderPlaced.route

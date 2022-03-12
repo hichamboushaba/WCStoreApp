@@ -7,13 +7,10 @@ import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.ShowSnackbar
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class AddressListViewModel @Inject constructor(
+class AddressListViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val addressRepository: AddressRepository,
     private val navigationManager: AndroidNavigationManager

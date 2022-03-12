@@ -2,11 +2,10 @@ package com.hicham.wcstoreapp.data.category.fake
 
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.models.Category
-import com.hicham.wcstoreapp.util.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeCategoryRepository @Inject constructor() : CategoryRepository {
+class FakeCategoryRepository  constructor() : CategoryRepository {
     override val categories: Flow<List<Category>>
         get() = flowOf(
             listOf(

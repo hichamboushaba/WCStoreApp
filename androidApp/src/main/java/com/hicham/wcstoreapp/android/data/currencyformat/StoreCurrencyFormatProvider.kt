@@ -19,13 +19,10 @@ import kotlinx.serialization.json.Json
 import logcat.LogPriority
 import logcat.asLog
 import logcat.logcat
-import javax.inject.Inject
-import javax.inject.Singleton
 
 // We are storing an object using Json's serialization, proto-buffers for this simple case seems like
 // an overkill
-@Singleton
-class StoreCurrencyFormatProvider @Inject constructor(
+class StoreCurrencyFormatProvider(
     private val dataStore: DataStore<Preferences>,
     private val json: Json,
     private val wooCommerceApi: WooCommerceApi,

@@ -8,13 +8,10 @@ import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class CartViewModel @Inject constructor(
+class CartViewModel(
     private val cartRepository: CartRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val navigationManager: AndroidNavigationManager

@@ -6,9 +6,8 @@ import com.hicham.wcstoreapp.android.data.db.entities.CartEntity
 import com.hicham.wcstoreapp.android.data.db.entities.toEntity
 import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.models.CartTotals
-import javax.inject.Inject
 
-class CartUpdateService @Inject constructor(private val database: AppDatabase) {
+class CartUpdateService(private val database: AppDatabase) {
     private val addressDao = database.addressDao()
     private val cartDao = database.cartDao()
 

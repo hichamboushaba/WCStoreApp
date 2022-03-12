@@ -3,15 +3,14 @@ package com.hicham.wcstoreapp.android
 import android.app.Application
 import android.content.Context
 import com.hicham.wcstoreapp.android.di.appModule
+import com.hicham.wcstoreapp.android.di.roomDbModule
 import com.hicham.wcstoreapp.android.di.viewModelsModule
 import com.hicham.wcstoreapp.di.initKoin
-import dagger.hilt.android.HiltAndroidApp
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-@HiltAndroidApp
 class WCStoreApp : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -20,6 +19,6 @@ class WCStoreApp : Application() {
         val androidContext = module {
             single<Context> { this@WCStoreApp } bind Application::class
         }
-        initKoin(androidContext, appModule, viewModelsModule)
+        initKoin(androidContext, appModule, roomDbModule, viewModelsModule)
     }
 }

@@ -10,7 +10,8 @@ import org.koin.dsl.module
 
 val appModule = module {
     single(AppCoroutineScopeQualifier) { GlobalScope }
-    single<NavigationManager> { AndroidNavigationManager() }
+    single<NavigationManager> { get<AndroidNavigationManager>() }
+    single { AndroidNavigationManager() }
     single {
         PreferenceDataStoreFactory.create {
             get<Context>().preferencesDataStoreFile("datastore")

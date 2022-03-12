@@ -12,13 +12,10 @@ import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.ShowSnackbar
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ProductViewModel @Inject constructor(
+class ProductViewModel(
     savedStateHandle: SavedStateHandle,
     private val productsRepository: ProductsRepository,
     private val cartRepository: CartRepository,

@@ -10,12 +10,11 @@
 //import com.hicham.wcstoreapp.models.Product
 //import com.kuuurt.paging.multiplatform.Pager
 //import kotlinx.coroutines.CoroutineScope
-//import javax.inject.Inject
-//
+////
 //private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
 //
 //@OptIn(ExperimentalPagingApi::class)
-//class DBProductsRepository @Inject constructor(
+//class DBProductsRepository  constructor(
 //    private val database: AppDatabase,
 //    private val wooCommerceApi: WooCommerceApi
 //) : ProductsRepository {
