@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -27,9 +28,11 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ui.BottomNavigation
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.MainNavGraph
-import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import compose.icons.TablerIcons
+import compose.icons.tablericons.LayoutGrid
+import compose.icons.tablericons.Search
 import compose.icons.tablericons.ShoppingCart
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -99,20 +102,32 @@ private fun Main(uiState: MainViewModel.UiState, navigationManager: AndroidNavig
 @Composable
 private fun BottomNavigation(navController: NavController) {
     BottomNavigation {
-        BottomNavItem(navController = navController, screen = Screen.Home)
-        BottomNavItem(navController = navController, screen = Screen.Search)
+        BottomNavItem(
+            navController = navController,
+            screen = Screen.Home,
+            icon = TablerIcons.LayoutGrid
+        )
+        BottomNavItem(
+            navController = navController,
+            screen = Screen.Search,
+            icon = TablerIcons.Search
+        )
     }
 }
 
 @Composable
-private fun RowScope.BottomNavItem(navController: NavController, screen: Screen) {
+private fun RowScope.BottomNavItem(
+    navController: NavController,
+    screen: Screen,
+    icon: ImageVector
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     BottomNavigationItem(
         icon = {
             Icon(
-                screen.icon!!,
+                icon,
                 modifier = Modifier.size(32.dp),
                 contentDescription = null
             )

@@ -3,7 +3,6 @@ package com.hicham.wcstoreapp.android.ui.checkout
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.ui.checkout.address.AddAddressViewModel
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
-import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
@@ -12,6 +11,7 @@ import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

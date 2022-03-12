@@ -1,32 +1,23 @@
-package com.hicham.wcstoreapp.android.ui.navigation
-
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import compose.icons.TablerIcons
-import compose.icons.tablericons.LayoutGrid
-import compose.icons.tablericons.Search
+package com.hicham.wcstoreapp.ui.navigation
 
 sealed class Screen(
     private val baseRoute: String,
-    val icon: ImageVector? = null,
     val shouldShowBottomNav: Boolean = false,
-    val navArguments: List<NamedNavArgument> = emptyList()
+    val navArguments: List<NavArgument<*>> = emptyList()
 ) {
     val route: String = baseRoute.appendArguments(navArguments)
 
     object Home :
-        Screen("home", icon = TablerIcons.LayoutGrid, shouldShowBottomNav = true)
+        Screen("home", shouldShowBottomNav = true)
 
     object Search :
-        Screen("search", icon = TablerIcons.Search, shouldShowBottomNav = true)
+        Screen("search", shouldShowBottomNav = true)
 
     object Cart : Screen("cart")
 
     object Product : Screen(
         baseRoute = "product",
-        navArguments = listOf(navArgument("productId") { type = NavType.LongType })
+        navArguments = listOf(NavArgument<Long>("productId", NavArgumentType.Long))
     ) {
         fun createRoute(productId: Long) =
             route.replace("{${navArguments.first().name}}", productId.toString())
@@ -40,20 +31,25 @@ sealed class Screen(
 
     object OrderPlaced : Screen(
         baseRoute = "checkout/orderplaced",
-        navArguments = listOf(
-            navArgument("orderId") { type = NavType.LongType })
+        navArguments = listOf(NavArgument<Long>("orderId", NavArgumentType.Long))
     ) {
         fun createRoute(orderId: Long) =
             route.replace("{${navArguments.first().name}}", orderId.toString())
     }
 }
 
-private fun String.appendArguments(navArguments: List<NamedNavArgument>): String {
-    val mandatoryArguments = navArguments.filter { it.argument.defaultValue == null }
+data class NavArgument<T>(val name: String, val type: NavArgumentType, val defaultValue: T? = null)
+
+enum class NavArgumentType {
+    Int, Long, Boolean, String
+}
+
+private fun String.appendArguments(navArguments: List<NavArgument<*>>): String {
+    val mandatoryArguments = navArguments.filter { it.defaultValue == null }
         .takeIf { it.isNotEmpty() }
         ?.joinToString(separator = "/", prefix = "/") { "{${it.name}}" }
         .orEmpty()
-    val optionalArguments = navArguments.filter { it.argument.defaultValue != null }
+    val optionalArguments = navArguments.filter { it.defaultValue != null }
         .takeIf { it.isNotEmpty() }
         ?.joinToString(separator = "&", prefix = "?") { "${it.name}={${it.name}}" }
         .orEmpty()

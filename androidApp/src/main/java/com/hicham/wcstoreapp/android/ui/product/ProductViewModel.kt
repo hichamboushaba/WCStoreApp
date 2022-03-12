@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.cart.items
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
-import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
@@ -12,6 +11,7 @@ import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
