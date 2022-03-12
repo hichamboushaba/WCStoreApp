@@ -11,7 +11,7 @@ import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
 class HomeViewModelProxy: ObservableObject {
-    let viewModel = KoinWrapper.shared.get(objCClass: HomeViewModel.self) as! HomeViewModel
+    let viewModel = KoinKt.get(objCClass: HomeViewModel.self) as! HomeViewModel
     
     @Published private(set) var productsState: ProductsUiListState = ProductsUiListState.init(products: [], hasNext: true, state: LoadingState.loading)
     

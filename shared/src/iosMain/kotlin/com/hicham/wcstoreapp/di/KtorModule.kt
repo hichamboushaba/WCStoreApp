@@ -25,12 +25,7 @@ actual fun Module.ktor() {
                 }
             }
             install(JsonFeature) {
-                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
-                    // TODO we can probably remove this, and filter the API using the _fields parameter instead for better performance
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                }
-                )
+                serializer = KotlinxSerializer(get())
             }
             if (Platform.isDebugBinary) install(Logging) {
                 level = LogLevel.ALL
