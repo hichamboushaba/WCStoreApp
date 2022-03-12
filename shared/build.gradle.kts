@@ -6,11 +6,13 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    id("kotlin-kapt")
     id("com.android.library")
     id("kotlin-parcelize")
-    id("com.rickclephas.kmp.nativecoroutines") version("0.11.3")
+    id("com.rickclephas.kmp.nativecoroutines") version ("0.11.3")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildkonfig)
+    id("dagger.hilt.android.plugin")
 }
 
 version = "1.0"
@@ -50,7 +52,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.hilt.android)
                 implementation(libs.datastore)
                 implementation(libs.lifecycle.viewmodel)
             }
@@ -86,6 +87,17 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
+    }
+
+    dependencies {
+        configurations.get("kapt").dependencies.add(
+            org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
+                "com.google.dagger",
+                "hilt-compiler",
+                libs.versions.hilt.get()
+            )
+        )
+        implementation(libs.hilt.android)
     }
 }
 

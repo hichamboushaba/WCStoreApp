@@ -2,6 +2,8 @@ package com.hicham.wcstoreapp.data.product.network
 
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.product.LoadingState
+import com.hicham.wcstoreapp.data.product.ProductsListState
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
@@ -22,10 +24,9 @@ class NetworkProductsRepository @Inject constructor(
     private var currentQuery: String? = null
     private var currentCategory: Category? = null
 
-    override val hasNext = MutableStateFlow(true)
     private var currentOffset = 0
 
-    private val _products = MutableStateFlow<List<Product>>(emptyList())
+    private val _products = MutableStateFlow(ProductsListState.empty)
     override val products
         get() = _products
 
@@ -33,21 +34,32 @@ class NetworkProductsRepository @Inject constructor(
         currentQuery = query
         currentCategory = category
         currentOffset = 0
-        hasNext.value = true
-        _products.value = emptyList()
+        _products.value = ProductsListState.empty
 
         return loadNext()
     }
 
     override suspend fun loadNext(): Result<Unit> {
         return mutex.withLock {
-            if (!hasNext.value) return@withLock Result.success(Unit)
+            if (!_products.value.hasNext) return@withLock Result.success(Unit)
 
             runCatchingNetworkErrors {
+                _products.update {
+                    it.copy(state = if (currentOffset == 0) LoadingState.Loading else LoadingState.AppendLoading)
+                }
                 val products = getProducts(currentQuery, currentCategory, currentOffset)
-                hasNext.value = products.size == DEFAULT_PRODUCT_PAGE_SIZE
                 currentOffset += products.size
-                _products.update { it + products }
+                _products.update {
+                    it.copy(
+                        products = it.products + products,
+                        hasNext = products.size == DEFAULT_PRODUCT_PAGE_SIZE,
+                        state = LoadingState.Success
+                    )
+                }
+            }.onFailure {
+                _products.update {
+                    it.copy(state = if (currentOffset == 0) LoadingState.Error else LoadingState.AppendError)
+                }
             }
         }
     }

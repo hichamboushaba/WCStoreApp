@@ -1,7 +1,5 @@
 package com.hicham.wcstoreapp.android.ui.search
 
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.Screen
@@ -13,7 +11,6 @@ import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,20 +25,16 @@ class SearchViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    val products = _searchQuery
-        .flatMapLatest { query ->
-            // debounce using a simple delay
-            delay(500L)
-            return@flatMapLatest if (query.trim().length >= 3) {
-                repository.getProductList(scope = viewModelScope, query = query)
-                    .pagingData
-                    .cachedIn(viewModelScope)
-            } else {
-                flowOf(PagingData.from(emptyList<Product>()))
-            }
-        }.mapToUiModel(currencyFormatProvider, cartRepository)
-        .cachedIn(viewModelScope)
+    val products = repository.products
+        .mapToUiModel(currencyFormatProvider, cartRepository)
         .flowOn(Dispatchers.Default)
+
+    init {
+        _searchQuery
+            .debounce(500L)
+            .onEach { repository.fetch(query = it) }
+            .launchIn(viewModelScope)
+    }
 
     fun onQueryChanged(query: String) {
         _searchQuery.value = query
@@ -52,6 +45,12 @@ class SearchViewModel @Inject constructor(
             cartRepository.addItem(product).onFailure {
                 triggerEffect(ShowSnackbar("Error while updating your cart"))
             }
+        }
+    }
+
+    fun loadNext() {
+        viewModelScope.launch {
+            repository.loadNext()
         }
     }
 

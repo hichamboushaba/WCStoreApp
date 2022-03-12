@@ -13,19 +13,13 @@ import KMPNativeCoroutinesCombine
 class HomeViewModelProxy: ObservableObject {
     let viewModel = KoinWrapper.shared.get(objCClass: HomeViewModel.self) as! HomeViewModel
     
-    @Published private(set) var products: [ProductUiModel] = []
-    @Published private(set) var hasNext: Bool = true
+    @Published private(set) var productsState: ProductsUiListState = ProductsUiListState.init(products: [], hasNext: true, state: LoadingState.loading)
     
     init() {
         createPublisher(for: viewModel.productsNative)
             .assertNoFailure()
             .receive(on: RunLoop.main)
-            .assign(to: &$products)
-        
-        createPublisher(for: viewModel.hasNextNative)
-            .assertNoFailure()
-            .map { $0.boolValue }
-            .assign(to: &$hasNext)
+            .assign(to: &$productsState)
     }
 }
 
@@ -35,10 +29,10 @@ struct ProductsList: View {
     
     var body: some View {
         List {
-            ForEach(viewModelProxy.products, id: \.product.id) { productUiModel in
+            ForEach(viewModelProxy.productsState.products, id: \.product.id) { productUiModel in
                 ProductsListRowView(uiModel: productUiModel)
             }
-            if viewModelProxy.hasNext {
+            if viewModelProxy.productsState.hasNext {
                 nextPageView
             }
         }

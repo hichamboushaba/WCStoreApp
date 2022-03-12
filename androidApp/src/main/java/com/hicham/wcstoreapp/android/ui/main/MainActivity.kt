@@ -26,8 +26,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ui.BottomNavigation
+import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.MainNavGraph
-import com.hicham.wcstoreapp.android.ui.navigation.NavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.Screen
 import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
 import compose.icons.TablerIcons
@@ -38,7 +38,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
-    lateinit var navigationManager: NavigationManager
+    lateinit var navigationManager: AndroidNavigationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun Main(uiState: MainViewModel.UiState, navigationManager: NavigationManager) {
+private fun Main(uiState: MainViewModel.UiState, navigationManager: AndroidNavigationManager) {
     val navController = rememberNavController()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -172,6 +172,6 @@ private fun CartButton(countOfItemsInCart: Int, onClick: () -> Unit) {
 @Composable
 fun DefaultPreview() {
     WCStoreAppTheme {
-        Main(MainViewModel.UiState(1), NavigationManager())
+        Main(MainViewModel.UiState(1), AndroidNavigationManager())
     }
 }

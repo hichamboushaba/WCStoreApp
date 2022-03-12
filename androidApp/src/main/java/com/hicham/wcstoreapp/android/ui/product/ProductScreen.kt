@@ -35,15 +35,14 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.hicham.wcstoreapp.android.R
 import com.hicham.wcstoreapp.android.data.product.fake.FakeProductsRepository
-import com.hicham.wcstoreapp.android.ui.ShowActionSnackbar
-import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.android.ui.common.components.WCTopAppBar
+import com.hicham.wcstoreapp.ui.ShowActionSnackbar
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ChevronLeft
 import compose.icons.tablericons.ChevronRight
 import compose.icons.tablericons.ShoppingCartPlus
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 

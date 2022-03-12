@@ -2,6 +2,8 @@ package com.hicham.wcstoreapp.android.data.product.fake
 
 import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.product.LoadingState
+import com.hicham.wcstoreapp.data.product.ProductsListState
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
@@ -11,16 +13,18 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class FakeProductsRepository : ProductsRepository {
-    override val products: Flow<List<Product>>
+    override val products: Flow<ProductsListState>
         get() = flowOf(
-            Json.decodeFromString(
-                ListSerializer(NetworkProduct.serializer()),
-                PRODUCTS_JSON
+            ProductsListState(
+                products = Json.decodeFromString(
+                    ListSerializer(NetworkProduct.serializer()),
+                    PRODUCTS_JSON
+                )
+                    .map { it.toDomainModel() },
+                hasNext = false,
+                state = LoadingState.Success
             )
-                .map { it.toDomainModel() }
         )
-
-    override val hasNext = flowOf(false)
 
     override suspend fun fetch(query: String?, category: Category?): Result<Unit> =
         Result.success(Unit)

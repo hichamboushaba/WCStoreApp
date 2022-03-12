@@ -10,5 +10,5 @@ expect annotation class Inject()
 @OptIn(ExperimentalMultiplatform::class)
 @OptionalExpectation
 @Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 expect annotation class HiltViewModel()

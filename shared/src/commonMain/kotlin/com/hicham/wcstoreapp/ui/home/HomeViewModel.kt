@@ -34,8 +34,6 @@ class HomeViewModel @Inject constructor(
         .mapToUiModel(currencyFormatProvider, cartRepository)
         .flowOn(Dispatchers.Default)
 
-    val hasNext = repository.hasNext
-
     private val _categories = categoryRepository.categories.map { list ->
         list.toMutableList().apply { add(0, ALL_CATEGORY) }
     }
@@ -72,15 +70,16 @@ class HomeViewModel @Inject constructor(
     }
 
     fun loadNext() {
+        println("loadNext")
         viewModelScope.launch {
             repository.loadNext()
         }
     }
 
-//    fun onProductClicked(product: Product) {
+    fun onProductClicked(product: Product) {
 //        val route = Screen.Product.createRoute(product.id)
 //        navigationManager.navigate(route)
-//    }
+    }
 
     fun onCategorySelected(category: Category) {
         selectedCategory.value = category

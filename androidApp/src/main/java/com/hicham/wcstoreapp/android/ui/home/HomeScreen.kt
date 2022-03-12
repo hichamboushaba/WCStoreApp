@@ -12,17 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.PagingData
-import com.hicham.wcstoreapp.android.ui.ShowSnackbar
 import com.hicham.wcstoreapp.android.ui.common.components.CategoryChip
 import com.hicham.wcstoreapp.android.ui.products.ProductsList
 import com.hicham.wcstoreapp.data.category.fake.FakeCategoryRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.home.CategoryUiModel
 import com.hicham.wcstoreapp.ui.home.HomeViewModel
-import com.hicham.wcstoreapp.ui.products.ProductUiModel
-import kotlinx.coroutines.flow.*
+import com.hicham.wcstoreapp.ui.products.ProductsUiListState
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
 @Composable
@@ -31,6 +31,9 @@ fun HomeScreen(
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val categories by viewModel.categories.collectAsState(initial = emptyList())
+    val products by viewModel.products.collectAsState(
+        initial = ProductsUiListState()
+    )
 
     LaunchedEffect("effects") {
         viewModel.effects.collect { effect ->
@@ -41,24 +44,27 @@ fun HomeScreen(
     }
 
     HomeScreen(
-        products = viewModel.products,
+        products = products,
         categories = categories,
         addItemToCart = viewModel::addItemToCart,
         deleteItemFromCart = viewModel::deleteItemFromCart,
         onProductClicked = viewModel::onProductClicked,
         onCategorySelected = viewModel::onCategorySelected,
+        loadNext = viewModel::loadNext,
         scaffoldState = scaffoldState
     )
 }
 
 @Composable
 private fun HomeScreen(
-    products: Flow<PagingData<ProductUiModel>>,
+    products: ProductsUiListState,
     categories: List<CategoryUiModel>,
     addItemToCart: (Product) -> Unit = {},
     deleteItemFromCart: (Product) -> Unit = {},
     onProductClicked: (Product) -> Unit = {},
     onCategorySelected: (Category) -> Unit = {},
+    retry: () -> Unit = {},
+    loadNext: () -> Unit = {},
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -75,11 +81,13 @@ private fun HomeScreen(
             }
         }
         ProductsList(
-            productsFlow = products,
+            productsUiListState = products,
             addItemToCart = addItemToCart,
             removeItemFromCart = deleteItemFromCart,
             onProductClicked = onProductClicked,
-            scaffoldState = scaffoldState
+            scaffoldState = scaffoldState,
+            retry = retry,
+            loadNext = loadNext
         )
     }
 }
@@ -97,5 +105,5 @@ private fun HomePreview() {
             }
         }.first()
     }
-    HomeScreen(products = emptyFlow(), categories = categories)
+    // HomeScreen(products = emptyFlow(), categories = categories)
 }

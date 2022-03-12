@@ -9,33 +9,29 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
+import com.hicham.wcstoreapp.data.product.LoadingState
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.products.ProductUiModel
+import com.hicham.wcstoreapp.ui.products.ProductsUiListState
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
 fun ProductsList(
-    productsFlow: Flow<PagingData<ProductUiModel>>,
+    productsUiListState: ProductsUiListState,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
     onProductClicked: (Product) -> Unit,
+    retry: () -> Unit,
+    loadNext: () -> Unit,
     scaffoldState: ScaffoldState
 ) {
-    val lazyProductList = productsFlow.collectAsLazyPagingItems()
-
     val coroutineScope = rememberCoroutineScope()
 
     val minCardWidth = 160.dp
@@ -43,11 +39,11 @@ fun ProductsList(
     BoxWithConstraints {
         val nbColumns = (maxWidth / minCardWidth).toInt()
         val size = (maxWidth / nbColumns) - 16.dp
-        val hasOfflineData = lazyProductList.loadState.mediator != null &&
-                lazyProductList.itemCount != 0
-        val loadState = lazyProductList.loadState
+        val hasOfflineData =
+            false // TODO lazyProductList.loadState.mediator != null && lazyProductList.itemCount != 0
+        val loadState = productsUiListState.state
         when {
-            loadState.refresh is LoadState.Loading && !hasOfflineData -> {
+            loadState == LoadingState.Loading && !hasOfflineData -> {
                 // When refreshing and there is no items, or there is no offline cache
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -55,8 +51,10 @@ fun ProductsList(
                         .wrapContentSize(Alignment.Center)
                 )
             }
-            loadState.refresh is LoadState.Error && !hasOfflineData -> {
-                ErrorView(modifier = Modifier.fillMaxSize()) { lazyProductList.retry() }
+            loadState == LoadingState.Error && !hasOfflineData -> {
+                ErrorView(modifier = Modifier.fillMaxSize()) {
+                    //TODO lazyProductList.retry()
+                }
             }
             else -> {
                 LazyColumn(
@@ -66,19 +64,21 @@ fun ProductsList(
                 ) {
 
                     renderList(
-                        lazyProductList = lazyProductList,
+                        productsUiListState = productsUiListState,
                         addItemToCart = addItemToCart,
                         removeItemFromCart = removeItemFromCart,
                         onProductClick = onProductClicked,
+                        loadNext = loadNext,
                         nbColumns = nbColumns,
-                        itemsSize = size
+                        itemsSize = size,
                     )
 
                     handleLoadState(
                         coroutineScope = coroutineScope,
-                        loadState = loadState,
-                        scaffoldState = scaffoldState
-                    ) { lazyProductList.retry() }
+                        loadState = productsUiListState.state,
+                        scaffoldState = scaffoldState,
+                        retry = { retry() }
+                    )
                 }
             }
         }
@@ -87,12 +87,12 @@ fun ProductsList(
 
 private fun LazyListScope.handleLoadState(
     coroutineScope: CoroutineScope,
-    loadState: CombinedLoadStates,
+    loadState: LoadingState,
     scaffoldState: ScaffoldState,
-    retry: () -> Unit
+    retry: () -> Unit,
 ) {
     when {
-        loadState.refresh is LoadState.Error -> {
+        loadState == LoadingState.Error -> {
             coroutineScope.launch {
                 val result = scaffoldState.snackbarHostState.showSnackbar(
                     message = "Fetching products failed",
@@ -104,7 +104,7 @@ private fun LazyListScope.handleLoadState(
                 }
             }
         }
-        loadState.append == LoadState.Loading -> {
+        loadState == LoadingState.AppendLoading -> {
             item {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -114,7 +114,7 @@ private fun LazyListScope.handleLoadState(
                 )
             }
         }
-        loadState.append is LoadState.Error -> {
+        loadState == LoadingState.AppendError -> {
             coroutineScope.launch {
                 val result = scaffoldState.snackbarHostState.showSnackbar(
                     message = "Loading Products Failed",
@@ -130,25 +130,27 @@ private fun LazyListScope.handleLoadState(
 }
 
 private fun LazyListScope.renderList(
-    lazyProductList: LazyPagingItems<ProductUiModel>,
+    productsUiListState: ProductsUiListState,
     addItemToCart: (Product) -> Unit,
     removeItemFromCart: (Product) -> Unit,
     onProductClick: (Product) -> Unit,
+    loadNext: () -> Unit,
     nbColumns: Int,
     itemsSize: Dp
 ) {
+    val products = productsUiListState.products
     val rowsCount =
-        kotlin.math.ceil(lazyProductList.itemCount.toDouble() / nbColumns).toInt()
+        kotlin.math.ceil(products.size.toDouble() / nbColumns).toInt()
 
-    items(count = rowsCount, key = { lazyProductList[it]?.product?.id ?: 0L }) { row ->
+    items(count = rowsCount, key = { products[it].product.id }) { row ->
         val firstIndex = row * nbColumns
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             (firstIndex until firstIndex + nbColumns).forEach { itemIndex ->
-                if (itemIndex < lazyProductList.itemCount) {
-                    lazyProductList[itemIndex]?.let {
+                if (itemIndex < products.size) {
+                    products[itemIndex].let {
                         ProductCard(
                             uiModel = it,
                             addItemToCart = addItemToCart,
@@ -157,6 +159,9 @@ private fun LazyListScope.renderList(
                                 .size(itemsSize)
                                 .clickable { onProductClick(it.product) }
                         )
+                    }
+                    if (productsUiListState.hasNext && itemIndex == products.size - 1) {
+                        LaunchedEffect(key1 = "loadNext", block = { loadNext() })
                     }
                 } else {
                     Spacer(Modifier.size(itemsSize))
