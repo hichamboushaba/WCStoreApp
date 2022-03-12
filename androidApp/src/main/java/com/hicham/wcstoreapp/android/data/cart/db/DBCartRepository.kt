@@ -5,7 +5,7 @@ import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.CartItemEntity
 import com.hicham.wcstoreapp.android.data.db.entities.toDomainModel
-import com.hicham.wcstoreapp.android.di.AppCoroutineScope
+import com.hicham.wcstoreapp.android.di.HiltAppCoroutineScope
 import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.models.*
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class DBCartRepository @Inject constructor(
     private val database: AppDatabase,
-    @AppCoroutineScope private val appCoroutineScope: CoroutineScope,
+    @HiltAppCoroutineScope private val appCoroutineScope: CoroutineScope,
     private val wooCommerceApi: WooCommerceApi,
     private val cartUpdateService: CartUpdateService
 ) : CartRepository {

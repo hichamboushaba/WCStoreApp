@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.hicham.wcstoreapp.android.di.AppCoroutineScope
+import com.hicham.wcstoreapp.android.di.HiltAppCoroutineScope
 import com.hicham.wcstoreapp.data.api.NetworkFormattable
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.toDomainModel
@@ -29,7 +29,7 @@ class StoreCurrencyFormatProvider @Inject constructor(
     private val dataStore: DataStore<Preferences>,
     private val json: Json,
     private val wooCommerceApi: WooCommerceApi,
-    @AppCoroutineScope private val coroutineScope: CoroutineScope
+    @HiltAppCoroutineScope private val coroutineScope: CoroutineScope
 ) : CurrencyFormatProvider {
     companion object {
         const val SETTINGS_KEY = "currency_format_settings"

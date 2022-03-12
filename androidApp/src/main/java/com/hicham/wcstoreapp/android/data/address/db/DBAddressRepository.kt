@@ -3,7 +3,7 @@ package com.hicham.wcstoreapp.android.data.address.db
 import com.hicham.wcstoreapp.android.data.cart.db.CartUpdateService
 import com.hicham.wcstoreapp.android.data.db.AppDatabase
 import com.hicham.wcstoreapp.android.data.db.entities.AddressEntity
-import com.hicham.wcstoreapp.android.di.AppCoroutineScope
+import com.hicham.wcstoreapp.android.di.HiltAppCoroutineScope
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.api.NetworkUpdateCustomerRequest
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class DBAddressRepository @Inject constructor(
     private val database: AppDatabase,
-    @AppCoroutineScope private val appCoroutineScope: CoroutineScope,
+    @HiltAppCoroutineScope private val appCoroutineScope: CoroutineScope,
     private val api: WooCommerceApi,
     private val cartUpdateService: CartUpdateService
 ) : AddressRepository {

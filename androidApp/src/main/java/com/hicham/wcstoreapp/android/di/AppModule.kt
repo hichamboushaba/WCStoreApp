@@ -1,24 +1,19 @@
 package com.hicham.wcstoreapp.android.di
 
+import android.content.Context
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.ui.NavigationManager
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class AppModule {
-    companion object {
-        @Provides
-        @AppCoroutineScope
-        fun providesAppCoroutineScope(): CoroutineScope = GlobalScope
+val appModule = module {
+    single(AppCoroutineScopeQualifier) { GlobalScope }
+    single<NavigationManager> { AndroidNavigationManager() }
+    single {
+        PreferenceDataStoreFactory.create {
+            get<Context>().preferencesDataStoreFile("datastore")
+        }
     }
-
-    @Binds
-    abstract fun bindNavigationManager(navigationManager: AndroidNavigationManager): NavigationManager
 }

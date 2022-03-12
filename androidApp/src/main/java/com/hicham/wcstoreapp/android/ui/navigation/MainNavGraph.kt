@@ -16,6 +16,7 @@ import com.hicham.wcstoreapp.android.ui.checkout.after.OrderPlacedScreen
 import com.hicham.wcstoreapp.android.ui.home.HomeScreen
 import com.hicham.wcstoreapp.android.ui.product.ProductScreen
 import com.hicham.wcstoreapp.android.ui.search.SearchScreen
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainNavGraph(
@@ -29,7 +30,7 @@ fun MainNavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-            HomeScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
+            HomeScreen(viewModel = getViewModel(), scaffoldState = scaffoldState)
         }
         composable(Screen.Search.route) {
             SearchScreen(viewModel = hiltViewModel(), scaffoldState = scaffoldState)
