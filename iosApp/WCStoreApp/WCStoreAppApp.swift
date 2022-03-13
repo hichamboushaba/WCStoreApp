@@ -12,7 +12,7 @@ import WCStoreAppKmm
 struct WCStoreAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ProductsList()
+            ProductScreen()
         }
     }
 }

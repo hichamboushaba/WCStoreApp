@@ -1,8 +1,8 @@
 package com.hicham.wcstoreapp.android.di
 
 import com.hicham.wcstoreapp.android.ui.main.MainViewModel
-import com.hicham.wcstoreapp.android.ui.product.ProductViewModel
 import com.hicham.wcstoreapp.ui.home.HomeViewModel
+import com.hicham.wcstoreapp.ui.product.ProductViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

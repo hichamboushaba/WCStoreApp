@@ -1,15 +1,11 @@
-package com.hicham.wcstoreapp.android.ui.product
+package com.hicham.wcstoreapp.ui.product
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.android.data.cart.items
-import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.ui.BaseViewModel
-import com.hicham.wcstoreapp.ui.CurrencyFormatter
-import com.hicham.wcstoreapp.ui.ShowActionSnackbar
-import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.*
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -18,7 +14,7 @@ class ProductViewModel(
     private val productId: Long,
     private val productsRepository: ProductsRepository,
     private val cartRepository: CartRepository,
-    private val navigationManager: AndroidNavigationManager,
+    private val navigationManager: NavigationManager,
     currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.LoadingState)

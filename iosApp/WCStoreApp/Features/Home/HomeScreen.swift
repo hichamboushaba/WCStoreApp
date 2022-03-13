@@ -24,7 +24,7 @@ class HomeViewModelProxy: ObservableObject {
 }
 
 
-struct ProductsList: View {
+struct HomeScreen: View {
     @StateObject private var viewModelProxy = HomeViewModelProxy()
     
     var body: some View {

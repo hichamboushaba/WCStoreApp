@@ -39,6 +39,7 @@ import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.android.ui.common.components.WCTopAppBar
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.product.ProductViewModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ChevronLeft
 import compose.icons.tablericons.ChevronRight
