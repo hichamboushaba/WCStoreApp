@@ -2,16 +2,19 @@ PODS:
   - KMPNativeCoroutinesCombine (0.11.3):
     - KMPNativeCoroutinesCore (= 0.11.3)
   - KMPNativeCoroutinesCore (0.11.3)
+  - NavigationStack (1.0.4)
   - shared (1.0)
 
 DEPENDENCIES:
   - KMPNativeCoroutinesCombine
+  - NavigationStack
   - shared (from `../shared`)
 
 SPEC REPOS:
   trunk:
     - KMPNativeCoroutinesCombine
     - KMPNativeCoroutinesCore
+    - NavigationStack
 
 EXTERNAL SOURCES:
   shared:
@@ -20,8 +23,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   KMPNativeCoroutinesCombine: eb605c5d8315a2f3d046767c3b733887009cc5de
   KMPNativeCoroutinesCore: 28d42a3a801ce4d5be75e01a7f227462c529a127
+  NavigationStack: c2fb4c71b89659481e8e0dfb20e533681dce084f
   shared: 41d14110fee8893b131e1b730829232bbc49f601
 
-PODFILE CHECKSUM: 9d78ea3d175478bf55b2a89f517525c366c2ce2b
+PODFILE CHECKSUM: f5f0669530692f0bb354d305be1316d6371374ce
 
 COCOAPODS: 1.11.2

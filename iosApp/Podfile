@@ -8,5 +8,6 @@ target 'WCStoreApp' do
   # Pods for WCStoreApp
   pod 'shared', :path => '../shared'
   pod 'KMPNativeCoroutinesCombine'
+  pod 'NavigationStack'
 
 end

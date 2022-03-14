@@ -1,23 +1,31 @@
 package com.hicham.wcstoreapp.di
 
+import com.hicham.wcstoreapp.ui.NavigationManager
 import kotlinx.cinterop.ObjCClass
 import kotlinx.cinterop.ObjCProtocol
 import kotlinx.cinterop.getOriginalKotlinClass
+import org.koin.core.context.GlobalContext
 import org.koin.core.parameter.ParametersHolder
 import org.koin.core.qualifier.Qualifier
+import org.koin.dsl.module
 
-val koinApplication by lazy {
-    initKoin(appModule)
+fun initKoin(navigationManager: NavigationManager) {
+    initKoin(appModule, module {
+        single { navigationManager }
+    })
 }
+
+private val koin
+    get() = GlobalContext.get()
 
 fun get(objCProtocol: ObjCProtocol): Any {
     val klass = getOriginalKotlinClass(objCProtocol)!!
-    return koinApplication.koin.get(klass, null)
+    return koin.get(klass, null)
 }
 
 fun get(objCProtocol: ObjCProtocol, qualifier: Qualifier? = null): Any {
     val klass = getOriginalKotlinClass(objCProtocol)!!
-    return koinApplication.koin.get(klass, qualifier)
+    return koin.get(klass, qualifier)
 }
 
 fun get(objCClass: ObjCClass): Any {
@@ -38,7 +46,7 @@ fun get(
     parameters: List<Any?>? = null
 ): Any {
     val klass = getOriginalKotlinClass(objCClass)!!
-    return koinApplication.koin.get(klass, qualifier, parameters?.let {
+    return koin.get(klass, qualifier, parameters?.let {
         { ParametersHolder(it.toMutableList()) }
     })
 }

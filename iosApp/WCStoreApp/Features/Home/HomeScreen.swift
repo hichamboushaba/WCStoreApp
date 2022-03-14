@@ -30,7 +30,9 @@ struct HomeScreen: View {
     var body: some View {
         List {
             ForEach(viewModelProxy.productsState.products, id: \.product.id) { productUiModel in
-                ProductsListRowView(uiModel: productUiModel)
+                ProductsListRowView(uiModel: productUiModel, onClick: {
+                    viewModelProxy.viewModel.onProductClicked(product: productUiModel.product)
+                })
             }
             if viewModelProxy.productsState.hasNext {
                 nextPageView
@@ -58,6 +60,7 @@ struct HomeScreen: View {
 
 struct ProductsListRowView: View {
     let uiModel: ProductUiModel
+    let onClick: () -> Void
     
     var body: some View {
         HStack {
@@ -84,6 +87,7 @@ struct ProductsListRowView: View {
                     .foregroundColor(.gray)
             }
         }
+        .onTapGesture(perform: onClick)
     }
 }
 

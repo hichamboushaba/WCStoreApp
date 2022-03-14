@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.ui.navigation
 
 sealed class Screen(
-    private val baseRoute: String,
+    val baseRoute: String,
     val shouldShowBottomNav: Boolean = false,
     val navArguments: List<NavArgument<*>> = emptyList()
 ) {
@@ -38,7 +38,13 @@ sealed class Screen(
     }
 }
 
-data class NavArgument<T>(val name: String, val type: NavArgumentType, val defaultValue: T? = null)
+data class NavArgument<T>(
+    val name: String,
+    val type: NavArgumentType,
+    val defaultValue: T? = null
+) {
+    val isOptional: Boolean = defaultValue != null
+}
 
 enum class NavArgumentType {
     Int, Long, Boolean, String
