@@ -11,11 +11,12 @@ import com.hicham.wcstoreapp.data.checkout.network.NetworkCheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.fake.FakeCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
+import com.hicham.wcstoreapp.data.product.db.DBProductsRepository
 import com.hicham.wcstoreapp.data.product.network.NetworkProductsRepository
 import org.koin.dsl.module
 
 val dataModule = module {
-    factory<ProductsRepository> { NetworkProductsRepository(get()) }
+    factory<ProductsRepository> { DBProductsRepository(get(), get()) }
     factory<CartRepository> { InMemoryCartRepository() }
     factory<CategoryRepository> { NetworkCategoryRepository(get()) }
     factory<CurrencyFormatProvider> { FakeCurrencyFormatProvider() }

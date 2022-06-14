@@ -39,8 +39,7 @@ fun ProductsList(
     BoxWithConstraints {
         val nbColumns = (maxWidth / minCardWidth).toInt()
         val size = (maxWidth / nbColumns) - 16.dp
-        val hasOfflineData =
-            false // TODO lazyProductList.loadState.mediator != null && lazyProductList.itemCount != 0
+        val hasOfflineData = productsUiListState.products.isNotEmpty()
         val loadState = productsUiListState.state
         when {
             loadState == LoadingState.Loading && !hasOfflineData -> {

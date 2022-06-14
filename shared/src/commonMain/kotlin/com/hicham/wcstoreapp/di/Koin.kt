@@ -6,6 +6,6 @@ import org.koin.core.module.Module
 
 fun initKoin(vararg appModules: Module): KoinApplication {
     return startKoin {
-        modules(*appModules, networkModule, dataModule)
+        modules(*appModules, networkModule, dataModule, dbModule)
     }
 }

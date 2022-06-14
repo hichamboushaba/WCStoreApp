@@ -11,3 +11,14 @@ CREATE TABLE ProductEntity(
    shortDescription TEXT NOT NULL,
    description TEXT NOT NULL
 );
+
+selectAll:
+SELECT *
+FROM ProductEntity;
+
+deleteAll:
+DELETE FROM ProductEntity;
+
+insert:
+INSERT INTO ProductEntity(id, name, images, price, regularPrice, salePrice, shortDescription, description)
+VALUES ?;
