@@ -17,6 +17,7 @@ ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0"
 bignum = "com.ionspin.kotlin:bignum:0.3.4"
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
 ### Android Libraries
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }

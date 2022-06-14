@@ -12,13 +12,9 @@ import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.fake.FakeCurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.data.product.network.NetworkProductsRepository
-import org.koin.core.module.Module
 import org.koin.dsl.module
 
-expect fun Module.db()
-
 val dataModule = module {
-    db()
     factory<ProductsRepository> { NetworkProductsRepository(get()) }
     factory<CartRepository> { InMemoryCartRepository() }
     factory<CategoryRepository> { NetworkCategoryRepository(get()) }

@@ -1,0 +1,13 @@
+import kotlin.collections.List;
+import com.ionspin.kotlin.bignum.decimal.BigDecimal;
+
+CREATE TABLE ProductEntity(
+   id INTEGER NOT NULL,
+   name TEXT NOT NULL,
+   images TEXT AS List<String> NOT NULL,
+   price TEXT AS BigDecimal NOT NULL,
+   regularPrice TEXT AS BigDecimal NOT NULL,
+   salePrice TEXT AS BigDecimal NOT NULL,
+   shortDescription TEXT NOT NULL,
+   description TEXT NOT NULL
+);

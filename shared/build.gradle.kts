@@ -43,6 +43,7 @@ kotlin {
                 api(libs.multiplatform.paging)
                 implementation(libs.bignum)
                 api(libs.koin.core)
+                implementation(libs.sqldelight.coroutines)
             }
         }
         val commonTest by getting {
