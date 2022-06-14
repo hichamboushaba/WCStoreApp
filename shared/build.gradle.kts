@@ -12,6 +12,7 @@ plugins {
     id("com.rickclephas.kmp.nativecoroutines") version ("0.11.3")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.sqldelight)
 }
 
 version = "1.0"
@@ -53,6 +54,7 @@ kotlin {
             dependencies {
                 implementation(libs.datastore)
                 implementation(libs.lifecycle.viewmodel)
+                implementation(libs.sqldelight.android)
             }
         }
         val androidTest by getting
@@ -66,6 +68,7 @@ kotlin {
 //            iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(libs.ktor.client.ios)
+                implementation(libs.sqldelight.native)
             }
         }
         val iosX64Test by getting
@@ -98,5 +101,11 @@ buildkonfig {
             "WC_URL",
             gradleLocalProperties(rootDir).getProperty("WC_URL", "")
         )
+    }
+}
+
+sqldelight {
+    database("Database") {
+        packageName = "com.hicham.wcstoreapp"
     }
 }
