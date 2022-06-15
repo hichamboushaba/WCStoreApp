@@ -4,9 +4,13 @@ import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
+import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
+import com.hicham.wcstoreapp.data.currencyformat.StoreCurrencyFormatProvider
+import com.hicham.wcstoreapp.di.AppCoroutineScopeQualifier
 import com.hicham.wcstoreapp.ui.NavigationManager
 import kotlinx.coroutines.GlobalScope
 import org.koin.dsl.module
+import org.koin.dsl.single
 
 val appModule = module {
     single<NavigationManager> { get<AndroidNavigationManager>() }
@@ -15,5 +19,13 @@ val appModule = module {
         PreferenceDataStoreFactory.create {
             get<Context>().preferencesDataStoreFile("datastore")
         }
+    }
+    single<CurrencyFormatProvider> {
+        StoreCurrencyFormatProvider(
+            coroutineScope = get(AppCoroutineScopeQualifier),
+            dataStore = get(),
+            json = get(),
+            wooCommerceApi = get()
+        )
     }
 }

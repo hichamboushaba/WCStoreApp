@@ -56,6 +56,7 @@ kotlin {
                 implementation(libs.datastore)
                 implementation(libs.lifecycle.viewmodel)
                 implementation(libs.sqldelight.android)
+                implementation(libs.logcat)
             }
         }
         val androidTest by getting

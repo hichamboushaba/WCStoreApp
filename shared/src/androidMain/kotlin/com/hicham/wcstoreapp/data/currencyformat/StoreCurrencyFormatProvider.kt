@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.android.data.currencyformat
+package com.hicham.wcstoreapp.data.currencyformat
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.hicham.wcstoreapp.data.api.NetworkFormattable
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.toDomainModel
-import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
@@ -19,13 +18,11 @@ import logcat.LogPriority
 import logcat.asLog
 import logcat.logcat
 
-// We are storing an object using Json's serialization, proto-buffers for this simple case seems like
-// an overkill
 class StoreCurrencyFormatProvider(
+    private val coroutineScope: CoroutineScope,
     private val dataStore: DataStore<Preferences>,
     private val json: Json,
-    private val wooCommerceApi: WooCommerceApi,
-    private val coroutineScope: CoroutineScope
+    private val wooCommerceApi: WooCommerceApi
 ) : CurrencyFormatProvider {
     companion object {
         const val SETTINGS_KEY = "currency_format_settings"

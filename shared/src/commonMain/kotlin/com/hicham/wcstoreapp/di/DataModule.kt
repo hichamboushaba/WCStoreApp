@@ -34,7 +34,6 @@ val dataModule = module {
         )
     }
     factory<CategoryRepository> { NetworkCategoryRepository(get()) }
-    factory<CurrencyFormatProvider> { FakeCurrencyFormatProvider() }
     single<AddressRepository> {
         DBAddressRepository(
             appCoroutineScope = get(qualifier = AppCoroutineScopeQualifier),
