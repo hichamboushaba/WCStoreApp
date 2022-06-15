@@ -13,7 +13,8 @@ CREATE INDEX IF NOT EXISTS index_CartItemEntity_productId ON CartItemEntity (pro
 
 selectAll:
 SELECT *
-FROM CartItemEntity;
+FROM CartItemEntity
+ORDER BY key ASC;
 
 deleteAll:
 DELETE FROM CartItemEntity;
@@ -27,3 +28,10 @@ SELECT * FROM CartItemEntity WHERE productId = :productId;
 
 deleteCartItemForProductId:
 DELETE FROM CartItemEntity WHERE productId = :productId;
+
+selectItemsWithProducts:
+SELECT
+  CartItemEntity.*,
+  ProductEntity.*
+FROM CartItemEntity
+JOIN ProductEntity ON ProductEntity.id = CartItemEntity.productId;

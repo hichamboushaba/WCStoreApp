@@ -5,10 +5,10 @@ import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.CartItemEntity
 import com.hicham.wcstoreapp.data.db.daos.CartDao
-import com.hicham.wcstoreapp.data.db.suspendTransaction
-import com.hicham.wcstoreapp.data.db.suspendTransactionWithResult
 import com.hicham.wcstoreapp.data.db.toDomainModel
-import com.hicham.wcstoreapp.models.*
+import com.hicham.wcstoreapp.models.Cart
+import com.hicham.wcstoreapp.models.CartTotals
+import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlinx.coroutines.CoroutineScope
@@ -103,35 +103,31 @@ class DBCartRepository constructor(
     }
 
     private suspend fun deleteItemFromDb(product: Product): CartItemEntity? {
-        return cartDao.suspendTransactionWithResult {
-            val currentItem = cartDao.getCartItem(product.id)
-            if (currentItem != null && currentItem.quantity > 1) {
-                cartDao.upsertCartItem(currentItem.copy(quantity = currentItem.quantity - 1))
-            } else {
-                cartDao.deleteCartItemForProductId(productId = product.id)
-            }
-            currentItem
+        val currentItem = cartDao.getCartItem(product.id)
+        if (currentItem != null && currentItem.quantity > 1) {
+            cartDao.upsertCartItem(currentItem.copy(quantity = currentItem.quantity - 1))
+        } else {
+            cartDao.deleteCartItemForProductId(productId = product.id)
         }
+        return currentItem
     }
 
     private suspend fun addItemToDb(product: Product, cartItemKey: String? = null) {
-        cartDao.suspendTransaction {
-            val currentItem = cartDao.getCartItem(product.id)
-            val updatedItem = currentItem?.copy(quantity = currentItem.quantity + 1)
-                ?: cartItemKey?.let {
-                    CartItemEntity(
-                        cartItemKey,
-                        product.id,
-                        1,
-                        subtotal = BigDecimal.ZERO,
-                        tax = BigDecimal.ZERO,
-                        total = BigDecimal.ZERO
-                    )
-                }
-
-            updatedItem?.let {
-                cartDao.upsertCartItem(updatedItem)
+        val currentItem = cartDao.getCartItem(product.id)
+        val updatedItem = currentItem?.copy(quantity = currentItem.quantity + 1)
+            ?: cartItemKey?.let {
+                CartItemEntity(
+                    cartItemKey,
+                    product.id,
+                    1,
+                    subtotal = BigDecimal.ZERO,
+                    tax = BigDecimal.ZERO,
+                    total = BigDecimal.ZERO
+                )
             }
+
+        updatedItem?.let {
+            cartDao.upsertCartItem(updatedItem)
         }
     }
 

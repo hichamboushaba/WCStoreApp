@@ -34,17 +34,15 @@ fun CartWithItemsEntity.toDomainModel() = Cart(
         total = cartEntity.total
     ),
     items = items.mapNotNull { item ->
-        if (item.product != null) {
-            CartItem(
-                id = item.cartItem.key,
-                product = item.product.toDomainModel(),
-                quantity = item.cartItem.quantity,
-                totals = CartItemTotals(
-                    subtotal = item.cartItem.subtotal,
-                    tax = item.cartItem.subtotal,
-                    total = item.cartItem.total
-                )
+        CartItem(
+            id = item.cartItem.key,
+            product = item.product.toDomainModel(),
+            quantity = item.cartItem.quantity,
+            totals = CartItemTotals(
+                subtotal = item.cartItem.subtotal,
+                tax = item.cartItem.subtotal,
+                total = item.cartItem.total
             )
-        } else null
+        )
     }
 )

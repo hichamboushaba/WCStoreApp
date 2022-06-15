@@ -19,22 +19,22 @@ class AddressDao(private val database: Database) : Transacter by database {
         .asFlow()
         .mapToList()
 
-    suspend fun insertAddress(addressEntity: AddressEntity) = withContext(Dispatchers.DB) {
-        addressQueries.insert(addressEntity)
-    }
+    fun insertAddress(addressEntity: AddressEntity) = addressQueries.insert(addressEntity)
 
-    fun getMatchingAddress(networkAddress: NetworkAddress) =
-        with(networkAddress) {
-            addressQueries.getMatchingAddress(
-                firstName = firstName,
-                lastName = lastName,
-                address1 = address1,
-                address2 = address2,
-                postCode = postcode,
-                city = city,
-                state = state,
-                country = country,
-                phone = phone
-            ).executeAsOneOrNull()
+    suspend fun getMatchingAddress(networkAddress: NetworkAddress) =
+        withContext(Dispatchers.Default) {
+            with(networkAddress) {
+                addressQueries.getMatchingAddress(
+                    firstName = firstName,
+                    lastName = lastName,
+                    address1 = address1,
+                    address2 = address2,
+                    postCode = postcode,
+                    city = city,
+                    state = state,
+                    country = country,
+                    phone = phone
+                ).executeAsOneOrNull()
+            }
         }
 }

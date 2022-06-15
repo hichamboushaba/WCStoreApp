@@ -14,7 +14,8 @@ CREATE TABLE ProductEntity(
 
 selectAll:
 SELECT *
-FROM ProductEntity;
+FROM ProductEntity
+ORDER BY name ASC;
 
 selectProduct:
 SELECT *

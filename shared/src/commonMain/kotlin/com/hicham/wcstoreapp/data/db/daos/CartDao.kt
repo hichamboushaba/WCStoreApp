@@ -1,39 +1,34 @@
 package com.hicham.wcstoreapp.data.db.daos
 
 import com.hicham.wcstoreapp.Database
-import com.hicham.wcstoreapp.data.db.CartEntity
-import com.hicham.wcstoreapp.data.db.CartItemEntity
-import com.hicham.wcstoreapp.data.db.CartItemWithProduct
-import com.hicham.wcstoreapp.data.db.CartWithItemsEntity
-import com.hicham.wcstoreapp.util.DB
+import com.hicham.wcstoreapp.data.db.*
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.squareup.sqldelight.Transacter
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.withContext
 
 class CartDao(private val database: Database) : Transacter by database {
     private val cartQueries = database.cartEntityQueries
     private val cartItemQueries = database.cartItemEntityQueries
-    private val productQueries = database.productEntityQueries
 
-    fun observeCart(): Flow<CartWithItemsEntity?> = transactionWithResult {
-        combine(
-            cartQueries.selectAll()
-                .asFlow()
-                .mapToOneOrNull(), getCartItemsWithProducts()
-        ) { cartEntity, items ->
-            if (cartEntity == null) {
-                null
-            } else {
-                CartWithItemsEntity(
-                    cartEntity = cartEntity,
-                    items = items
-                )
-            }
+    fun observeCart(): Flow<CartWithItemsEntity?> = combine(
+        cartQueries.selectAll()
+            .asFlow()
+            .mapToOneOrNull(),
+        getCartItemsWithProducts()
+    ) { cartEntity, items ->
+        if (cartEntity == null) {
+            null
+        } else {
+            CartWithItemsEntity(
+                cartEntity = cartEntity,
+                items = items
+            )
         }
     }
 
@@ -45,21 +40,19 @@ class CartDao(private val database: Database) : Transacter by database {
         cartItemQueries.selectAll().executeAsList()
     }
 
-    suspend fun clear() = withContext(Dispatchers.DB) {
-        transaction {
-            cartItemQueries.deleteAll()
-            cartQueries.deleteAll()
-        }
+    fun clear() = transaction {
+        cartItemQueries.deleteAll()
+        cartQueries.deleteAll()
     }
 
-    suspend fun insert(
+    fun insert(
         primaryBillingAddress: Long?,
         primaryShippingAddress: Long?,
         subtotal: BigDecimal,
         tax: BigDecimal,
         shippingEstimate: BigDecimal?,
         total: BigDecimal
-    ) = withContext(Dispatchers.DB) {
+    ) {
         cartQueries.insert(
             primaryBillingAddress = primaryBillingAddress,
             primaryShippingAddress = primaryShippingAddress,
@@ -70,31 +63,44 @@ class CartDao(private val database: Database) : Transacter by database {
         )
     }
 
-    suspend fun upsertCartItem(vararg cartItemEntity: CartItemEntity) =
-        withContext(Dispatchers.DB) {
-            transaction {
-                cartItemEntity.forEach {
-                    cartItemQueries.upsert(it)
-                }
-            }
+    fun upsertCartItem(vararg cartItemEntity: CartItemEntity) = transaction {
+        cartItemEntity.forEach {
+            cartItemQueries.upsert(it)
         }
+    }
 
     suspend fun getCartItem(productId: Long): CartItemEntity? = withContext(Dispatchers.Default) {
         cartItemQueries.getCartItemWithProductId(productId).executeAsOneOrNull()
     }
 
-    suspend fun deleteCartItemForProductId(productId: Long) = withContext(Dispatchers.DB) {
+    fun deleteCartItemForProductId(productId: Long) {
         cartItemQueries.deleteCartItemForProductId(productId)
     }
 
-    private fun getCartItemsWithProducts() = cartItemQueries.selectAll().asFlow().mapToList()
-        .map { list ->
-            list.map {
+    private fun getCartItemsWithProducts() =
+        cartItemQueries
+            .selectItemsWithProducts { key, productId, quantity, subtotal, tax, total, id, name, images, price, regularPrice, salePrice, shortDescription, description ->
                 CartItemWithProduct(
-                    cartItem = it,
-                    product = productQueries.selectProduct(it.productId).executeAsOneOrNull()
+                    cartItem = CartItemEntity(
+                        key = key,
+                        productId = productId,
+                        quantity = quantity,
+                        subtotal = subtotal,
+                        tax = tax,
+                        total = total
+                    ),
+                    product = ProductEntity(
+                        id = id,
+                        name = name,
+                        images = images,
+                        price = price,
+                        regularPrice = regularPrice,
+                        salePrice = salePrice,
+                        shortDescription = shortDescription,
+                        description = description
+                    )
                 )
             }
-        }
-        .flowOn(Dispatchers.Default)
+            .asFlow()
+            .mapToList()
 }

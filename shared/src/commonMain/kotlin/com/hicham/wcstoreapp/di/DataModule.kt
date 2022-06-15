@@ -19,7 +19,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
     factory<ProductsRepository> { DBProductsRepository(get(), get()) }
-    factory<CartRepository> {
+    single<CartRepository> {
         DBCartRepository(
             cartDao = get(),
             appCoroutineScope = get(qualifier = AppCoroutineScopeQualifier),

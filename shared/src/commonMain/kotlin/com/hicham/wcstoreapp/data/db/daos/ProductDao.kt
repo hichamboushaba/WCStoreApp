@@ -7,6 +7,7 @@ import com.squareup.sqldelight.Transacter
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.withContext
 
 class ProductDao(private val database: Database) : Transacter by database {
@@ -14,15 +15,12 @@ class ProductDao(private val database: Database) : Transacter by database {
 
     fun observeProducts() = productQueries.selectAll().asFlow().mapToList()
 
-    suspend fun insertProducts(vararg product: ProductEntity) = withContext(Dispatchers.DB) {
-        database.transaction {
-            product.forEach {
-                productQueries.insert(it)
-            }
+    fun insertProducts(vararg product: ProductEntity) = transaction {
+        product.forEach {
+            productQueries.insert(it)
         }
     }
 
-    suspend fun deleteAll() = withContext(Dispatchers.DB) {
+    fun deleteAll() =
         productQueries.deleteAll()
-    }
 }

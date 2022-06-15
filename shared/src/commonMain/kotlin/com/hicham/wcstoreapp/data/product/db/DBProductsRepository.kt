@@ -3,7 +3,6 @@ package com.hicham.wcstoreapp.data.product.db
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.data.db.daos.ProductDao
-import com.hicham.wcstoreapp.data.db.suspendTransaction
 import com.hicham.wcstoreapp.data.db.toDomainModel
 import com.hicham.wcstoreapp.data.db.toEntity
 import com.hicham.wcstoreapp.data.product.LoadingState
@@ -11,10 +10,13 @@ import com.hicham.wcstoreapp.data.product.ProductsListState
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.util.DB
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 
 private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
 
@@ -92,8 +94,8 @@ class DBProductsRepository(
         }
     }
 
-    private suspend fun cacheProducts(products: List<Product>) {
-        productDao.suspendTransaction {
+    private suspend fun cacheProducts(products: List<Product>) = withContext(Dispatchers.DB) {
+        productDao.transaction {
             if (currentOffset == 0 && currentQuery.value.isNullOrEmpty() && currentCategory.value == null) {
                 productDao.deleteAll()
             }
