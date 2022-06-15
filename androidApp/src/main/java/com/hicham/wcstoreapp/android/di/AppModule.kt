@@ -9,7 +9,6 @@ import kotlinx.coroutines.GlobalScope
 import org.koin.dsl.module
 
 val appModule = module {
-    single(AppCoroutineScopeQualifier) { GlobalScope }
     single<NavigationManager> { get<AndroidNavigationManager>() }
     single { AndroidNavigationManager() }
     single {

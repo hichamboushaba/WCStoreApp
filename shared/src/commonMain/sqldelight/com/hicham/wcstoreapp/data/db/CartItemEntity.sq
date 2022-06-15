@@ -1,0 +1,29 @@
+import com.ionspin.kotlin.bignum.decimal.BigDecimal;
+
+CREATE TABLE IF NOT EXISTS CartItemEntity (
+    key TEXT NOT NULL PRIMARY KEY,
+    productId INTEGER NOT NULL,
+    quantity INTEGER AS Int NOT NULL,
+    subtotal TEXT AS BigDecimal NOT NULL,
+    tax TEXT AS BigDecimal NOT NULL,
+    total TEXT AS BigDecimal NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS index_CartItemEntity_productId ON CartItemEntity (productId);
+
+selectAll:
+SELECT *
+FROM CartItemEntity;
+
+deleteAll:
+DELETE FROM CartItemEntity;
+
+upsert:
+INSERT OR REPLACE INTO CartItemEntity(key, productId, quantity, subtotal, tax, total)
+VALUES ?;
+
+getCartItemWithProductId:
+SELECT * FROM CartItemEntity WHERE productId = :productId;
+
+deleteCartItemForProductId:
+DELETE FROM CartItemEntity WHERE productId = :productId;

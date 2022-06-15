@@ -1,8 +1,9 @@
 package com.hicham.wcstoreapp.data.product.db
 
-import com.hicham.wcstoreapp.Database
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.db.daos.ProductDao
+import com.hicham.wcstoreapp.data.db.suspendTransaction
 import com.hicham.wcstoreapp.data.db.toDomainModel
 import com.hicham.wcstoreapp.data.db.toEntity
 import com.hicham.wcstoreapp.data.product.LoadingState
@@ -11,8 +12,6 @@ import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -21,7 +20,7 @@ private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
 
 class DBProductsRepository(
     private val wooCommerceApi: WooCommerceApi,
-    private val database: Database
+    private val productDao: ProductDao
 ) : ProductsRepository {
     private val mutex = Mutex()
 
@@ -39,10 +38,10 @@ class DBProductsRepository(
         if (!query.isNullOrEmpty() || category != null) {
             emitAll(searchResults)
         } else {
-            emitAll(database.productEntityQueries.selectAll()
-                .asFlow()
-                .mapToList()
-                .map { list -> list.map { it.toDomainModel() } })
+            emitAll(
+                productDao.observeProducts()
+                    .map { list -> list.map { it.toDomainModel() } }
+            )
         }
     }.combine(paginationState) { results, (hasNext, state) ->
         ProductsListState(
@@ -93,14 +92,12 @@ class DBProductsRepository(
         }
     }
 
-    private fun cacheProducts(products: List<Product>) {
-        database.productEntityQueries.transaction {
+    private suspend fun cacheProducts(products: List<Product>) {
+        productDao.suspendTransaction {
             if (currentOffset == 0 && currentQuery.value.isNullOrEmpty() && currentCategory.value == null) {
-                database.productEntityQueries.deleteAll()
+                productDao.deleteAll()
             }
-            products.forEach {
-                database.productEntityQueries.insert(it.toEntity())
-            }
+            productDao.insertProducts(*products.map { it.toEntity() }.toTypedArray())
         }
     }
 

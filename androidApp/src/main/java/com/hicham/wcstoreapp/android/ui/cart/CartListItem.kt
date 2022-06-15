@@ -16,6 +16,7 @@ import coil.compose.rememberImagePainter
 import coil.size.Scale
 import com.hicham.wcstoreapp.android.R
 import com.hicham.wcstoreapp.android.data.Fakes
+import com.hicham.wcstoreapp.ui.ui.CartViewModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Minus
 import compose.icons.tablericons.Plus

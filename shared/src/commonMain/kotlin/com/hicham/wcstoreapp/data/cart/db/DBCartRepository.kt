@@ -1,45 +1,34 @@
-package com.hicham.wcstoreapp.android.data.cart.db
+package com.hicham.wcstoreapp.data.cart.db
 
-import androidx.room.withTransaction
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.data.db.AppDatabase
-import com.hicham.wcstoreapp.android.data.db.entities.CartItemEntity
-import com.hicham.wcstoreapp.android.data.db.entities.toDomainModel
-import com.hicham.wcstoreapp.android.di.HiltAppCoroutineScope
 import com.hicham.wcstoreapp.data.api.NetworkCart
 import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.db.CartItemEntity
+import com.hicham.wcstoreapp.data.db.daos.CartDao
+import com.hicham.wcstoreapp.data.db.suspendTransaction
+import com.hicham.wcstoreapp.data.db.suspendTransactionWithResult
+import com.hicham.wcstoreapp.data.db.toDomainModel
 import com.hicham.wcstoreapp.models.*
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
+import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class DBCartRepository  constructor(
-    private val database: AppDatabase,
-    @HiltAppCoroutineScope private val appCoroutineScope: CoroutineScope,
+class DBCartRepository constructor(
+    private val cartDao: CartDao,
+    private val appCoroutineScope: CoroutineScope,
     private val wooCommerceApi: WooCommerceApi,
     private val cartUpdateService: CartUpdateService
 ) : CartRepository {
-    private val cartDao = database.cartDao()
-
     private var isExecutingOperation: Boolean = false
 
     override val cart: Flow<Cart> = cartDao.observeCart()
         .map { entity ->
-            Cart(
-                totals = entity?.cartEntity?.totals ?: CartTotals.ZERO,
-                items = entity?.items.orEmpty().mapNotNull { item ->
-                    // Can't happen due to the foreign key we have now
-                    // TODO check what's the best way to handle this
-                    if (item.product != null) {
-                        CartItem(
-                            id = item.cartItem.key,
-                            product = item.product.toDomainModel(),
-                            quantity = item.cartItem.quantity,
-                            totals = item.cartItem.totals
-                        )
-                    } else null
-                })
+            entity?.toDomainModel() ?: Cart(
+                totals = CartTotals.ZERO,
+                items = emptyList()
+            )
         }
         .onStart {
             fetchCart()
@@ -76,19 +65,20 @@ class DBCartRepository  constructor(
 
     override suspend fun clearProduct(product: Product): Result<Unit> {
         if (isExecutingOperation) return Result.success(Unit)
-        val currentItem =
-            cartDao.getCartItem(product.id) ?: return Result.failure(NullPointerException())
+        val currentItem = cartDao.getCartItem(product.id)
+            ?: return Result.failure(NullPointerException())
         cartDao.deleteCartItemForProductId(productId = product.id)
 
         return runActionWithOptimisticUpdate(
             action = { wooCommerceApi.removeItemFromCart(currentItem.key) },
-            revertAction = { cartDao.insertItem(currentItem) }
+            revertAction = { cartDao.upsertCartItem(currentItem) }
         )
     }
 
     override suspend fun clear(): Result<Unit> {
         if (isExecutingOperation) return Result.success(Unit)
-        val cartContent = cartDao.getCartItems()
+        val cart = cartDao.getCart()
+        val cartItems = cartDao.getCartItems()
         cartDao.clear()
 
         return runActionWithOptimisticUpdate(
@@ -97,16 +87,26 @@ class DBCartRepository  constructor(
                 wooCommerceApi.getCart()
             },
             revertAction = {
-                cartDao.insertItem(*cartContent.toTypedArray())
+                if (cart != null) {
+                    cartDao.insert(
+                        primaryBillingAddress = cart.primaryBillingAddress,
+                        total = cart.total,
+                        tax = cart.tax,
+                        subtotal = cart.subtotal,
+                        shippingEstimate = cart.shippingEstimate,
+                        primaryShippingAddress = cart.primaryShippingAddress
+                    )
+                }
+                cartDao.upsertCartItem(*cartItems.toTypedArray())
             }
         )
     }
 
     private suspend fun deleteItemFromDb(product: Product): CartItemEntity? {
-        return database.withTransaction {
+        return cartDao.suspendTransactionWithResult {
             val currentItem = cartDao.getCartItem(product.id)
             if (currentItem != null && currentItem.quantity > 1) {
-                cartDao.updateItem(currentItem.copy(quantity = currentItem.quantity - 1))
+                cartDao.upsertCartItem(currentItem.copy(quantity = currentItem.quantity - 1))
             } else {
                 cartDao.deleteCartItemForProductId(productId = product.id)
             }
@@ -115,12 +115,22 @@ class DBCartRepository  constructor(
     }
 
     private suspend fun addItemToDb(product: Product, cartItemKey: String? = null) {
-        database.withTransaction {
+        cartDao.suspendTransaction {
             val currentItem = cartDao.getCartItem(product.id)
-            if (currentItem != null) {
-                cartDao.updateItem(currentItem.copy(quantity = currentItem.quantity + 1))
-            } else if (cartItemKey != null) {
-                cartDao.insertItem(CartItemEntity(cartItemKey, 1, product.id, CartItemTotals.ZERO))
+            val updatedItem = currentItem?.copy(quantity = currentItem.quantity + 1)
+                ?: cartItemKey?.let {
+                    CartItemEntity(
+                        cartItemKey,
+                        product.id,
+                        1,
+                        subtotal = BigDecimal.ZERO,
+                        tax = BigDecimal.ZERO,
+                        total = BigDecimal.ZERO
+                    )
+                }
+
+            updatedItem?.let {
+                cartDao.upsertCartItem(updatedItem)
             }
         }
     }

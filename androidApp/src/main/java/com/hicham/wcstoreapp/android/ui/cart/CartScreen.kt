@@ -22,6 +22,7 @@ import com.hicham.wcstoreapp.android.ui.common.components.WCTopAppBar
 import com.hicham.wcstoreapp.data.api.NetworkProduct
 import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.ui.CartViewModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ShoppingCart
 import compose.icons.tablericons.ShoppingCartPlus

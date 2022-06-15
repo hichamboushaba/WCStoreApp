@@ -2,7 +2,7 @@ import kotlin.collections.List;
 import com.ionspin.kotlin.bignum.decimal.BigDecimal;
 
 CREATE TABLE ProductEntity(
-   id INTEGER NOT NULL,
+   id INTEGER NOT NULL PRIMARY KEY,
    name TEXT NOT NULL,
    images TEXT AS List<String> NOT NULL,
    price TEXT AS BigDecimal NOT NULL,
@@ -15,6 +15,11 @@ CREATE TABLE ProductEntity(
 selectAll:
 SELECT *
 FROM ProductEntity;
+
+selectProduct:
+SELECT *
+FROM ProductEntity
+WHERE id = ?;
 
 deleteAll:
 DELETE FROM ProductEntity;

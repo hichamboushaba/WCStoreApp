@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS AddressEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    label TEXT,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    street1 TEXT NOT NULL,
+    street2 TEXT,
+    phone TEXT,
+    email TEXT,
+    city TEXT NOT NULL,
+    state TEXT,
+    postCode TEXT NOT NULL,
+    country TEXT NOT NULL
+);
+
+selectAll:
+SELECT *
+FROM AddressEntity;
+
+deleteAll:
+DELETE FROM AddressEntity;
+
+insert:
+INSERT INTO AddressEntity(label, firstName, lastName, street1, street2, phone, email, city, state, postCode, country)
+VALUES ?;
+
+getMatchingAddress:
+SELECT * FROM AddressEntity
+        WHERE firstName = :firstName
+        AND lastName = :lastName
+        AND street1 = :address1
+        AND street2 = :address2
+        AND postCode = :postCode
+        AND city = :city
+        AND state = :state
+        AND country = :country
+        AND phone = :phone;

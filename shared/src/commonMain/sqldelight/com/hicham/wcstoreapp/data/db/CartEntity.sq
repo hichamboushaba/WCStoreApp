@@ -1,0 +1,22 @@
+import com.ionspin.kotlin.bignum.decimal.BigDecimal;
+
+CREATE TABLE IF NOT EXISTS CartEntity (
+    id INTEGER NOT NULL PRIMARY KEY CHECK (id = 0),
+    primaryShippingAddress INTEGER,
+    primaryBillingAddress INTEGER,
+    subtotal TEXT AS BigDecimal NOT NULL,
+    tax TEXT AS BigDecimal NOT NULL,
+    shippingEstimate TEXT AS BigDecimal,
+    total TEXT AS BigDecimal NOT NULL
+);
+
+selectAll:
+SELECT *
+FROM CartEntity;
+
+deleteAll:
+DELETE FROM CartEntity;
+
+insert:
+INSERT OR REPLACE INTO CartEntity(id, primaryBillingAddress, primaryShippingAddress, subtotal, tax, shippingEstimate, total)
+VALUES (0, ?, ?, ?, ?, ?, ?);

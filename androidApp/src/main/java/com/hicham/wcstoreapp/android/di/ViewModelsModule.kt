@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.android.di
 
+import com.hicham.wcstoreapp.ui.ui.CartViewModel
 import com.hicham.wcstoreapp.android.ui.main.MainViewModel
 import com.hicham.wcstoreapp.ui.home.HomeViewModel
 import com.hicham.wcstoreapp.ui.product.ProductViewModel
@@ -18,4 +19,5 @@ val viewModelsModule = module {
             get()
         )
     }
+    viewModel { CartViewModel(get(), get(), get()) }
 }

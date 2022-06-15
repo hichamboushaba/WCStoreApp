@@ -1,12 +1,11 @@
-package com.hicham.wcstoreapp.android.ui.cart
+package com.hicham.wcstoreapp.ui.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Product
+import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -14,8 +13,8 @@ import kotlinx.coroutines.launch
 class CartViewModel(
     private val cartRepository: CartRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
-    private val navigationManager: AndroidNavigationManager
-) : ViewModel() {
+    private val navigationManager: NavigationManager
+) : BaseViewModel() {
     private val _uiState = MutableStateFlow(CartUiState())
     val uiState = _uiState.asStateFlow()
 

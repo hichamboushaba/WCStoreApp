@@ -1,7 +1,6 @@
 package com.hicham.wcstoreapp.data.db
 
-import com.hicham.wcstoreapp.models.Product
-import com.hicham.wcstoreapp.models.ProductPrices
+import com.hicham.wcstoreapp.models.*
 
 fun ProductEntity.toDomainModel() = Product(
     id = id,
@@ -25,4 +24,27 @@ fun Product.toEntity() = ProductEntity(
     salePrice = prices.salePrice,
     shortDescription = shortDescription,
     description = description
+)
+
+fun CartWithItemsEntity.toDomainModel() = Cart(
+    totals = CartTotals(
+        subtotal = cartEntity.subtotal,
+        tax = cartEntity.tax,
+        shippingEstimate = cartEntity.shippingEstimate,
+        total = cartEntity.total
+    ),
+    items = items.mapNotNull { item ->
+        if (item.product != null) {
+            CartItem(
+                id = item.cartItem.key,
+                product = item.product.toDomainModel(),
+                quantity = item.cartItem.quantity,
+                totals = CartItemTotals(
+                    subtotal = item.cartItem.subtotal,
+                    tax = item.cartItem.subtotal,
+                    total = item.cartItem.total
+                )
+            )
+        } else null
+    }
 )

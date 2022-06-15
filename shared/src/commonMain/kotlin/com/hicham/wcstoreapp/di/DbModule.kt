@@ -1,9 +1,10 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.Database
-import com.hicham.wcstoreapp.data.db.ProductEntity
-import com.hicham.wcstoreapp.data.db.bigDecimalAdapter
-import com.hicham.wcstoreapp.data.db.listOfStringsAdapter
+import com.hicham.wcstoreapp.data.db.*
+import com.hicham.wcstoreapp.data.db.daos.AddressDao
+import com.hicham.wcstoreapp.data.db.daos.CartDao
+import com.hicham.wcstoreapp.data.db.daos.ProductDao
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -19,7 +20,22 @@ val dbModule = module {
                 priceAdapter = bigDecimalAdapter,
                 regularPriceAdapter = bigDecimalAdapter,
                 salePriceAdapter = bigDecimalAdapter
+            ),
+            CartEntityAdapter = CartEntity.Adapter(
+                shippingEstimateAdapter = bigDecimalAdapter,
+                subtotalAdapter = bigDecimalAdapter,
+                taxAdapter = bigDecimalAdapter,
+                totalAdapter = bigDecimalAdapter
+            ),
+            CartItemEntityAdapter = CartItemEntity.Adapter(
+                subtotalAdapter = bigDecimalAdapter,
+                taxAdapter = bigDecimalAdapter,
+                totalAdapter = bigDecimalAdapter
             )
         )
     }
+
+    single { ProductDao(get()) }
+    single { CartDao(get()) }
+    single { AddressDao(get()) }
 }
