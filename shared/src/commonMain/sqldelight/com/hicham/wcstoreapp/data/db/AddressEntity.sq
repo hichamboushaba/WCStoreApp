@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS AddressEntity (
     phone TEXT,
     email TEXT,
     city TEXT NOT NULL,
-    state TEXT,
+    state TEXT NOT NULL,
     postCode TEXT NOT NULL,
     country TEXT NOT NULL
 );
@@ -23,6 +23,10 @@ DELETE FROM AddressEntity;
 insert:
 INSERT INTO AddressEntity(label, firstName, lastName, street1, street2, phone, email, city, state, postCode, country)
 VALUES ?;
+
+delete:
+DELETE FROM AddressEntity
+WHERE id = :id;
 
 getMatchingAddress:
 SELECT * FROM AddressEntity

@@ -24,7 +24,7 @@ data class NetworkCart(
     val itemsCount: Long,
 
     @SerialName("items_weight")
-    val itemsWeight: Long,
+    val itemsWeight: Double,
 
     @SerialName("needs_payment")
     val needsPayment: Boolean,

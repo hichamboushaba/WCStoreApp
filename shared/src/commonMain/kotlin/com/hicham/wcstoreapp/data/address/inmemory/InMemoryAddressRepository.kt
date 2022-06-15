@@ -30,5 +30,4 @@ class InMemoryAddressRepository : AddressRepository {
     override suspend fun setPrimaryBillingAddress(address: Address) {
         return
     }
-
 }

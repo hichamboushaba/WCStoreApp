@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.di
 
+import com.hicham.wcstoreapp.android.data.address.db.DBAddressRepository
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.address.inmemory.InMemoryAddressRepository
@@ -19,18 +20,29 @@ import org.koin.dsl.module
 
 val dataModule = module {
     factory<ProductsRepository> { DBProductsRepository(get(), get()) }
+    factory {
+        CartUpdateService(
+            cartDao = get(), addressDao = get()
+        )
+    }
     single<CartRepository> {
         DBCartRepository(
             cartDao = get(),
             appCoroutineScope = get(qualifier = AppCoroutineScopeQualifier),
             wooCommerceApi = get(),
-            cartUpdateService = CartUpdateService(
-                cartDao = get(), addressDao = get()
-            )
+            cartUpdateService = get()
         )
     }
     factory<CategoryRepository> { NetworkCategoryRepository(get()) }
     factory<CurrencyFormatProvider> { FakeCurrencyFormatProvider() }
-    factory<AddressRepository> { InMemoryAddressRepository() }
+    single<AddressRepository> {
+        DBAddressRepository(
+            appCoroutineScope = get(qualifier = AppCoroutineScopeQualifier),
+            addressDao = get(),
+            cartDao = get(),
+            api = get(),
+            cartUpdateService = get()
+        )
+    }
     factory<CheckoutRepository> { NetworkCheckoutRepository(get()) }
 }

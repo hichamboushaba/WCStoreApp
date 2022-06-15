@@ -46,3 +46,17 @@ fun CartWithItemsEntity.toDomainModel() = Cart(
         )
     }
 )
+
+fun AddressEntity.toDomainModel() = Address(
+    label = label,
+    firstName = firstName,
+    lastName = lastName,
+    street1 = street1,
+    street2 = street2,
+    phone = phone,
+    email = email,
+    city = city,
+    state = state,
+    postCode = postCode,
+    country = country
+)

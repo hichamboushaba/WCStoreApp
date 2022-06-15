@@ -62,7 +62,7 @@ class AddAddressViewModel(
                     city = state.city.content,
                     state = state.state.content,
                     postCode = state.postCode.content,
-                    country = "US"
+                    country = state.country.content
                 )
                 addressRepository.addAddress(address)
                 navigationManager.navigateBackWithResult(ADDRESS_RESULT, address)
