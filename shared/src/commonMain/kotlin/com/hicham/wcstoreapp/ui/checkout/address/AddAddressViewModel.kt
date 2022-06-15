@@ -1,23 +1,20 @@
-package com.hicham.wcstoreapp.android.ui.checkout.address
+package com.hicham.wcstoreapp.ui.checkout.address
 
-import android.util.Patterns
-import com.hicham.wcstoreapp.android.R
-import com.hicham.wcstoreapp.android.ui.common.InputField
-import com.hicham.wcstoreapp.android.ui.common.OptionalField
-import com.hicham.wcstoreapp.android.ui.common.RequiredField
-import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.Effect
+import com.hicham.wcstoreapp.ui.NavigationManager
+import com.hicham.wcstoreapp.ui.common.InputField
+import com.hicham.wcstoreapp.ui.common.OptionalField
+import com.hicham.wcstoreapp.ui.common.PhoneField
+import com.hicham.wcstoreapp.ui.common.RequiredField
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parcelize
-import java.util.*
 
 class AddAddressViewModel(
     private val addressRepository: AddressRepository,
-    private val navigationManager: AndroidNavigationManager
+    private val navigationManager: NavigationManager
 ) : BaseViewModel() {
     companion object {
         const val ADDRESS_RESULT = "address"
@@ -50,8 +47,8 @@ class AddAddressViewModel(
             }
 
             // Check country
-            val countryCode = Locale.getISOCountries()
-                .firstOrNull { Locale("", it).displayCountry == state.country.content } ?: TODO()
+//            val countryCode = Locale.getISOCountries()
+//                .firstOrNull { Locale("", it).displayCountry == state.country.content } ?: TODO()
 
             viewModelScope.launch {
                 val address = Address(
@@ -65,7 +62,7 @@ class AddAddressViewModel(
                     city = state.city.content,
                     state = state.state.content,
                     postCode = state.postCode.content,
-                    country = countryCode
+                    country = "US"
                 )
                 addressRepository.addAddress(address)
                 navigationManager.navigateBackWithResult(ADDRESS_RESULT, address)
@@ -125,18 +122,18 @@ class AddAddressViewModel(
         fun updateField(field: Field, content: String): UiState {
             return when (field) {
                 Field.AddressLabel -> copy(
-                    addressLabel = addressLabel.copy(content = content).validate()
+                    addressLabel = addressLabel.clone(content = content).validate()
                 )
-                Field.FirstName -> copy(firstName = firstName.copy(content = content).validate())
-                Field.LastName -> copy(lastName = lastName.copy(content = content).validate())
-                Field.Street1 -> copy(street1 = street1.copy(content = content).validate())
-                Field.Street2 -> copy(street2 = street2.copy(content = content).validate())
-                Field.Phone -> copy(phone = phone.copy(content = content).validate())
-                Field.Email -> copy(email = email.copy(content = content).validate())
-                Field.City -> copy(city = city.copy(content = content).validate())
-                Field.State -> copy(state = state.copy(content = content).validate())
-                Field.PostCode -> copy(postCode = postCode.copy(content = content).validate())
-                Field.Country -> copy(country = country.copy(content = content).validate())
+                Field.FirstName -> copy(firstName = firstName.clone(content = content).validate())
+                Field.LastName -> copy(lastName = lastName.clone(content = content).validate())
+                Field.Street1 -> copy(street1 = street1.clone(content = content).validate())
+                Field.Street2 -> copy(street2 = street2.clone(content = content).validate())
+                Field.Phone -> copy(phone = phone.clone(content = content).validate())
+                Field.Email -> copy(email = email.clone(content = content).validate())
+                Field.City -> copy(city = city.clone(content = content).validate())
+                Field.State -> copy(state = state.clone(content = content).validate())
+                Field.PostCode -> copy(postCode = postCode.clone(content = content).validate())
+                Field.Country -> copy(country = country.clone(content = content).validate())
             }
         }
 
@@ -155,14 +152,6 @@ class AddAddressViewModel(
         }
 
         fun hasChanges(): Boolean = Field.values().any { get(it).content.isNotEmpty() }
-    }
-
-    @Parcelize
-    data class PhoneField(override val content: String) : InputField<PhoneField>(content) {
-        override fun validateInternal(): Int? {
-            return if (content.isEmpty() || Patterns.PHONE.matcher(content).matches()) null
-            else R.string.error_invalid_phone
-        }
     }
 
     enum class Field {

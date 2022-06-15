@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.hicham.wcstoreapp.android.R
 
 @Composable
-fun OrderPlacedScreen(orderId: Long, onNavigateUp: () -> Unit) {
+fun OrderPlacedScreen(orderId: Long, onNavigateToHome: () -> Unit) {
     val navController = rememberNavController()
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -33,7 +33,7 @@ fun OrderPlacedScreen(orderId: Long, onNavigateUp: () -> Unit) {
         )
         Text(text = "Order id is #$orderId")
         Spacer(modifier = Modifier)
-        Button(onClick = onNavigateUp) {
+        Button(onClick = onNavigateToHome) {
             Text(text = "Continue shopping")
         }
     }

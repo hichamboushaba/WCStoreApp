@@ -76,7 +76,7 @@ fun MainNavGraph(
                     .arguments
                     ?.getString(Screen.OrderPlaced.navArguments.first().name)!!
                     .toLong(),
-                onNavigateUp = { navController.navigateUp() }
+                onNavigateToHome = { navController.navigate(Screen.Home.route) }
             )
         }
     }

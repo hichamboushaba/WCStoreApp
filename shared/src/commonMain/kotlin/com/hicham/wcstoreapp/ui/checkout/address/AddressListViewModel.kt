@@ -1,19 +1,18 @@
-package com.hicham.wcstoreapp.android.ui.checkout.address
+package com.hicham.wcstoreapp.ui.checkout.address
 
-import androidx.lifecycle.SavedStateHandle
-import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class AddressListViewModel(
-    private val savedStateHandle: SavedStateHandle,
+//    private val savedStateHandle: SavedStateHandle,
     private val addressRepository: AddressRepository,
-    private val navigationManager: AndroidNavigationManager
+    private val navigationManager: NavigationManager
 ) : BaseViewModel() {
     val items: Flow<List<AddressItemUiModel>>
 
@@ -38,8 +37,8 @@ class AddressListViewModel(
         // Observe navigation result
         navigationManager.observeResult<Address>(AddAddressViewModel.ADDRESS_RESULT)
             .onStart {
-                val defaultAddress = savedStateHandle.get<Address>("address")
-                    ?: addressRepository.primaryShippingAddress.first()
+                val defaultAddress = //savedStateHandle.get<Address>("address")
+                     addressRepository.primaryShippingAddress.first()
                 if (defaultAddress != null) emit(defaultAddress)
             }
             .onEach { selectedAddress.value = it }
@@ -47,7 +46,7 @@ class AddressListViewModel(
 
         // Save current selected address to savedStateHandle
         selectedAddress.onEach {
-            savedStateHandle.set("address", it)
+            //savedStateHandle.set("address", it)
         }.launchIn(viewModelScope)
     }
 

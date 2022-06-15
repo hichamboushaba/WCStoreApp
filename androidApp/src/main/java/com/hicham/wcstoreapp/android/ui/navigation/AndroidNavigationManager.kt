@@ -43,10 +43,10 @@ class AndroidNavigationManager : NavigationManager {
         navigationCommands.tryEmit(NavigationCommand.PopUpToRoute(route, inclusive))
     }
 
-    fun <T> navigateBackWithResult(
+    override fun <T> navigateBackWithResult(
         key: String,
         result: T,
-        destination: String? = null
+        destination: String?
     ) {
         navigationCommands.tryEmit(
             NavigationCommand.NavigateUpWithResult(
@@ -57,7 +57,7 @@ class AndroidNavigationManager : NavigationManager {
         )
     }
 
-    fun <T> observeResult(key: String, route: String? = null): Flow<T> {
+    override fun <T> observeResult(key: String, route: String?): Flow<T> {
         return navControllerFlow
             .filterNotNull()
             .flatMapLatest { navController ->

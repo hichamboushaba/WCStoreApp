@@ -1,8 +1,9 @@
-package com.hicham.wcstoreapp.android.ui.common
+package com.hicham.wcstoreapp.ui.common
 
 import android.os.Parcelable
+import android.util.Patterns
 import androidx.annotation.StringRes
-import com.hicham.wcstoreapp.android.R
+import com.hicham.wcstoreapp.R
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -16,24 +17,26 @@ import kotlinx.parcelize.Parcelize
  *
  * This class is using a reverse generic type to allow returning the exact type of the class in [validate] function.
  */
-abstract class InputField<T : InputField<T>>(open val content: String) : Parcelable, Cloneable {
+actual abstract class InputField<T : InputField<T>> actual constructor(
+    actual open val content: String
+) : Parcelable, Cloneable {
     @StringRes
     var error: Int? = null
         private set
     private var hasBeenValidated: Boolean = false
-    val isValid: Boolean
+    actual val isValid: Boolean
         get() {
             return if (!hasBeenValidated) validateInternal() == null
             else error == null
         }
 
-    fun validate(): T {
+    actual fun validate(): T {
         val clone = this.clone() as T
         clone.error = validateInternal()
         clone.hasBeenValidated = true
         return clone
     }
-    
+
     /**
      * Marking the implementation as final to avoid overriding it by Kotlin's data classes, as the generated one
      * doesn't check the parent class's fields, and would skip important details.
@@ -52,8 +55,8 @@ abstract class InputField<T : InputField<T>>(open val content: String) : Parcela
     final override fun equals(other: Any?): Boolean {
         if (other !is InputField<*>) return false
         return content == other.content &&
-            error == other.error &&
-            hasBeenValidated == other.hasBeenValidated
+                error == other.error &&
+                hasBeenValidated == other.hasBeenValidated
     }
 
     /**
@@ -62,21 +65,38 @@ abstract class InputField<T : InputField<T>>(open val content: String) : Parcela
      */
     @StringRes
     protected abstract fun validateInternal(): Int?
+
+    actual abstract fun clone(content: String): InputField<T>
 }
 
 @Parcelize
-data class RequiredField(
+actual data class RequiredField actual constructor(
     override val content: String
 ) : InputField<RequiredField>(content) {
     override fun validateInternal(): Int? {
         return if (content.isBlank()) R.string.error_required_field
         else null
     }
+
+    override fun clone(content: String): InputField<RequiredField> = copy(content = content)
 }
 
 @Parcelize
-data class OptionalField(
+actual data class OptionalField actual constructor(
     override val content: String
 ) : InputField<OptionalField>(content) {
     override fun validateInternal(): Int? = null
+
+    override fun clone(content: String): InputField<OptionalField> = copy(content = content)
+}
+
+@Parcelize
+actual data class PhoneField actual constructor(override val content: String) :
+    InputField<PhoneField>(content) {
+    override fun validateInternal(): Int? {
+        return if (content.isEmpty() || Patterns.PHONE.matcher(content).matches()) null
+        else R.string.error_invalid_phone
+    }
+
+    override fun clone(content: String): InputField<PhoneField> = copy(content = content)
 }

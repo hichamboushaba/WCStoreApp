@@ -21,6 +21,7 @@ import com.hicham.wcstoreapp.android.ui.title
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.checkout.CheckoutViewModel
 
 @Composable
 fun CheckoutScreen(viewModel: CheckoutViewModel, scaffoldState: ScaffoldState) {
@@ -106,7 +107,7 @@ private fun CheckoutScreen(
                             }
                         } else {
                             Text(
-                                text = state.shippingAddress.formatAddress(),
+                                text = state.shippingAddress!!.formatAddress(),
                                 style = MaterialTheme.typography.body1
                             )
                             Spacer(Modifier.size(16.dp))

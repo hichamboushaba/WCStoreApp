@@ -1,8 +1,6 @@
-package com.hicham.wcstoreapp.android.ui.checkout
+package com.hicham.wcstoreapp.ui.checkout
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.ui.checkout.address.AddAddressViewModel
-import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
@@ -10,16 +8,18 @@ import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.CurrencyFormatter
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class CheckoutViewModel  constructor(
+class CheckoutViewModel constructor(
     private val cartRepository: CartRepository,
     private val currencyFormatProvider: CurrencyFormatProvider,
     private val addressRepository: AddressRepository,
-    private val navigationManager: AndroidNavigationManager,
+    private val navigationManager: NavigationManager,
     private val checkoutRepository: CheckoutRepository
 ) : BaseViewModel() {
     private val _uiState = MutableStateFlow(UiState())
@@ -114,9 +114,7 @@ class CheckoutViewModel  constructor(
 
             result.fold(
                 onSuccess = {
-                    navigationManager.navigate(Screen.OrderPlaced.createRoute(it)) {
-                        popUpTo(Screen.Home.route)
-                    }
+                    navigationManager.navigate(Screen.OrderPlaced.createRoute(it))
                     cartRepository.clear()
                 },
                 onFailure = {

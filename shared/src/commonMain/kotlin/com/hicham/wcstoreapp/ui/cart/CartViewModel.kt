@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.ui.ui
+package com.hicham.wcstoreapp.ui.cart
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider

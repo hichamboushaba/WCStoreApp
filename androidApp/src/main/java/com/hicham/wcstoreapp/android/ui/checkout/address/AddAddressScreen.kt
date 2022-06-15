@@ -25,11 +25,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hicham.wcstoreapp.android.ui.common.InputField
-import com.hicham.wcstoreapp.android.ui.common.RequiredField
 import com.hicham.wcstoreapp.android.ui.common.components.ToolbarScreen
 import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
 import com.hicham.wcstoreapp.ui.Effect
+import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
+import com.hicham.wcstoreapp.ui.common.InputField
+import com.hicham.wcstoreapp.ui.common.RequiredField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow

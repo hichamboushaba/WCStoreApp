@@ -20,6 +20,7 @@ import com.hicham.wcstoreapp.android.ui.common.formatAddress
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.Effect
 import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.checkout.address.AddressListViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
