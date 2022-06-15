@@ -3,7 +3,6 @@ package com.hicham.wcstoreapp.android
 import android.app.Application
 import android.content.Context
 import com.hicham.wcstoreapp.android.di.appModule
-import com.hicham.wcstoreapp.android.di.roomDbModule
 import com.hicham.wcstoreapp.android.di.viewModelsModule
 import com.hicham.wcstoreapp.di.initKoin
 import logcat.AndroidLogcatLogger
@@ -19,6 +18,6 @@ class WCStoreApp : Application() {
         val androidContext = module {
             single<Context> { this@WCStoreApp } bind Application::class
         }
-        initKoin(androidContext, appModule, roomDbModule, viewModelsModule)
+        initKoin(androidContext, appModule, viewModelsModule)
     }
 }

@@ -21,12 +21,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation":
-                                      "$projectDir/schemas".toString()]
-            }
-        }
     }
 
     buildTypes {
@@ -77,9 +71,6 @@ dependencies {
     implementation libs.accompanist.pager
 
     implementation libs.kotlinx.coroutines.core
-
-    implementation libs.bundles.room
-    kapt libs.room.compiler
 
     implementation libs.koin.android
     implementation libs.koin.compose
