@@ -1,7 +1,5 @@
-package com.hicham.wcstoreapp.data.api
+package com.hicham.wcstoreapp.data.storeApi
 
-import com.hicham.wcstoreapp.models.CheckoutData
-import com.hicham.wcstoreapp.models.PaymentMethod
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray

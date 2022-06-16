@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.product.network
 
-import com.hicham.wcstoreapp.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
+import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.data.product.LoadingState
 import com.hicham.wcstoreapp.data.product.ProductsListState
 import com.hicham.wcstoreapp.data.product.ProductsRepository

@@ -1,6 +1,6 @@
 @file:UseSerializers(BigDecimalSerializer::class)
 
-package com.hicham.wcstoreapp.data.api
+package com.hicham.wcstoreapp.data.storeApi
 
 import com.hicham.wcstoreapp.models.ProductPrices
 import com.ionspin.kotlin.bignum.decimal.BigDecimal

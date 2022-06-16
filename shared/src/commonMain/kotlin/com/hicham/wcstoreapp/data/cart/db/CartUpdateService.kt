@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.cart.db
 
-import com.hicham.wcstoreapp.data.api.NetworkCart
-import com.hicham.wcstoreapp.data.api.NetworkCartItem
+import com.hicham.wcstoreapp.data.storeApi.NetworkCart
+import com.hicham.wcstoreapp.data.storeApi.NetworkCartItem
 import com.hicham.wcstoreapp.data.db.CartItemEntity
 import com.hicham.wcstoreapp.data.db.daos.AddressDao
 import com.hicham.wcstoreapp.data.db.daos.CartDao
@@ -9,7 +9,6 @@ import com.hicham.wcstoreapp.models.CartItemTotals
 import com.hicham.wcstoreapp.models.CartTotals
 import com.hicham.wcstoreapp.util.DB
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class CartUpdateService(private val cartDao: CartDao, private val addressDao: AddressDao) {

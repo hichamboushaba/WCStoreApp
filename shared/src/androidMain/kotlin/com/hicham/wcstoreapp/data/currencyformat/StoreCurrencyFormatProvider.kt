@@ -4,9 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.hicham.wcstoreapp.data.api.NetworkFormattable
-import com.hicham.wcstoreapp.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.storeApi.NetworkFormattable
+import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
+import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

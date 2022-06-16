@@ -5,6 +5,7 @@ import com.hicham.wcstoreapp.BuildKonfig
 import com.hicham.wcstoreapp.util.KtorDataStorCookiesStorage
 import com.hicham.wcstoreapp.util.KtorNetworkException
 import com.hicham.wcstoreapp.util.NonceKtorPlugin
+import com.stripe.android.core.networking.HEADER_AUTHORIZATION
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.cookies.*
@@ -17,13 +18,13 @@ import org.koin.core.module.Module
 import java.net.URL
 
 actual fun Module.ktor() {
-    single {
-        val baseUrl = URL(BuildKonfig.WC_URL)
+    single(WooStoreApiClientQualifier) {
+        val baseUrl = Url(BuildKonfig.WC_URL)
         HttpClient {
             defaultRequest {
                 host = baseUrl.host
                 url {
-                    protocol = URLProtocol.byName[baseUrl.protocol]!!
+                    protocol = baseUrl.protocol
                 }
             }
             install(Logging) {
@@ -35,6 +36,41 @@ actual fun Module.ktor() {
             install(NonceKtorPlugin(get()))
             install(HttpCookies) {
                 storage = KtorDataStorCookiesStorage(get())
+            }
+
+            HttpResponseValidator {
+                handleResponseException {
+                    when (it) {
+                        is ResponseException -> throw it
+                        else -> {
+                            // Ktor seems to throw whatever exceptions the engine throws in case
+                            // of network connections, let's map it to a wrapper exception to be
+                            // able to catch it without a broad [Throwable] catch block.
+                            // TODO remove this when this is fixed https://youtrack.jetbrains.com/issue/KTOR-2630
+                            throw KtorNetworkException(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    single(StripeApiClientQualifier) {
+        HttpClient {
+            defaultRequest {
+                host = "api.stripe.com"
+                url {
+                    protocol = URLProtocol.HTTPS
+                }
+
+                header("Stripe-Account", BuildKonfig.WC_PAY_STRIPE_ACCOUNT_ID)
+                header("Authorization", "Bearer ${BuildKonfig.WC_PAY_STRIPE_PUBLISHABLE_KEY}")
+            }
+            install(Logging) {
+                level = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
+            }
+            install(JsonFeature) {
+                serializer = KotlinxSerializer(get())
             }
 
             HttpResponseValidator {

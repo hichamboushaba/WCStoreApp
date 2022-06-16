@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.db.daos
 
 import com.hicham.wcstoreapp.Database
-import com.hicham.wcstoreapp.data.api.NetworkAddress
+import com.hicham.wcstoreapp.data.storeApi.NetworkAddress
 import com.hicham.wcstoreapp.data.db.AddressEntity
 import com.squareup.sqldelight.Transacter
 import com.squareup.sqldelight.runtime.coroutines.asFlow

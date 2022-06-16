@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.product.db
 
-import com.hicham.wcstoreapp.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
+import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.data.db.daos.ProductDao
 import com.hicham.wcstoreapp.data.db.toDomainModel
 import com.hicham.wcstoreapp.data.db.toEntity

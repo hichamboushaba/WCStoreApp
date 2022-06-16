@@ -5,8 +5,7 @@ import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Address
-import com.hicham.wcstoreapp.models.Card
-import com.hicham.wcstoreapp.models.CardPaymentData
+import com.hicham.wcstoreapp.models.PaymentCard
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.*
 import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
@@ -26,13 +25,11 @@ class CheckoutViewModel constructor(
 
     private val selectedPaymentMethod = MutableStateFlow<PaymentMethod>(
         PaymentMethod.WCPayCard(
-            card = CardPaymentData(
-                card = Card(
+            card = PaymentCard(
                     "4242424242424242",
                     expiryMonth = 12,
                     expiryYear = 25,
                     cvc = "100"
-                )
             )
         )
     )

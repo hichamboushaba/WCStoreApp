@@ -1,6 +1,6 @@
 package com.hicham.wcstoreapp.models
 
-data class Card(
+data class PaymentCard(
     val number: String,
     val expiryMonth: Int,
     val expiryYear: Int,

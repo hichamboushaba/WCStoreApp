@@ -1,8 +1,8 @@
 package com.hicham.wcstoreapp.data.cart.db
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.data.api.NetworkCart
-import com.hicham.wcstoreapp.data.api.WooCommerceApi
+import com.hicham.wcstoreapp.data.storeApi.NetworkCart
+import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
 import com.hicham.wcstoreapp.data.db.CartItemEntity
 import com.hicham.wcstoreapp.data.db.daos.CartDao
 import com.hicham.wcstoreapp.data.db.toDomainModel

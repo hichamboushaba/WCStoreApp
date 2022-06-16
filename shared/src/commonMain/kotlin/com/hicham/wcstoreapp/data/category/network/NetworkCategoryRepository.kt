@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.data.category.network
 
-import com.hicham.wcstoreapp.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
+import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors

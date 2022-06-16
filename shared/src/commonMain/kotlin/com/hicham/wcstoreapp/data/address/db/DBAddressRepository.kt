@@ -1,9 +1,9 @@
 package com.hicham.wcstoreapp.android.data.address.db
 
 import com.hicham.wcstoreapp.data.address.AddressRepository
-import com.hicham.wcstoreapp.data.api.NetworkUpdateCustomerRequest
-import com.hicham.wcstoreapp.data.api.WooCommerceApi
-import com.hicham.wcstoreapp.data.api.toNetworkAddress
+import com.hicham.wcstoreapp.data.storeApi.NetworkUpdateCustomerRequest
+import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
+import com.hicham.wcstoreapp.data.storeApi.toNetworkAddress
 import com.hicham.wcstoreapp.data.cart.db.CartUpdateService
 import com.hicham.wcstoreapp.data.db.AddressEntity
 import com.hicham.wcstoreapp.data.db.daos.AddressDao

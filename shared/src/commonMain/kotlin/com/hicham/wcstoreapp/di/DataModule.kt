@@ -13,6 +13,8 @@ import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.checkout.network.NetworkCheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.fake.FakeCurrencyFormatProvider
+import com.hicham.wcstoreapp.data.payment.NetworkPaymentHandler
+import com.hicham.wcstoreapp.data.payment.PaymentHandler
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.data.product.db.DBProductsRepository
 import com.hicham.wcstoreapp.data.product.network.NetworkProductsRepository
@@ -44,4 +46,5 @@ val dataModule = module {
         )
     }
     factory<CheckoutRepository> { NetworkCheckoutRepository(get(), get()) }
+    factory<PaymentHandler> { NetworkPaymentHandler(get()) }
 }

@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.android.data.product.fake
 
-import com.hicham.wcstoreapp.data.api.NetworkProduct
-import com.hicham.wcstoreapp.data.api.toDomainModel
+import com.hicham.wcstoreapp.data.storeApi.NetworkProduct
+import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.data.product.LoadingState
 import com.hicham.wcstoreapp.data.product.ProductsListState
 import com.hicham.wcstoreapp.data.product.ProductsRepository

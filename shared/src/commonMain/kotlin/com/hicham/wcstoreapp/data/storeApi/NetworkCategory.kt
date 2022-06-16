@@ -1,4 +1,4 @@
-package com.hicham.wcstoreapp.data.api
+package com.hicham.wcstoreapp.data.storeApi
 
 import com.hicham.wcstoreapp.models.Category
 import kotlinx.serialization.Serializable

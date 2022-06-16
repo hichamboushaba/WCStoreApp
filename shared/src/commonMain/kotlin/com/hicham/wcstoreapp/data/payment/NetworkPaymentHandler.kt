@@ -1,17 +1,14 @@
 package com.hicham.wcstoreapp.data.payment
 
-import com.hicham.wcstoreapp.BuildKonfig
+import com.hicham.wcstoreapp.data.stripeApi.NetworkPaymentMethodRequest
+import com.hicham.wcstoreapp.data.stripeApi.StripeApi
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
-import com.stripe.android.Stripe
-import com.stripe.android.model.Address as StripeAddress
-import com.stripe.android.model.PaymentMethod as StripePaymentMethod
-import com.stripe.android.model.PaymentMethodCreateParams
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.*
 
-class NetworkPaymentHandler(private val stripe: Stripe) : PaymentHandler {
+class NetworkPaymentHandler(private val stripeApi: StripeApi) : PaymentHandler {
     override suspend fun processPayment(
         paymentMethod: PaymentMethod,
         billingAddress: Address
@@ -21,27 +18,12 @@ class NetworkPaymentHandler(private val stripe: Stripe) : PaymentHandler {
                 PaymentMethod.CASH, PaymentMethod.WIRE -> JsonNull
                 is PaymentMethod.WCPayCard -> {
                     val paymentCard = paymentMethod.card
-                    val paymentId = stripe.createPaymentMethodSynchronous(
-                        paymentMethodCreateParams = PaymentMethodCreateParams.create(
-                            card = PaymentMethodCreateParams.Card(
-                                number = paymentCard.number,
-                                expiryMonth = paymentCard.expiryMonth,
-                                expiryYear = paymentCard.expiryYear,
-                                cvc = paymentCard.cvc
-                            ),
-                            billingDetails = StripePaymentMethod.BillingDetails(
-                                address = StripeAddress(
-                                    line1 = billingAddress.street1,
-                                    line2 = billingAddress.street2,
-                                    city = billingAddress.city,
-                                    state = billingAddress.state,
-                                    postalCode = billingAddress.postCode,
-                                    country = billingAddress.country
-                                )
-                            )
-                        ),
-                        stripeAccountId = BuildKonfig.WC_PAY_STRIPE_ACCOUNT_ID
-                    )!!.id!!
+                    val paymentId = stripeApi.createPaymentMethod(
+                        paymentRequest = NetworkPaymentMethodRequest(
+                            billingAddress = billingAddress,
+                            card = paymentCard
+                        )
+                    )
                     JsonArray(
                         listOf(
                             JsonObject(
