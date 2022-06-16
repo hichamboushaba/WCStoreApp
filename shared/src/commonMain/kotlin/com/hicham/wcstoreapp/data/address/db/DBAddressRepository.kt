@@ -15,6 +15,7 @@ import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.plus
 import kotlinx.coroutines.withContext
 
 class DBAddressRepository(
@@ -26,7 +27,7 @@ class DBAddressRepository(
 ) : AddressRepository {
     private val _savedAddresses = addressDao.getSavedAddresses()
         .shareIn(
-            scope = appCoroutineScope,
+            scope = appCoroutineScope + Dispatchers.Main,
             started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
             replay = 1
         )

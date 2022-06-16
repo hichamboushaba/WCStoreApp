@@ -12,8 +12,10 @@ import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 
 class DBCartRepository constructor(
     private val cartDao: CartDao,
@@ -34,7 +36,7 @@ class DBCartRepository constructor(
             fetchCart()
         }
         .distinctUntilChanged()
-        .shareIn(appCoroutineScope, started = SharingStarted.WhileSubscribed(60000), replay = 1)
+        .shareIn(appCoroutineScope + Dispatchers.Main, started = SharingStarted.WhileSubscribed(60000), replay = 1)
 
     private fun fetchCart() = appCoroutineScope.launch {
         runCatchingNetworkErrors {

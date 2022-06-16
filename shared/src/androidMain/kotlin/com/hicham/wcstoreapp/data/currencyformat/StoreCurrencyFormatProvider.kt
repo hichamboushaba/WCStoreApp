@@ -9,8 +9,10 @@ import com.hicham.wcstoreapp.data.api.WooCommerceApi
 import com.hicham.wcstoreapp.data.api.toDomainModel
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -40,7 +42,7 @@ class StoreCurrencyFormatProvider(
             // Refresh the format settings when the flow is restarted
             fetchFormatSettings()
         }
-        .shareIn(coroutineScope, SharingStarted.WhileSubscribed(60000L), replay = 1)
+        .shareIn(coroutineScope + Dispatchers.Main, SharingStarted.WhileSubscribed(60000L), replay = 1)
 
     private fun fetchFormatSettings() {
         coroutineScope.launch {
