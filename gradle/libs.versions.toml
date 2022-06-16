@@ -1,5 +1,6 @@
 [versions]
-kotlin = "1.6.10"
+kotlin = "1.6.21"
+coroutines = "1.6.1-native-mt"
 compose = "1.1.0"
 accompanist = "0.19.0"
 ktor = "1.6.7"
@@ -8,7 +9,7 @@ sqldelight = "1.5.3"
 
 [libraries]
 ### shared Libraries
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = { strictly = "1.6.0-native-mt" } }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 ktor = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
