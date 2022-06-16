@@ -41,21 +41,21 @@ fun PaymentMethodSelector(
                     modifier = Modifier.padding(8.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                PaymentMethod.values().forEach {
-                    Text(
-                        text = it.title,
-                        style = MaterialTheme.typography.subtitle1,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                scope.launch {
-                                    state.hide()
-                                    onPaymentMethodSelected(it)
-                                }
-                            }
-                            .padding(8.dp)
-                    )
-                }
+//                PaymentMethod.values().forEach {
+//                    Text(
+//                        text = it.title,
+//                        style = MaterialTheme.typography.subtitle1,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .clickable {
+//                                scope.launch {
+//                                    state.hide()
+//                                    onPaymentMethodSelected(it)
+//                                }
+//                            }
+//                            .padding(8.dp)
+//                    )
+//                }
                 Spacer(modifier = Modifier.height(16.dp))
             }
         },

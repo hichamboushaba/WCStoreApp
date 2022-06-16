@@ -43,5 +43,5 @@ val dataModule = module {
             cartUpdateService = get()
         )
     }
-    factory<CheckoutRepository> { NetworkCheckoutRepository(get()) }
+    factory<CheckoutRepository> { NetworkCheckoutRepository(get(), get()) }
 }

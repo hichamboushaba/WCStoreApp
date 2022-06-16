@@ -70,7 +70,3 @@ data class NetworkPaymentResult(
     @SerialName("redirect_url")
     val redirectURL: String
 )
-
-fun NetworkCheckout.toDomainModel() = CheckoutData(
-    paymentMethod = PaymentMethod.fromNetworkPaymentMethod(paymentMethod)
-)

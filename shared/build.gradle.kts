@@ -56,6 +56,7 @@ kotlin {
                 implementation(libs.lifecycle.viewmodel)
                 implementation(libs.sqldelight.android)
                 implementation(libs.logcat)
+                implementation(libs.stripe.android)
             }
         }
         val androidTest by getting
@@ -95,12 +96,23 @@ android {
 
 buildkonfig {
     packageName = "com.hicham.wcstoreapp"
+    exposeObjectWithName = "BuildKonfig"
 
     defaultConfigs {
         buildConfigField(
             STRING,
             "WC_URL",
             gradleLocalProperties(rootDir).getProperty("WC_URL", "")
+        )
+        buildConfigField(
+            STRING,
+            "WC_PAY_STRIPE_PUBLISHABLE_KEY",
+            gradleLocalProperties(rootDir).getProperty("WC_PAY_STRIPE_PUBLISHABLE_KEY", "")
+        )
+        buildConfigField(
+            STRING,
+            "WC_PAY_STRIPE_ACCOUNT_ID",
+            gradleLocalProperties(rootDir).getProperty("WC_PAY_STRIPE_ACCOUNT_ID", "")
         )
     }
 }

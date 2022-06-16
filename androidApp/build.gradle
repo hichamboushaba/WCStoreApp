@@ -83,7 +83,9 @@ dependencies {
 
     implementation libs.logcat
 
-    implementation(libs.bignum)
+    implementation libs.bignum
+
+    implementation libs.stripe.android
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.test

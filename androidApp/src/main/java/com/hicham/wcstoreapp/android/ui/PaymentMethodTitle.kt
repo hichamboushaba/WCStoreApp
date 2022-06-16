@@ -6,4 +6,5 @@ val PaymentMethod.title: String
     get() = when (this) {
         PaymentMethod.WIRE -> "Direct Bank Transfer (BACS)"
         PaymentMethod.CASH -> "Cash on Delivery"
+        is PaymentMethod.WCPayCard -> "Credit Card"
     }

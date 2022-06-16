@@ -5,6 +5,8 @@ import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Address
+import com.hicham.wcstoreapp.models.Card
+import com.hicham.wcstoreapp.models.CardPaymentData
 import com.hicham.wcstoreapp.models.PaymentMethod
 import com.hicham.wcstoreapp.ui.*
 import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
@@ -22,20 +24,33 @@ class CheckoutViewModel constructor(
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    private val selectedPaymentMethod = MutableStateFlow<PaymentMethod>(
+        PaymentMethod.WCPayCard(
+            data = CardPaymentData(
+                card = Card(
+                    "4242424242424242",
+                    expiryMonth = 12,
+                    expiryYear = 25,
+                    cvc = "100"
+                )
+            )
+        )
+    )
+
     private val _retryTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     init {
         combine(
-            checkoutRepository.checkout,
+            selectedPaymentMethod,
             cartRepository.cart,
             currencyFormatProvider.formatSettings
-        ) { checkoutData, cart, formatSettings ->
+        ) { paymentMethod, cart, formatSettings ->
             val currencyFormatter = CurrencyFormatter(formatSettings)
             _uiState.update { state ->
                 state.copy(
                     isLoading = false,
                     loadingFailed = false,
-                    selectedPaymentMethod = checkoutData.paymentMethod,
+                    selectedPaymentMethod = paymentMethod,
                     subtotalFormatted = currencyFormatter.format(cart.totals.subtotal),
                     taxFormatted = currencyFormatter.format(cart.totals.tax),
                     shippingCost = cart.totals.shippingEstimate?.let { currencyFormatter.format(it) },
@@ -88,11 +103,12 @@ class CheckoutViewModel constructor(
     fun onPaymentMethodSelected(paymentMethod: PaymentMethod) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, isShowingPaymentMethodSelector = false) }
-            if (paymentMethod != _uiState.value.selectedPaymentMethod) {
-                checkoutRepository.updatePaymentMethod(paymentMethod).onFailure {
-                    triggerEffect(ShowSnackbar("Error while updating the payment method"))
-                }
-            }
+//            if (paymentMethod != _uiState.value.selectedPaymentMethod) {
+//                checkoutRepository.updatePaymentMethod(paymentMethod).onFailure {
+//                    triggerEffect(ShowSnackbar("Error while updating the payment method"))
+//                }
+//            }
+            selectedPaymentMethod.value = paymentMethod
             _uiState.update { it.copy(isLoading = false) }
         }
     }
@@ -100,12 +116,14 @@ class CheckoutViewModel constructor(
     fun onPlacedOrderClicked() {
         viewModelScope.launch {
             _uiState.update { state -> state.copy(isLoading = true) }
-            val shipping = uiState.value.shippingAddress!!
 
-            val result = checkoutRepository.placeOrder(
-                shippingAddress = shipping,
-                billingAddress = uiState.value.billingAddress ?: shipping,
-            )
+            val result = uiState.value.let { state ->
+                checkoutRepository.placeOrder(
+                    shippingAddress = state.shippingAddress!!,
+                    billingAddress = uiState.value.billingAddress ?: state.shippingAddress,
+                    paymentMethod = state.selectedPaymentMethod!!
+                )
+            }
 
             _uiState.update { state -> state.copy(isLoading = false) }
 
