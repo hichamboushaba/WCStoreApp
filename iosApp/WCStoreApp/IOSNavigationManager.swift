@@ -37,6 +37,18 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
         navigationStack.pop(to: PopDestination.view(withId: route))
     }
     
+    func navigateBackWithResult(key: String, result: Any, destination: String?) {
+        // TODO
+    }
+    
+    func observeResult(key: String, route: String?, onEach: @escaping (Any) -> Void) -> Ktor_ioCloseable {
+        // TODO
+        return closeable {
+            
+        }
+    }
+
+            
     @ViewBuilder
     func getView(iOSScreen: IOSScreen, arguments: Dictionary<String, String>) -> some View {
         switch iOSScreen {
@@ -88,5 +100,15 @@ enum IOSScreen: String, CaseIterable {
         case .Product:
             return Screen.Product.shared
         }
+    }
+}
+
+class closeable : Ktor_ioCloseable {
+    private var closeCallback:() -> Void
+    init(closeCallback: @escaping () -> Void) {
+        self.closeCallback = closeCallback
+    }
+    func close() {
+        self.closeCallback()
     }
 }

@@ -6,6 +6,7 @@ import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.Screen
+import com.hicham.wcstoreapp.ui.observeResultAsFlow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class AddressListViewModel(
 
     private fun observeSelectedAddress() {
         // Observe navigation result
-        navigationManager.observeResult<Address>(AddAddressViewModel.ADDRESS_RESULT)
+        navigationManager.observeResultAsFlow<Address>(AddAddressViewModel.ADDRESS_RESULT)
             .onStart {
                 val defaultAddress = //savedStateHandle.get<Address>("address")
                      addressRepository.primaryShippingAddress.first()

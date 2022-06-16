@@ -6,7 +6,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
 import com.hicham.wcstoreapp.ui.NavigationManager
+import io.ktor.utils.io.core.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlin.coroutines.EmptyCoroutineContext
 
 class AndroidNavigationManager : NavigationManager {
     // We use a StateFlow here to allow ViewModels to start observing navigation results before the initial composition,
@@ -16,6 +23,7 @@ class AndroidNavigationManager : NavigationManager {
     private val navigationCommands =
         MutableSharedFlow<NavigationCommand>(extraBufferCapacity = Int.MAX_VALUE)
 
+    private val navigationResults = Channel<NavigationResult>(capacity = Channel.BUFFERED)
 
     suspend fun handleNavigationCommands(navController: NavController) {
         navigationCommands
@@ -43,7 +51,7 @@ class AndroidNavigationManager : NavigationManager {
         navigationCommands.tryEmit(NavigationCommand.PopUpToRoute(route, inclusive))
     }
 
-    override fun <T> navigateBackWithResult(
+    override fun <T: Any> navigateBackWithResult(
         key: String,
         result: T,
         destination: String?
@@ -57,23 +65,20 @@ class AndroidNavigationManager : NavigationManager {
         )
     }
 
-    override fun <T> observeResult(key: String, route: String?): Flow<T> {
-        return navControllerFlow
-            .filterNotNull()
-            .flatMapLatest { navController ->
-                val backStackEntry = route?.let { navController.getBackStackEntry(it) }
-                    ?: navController.currentBackStackEntry
-
-                backStackEntry?.savedStateHandle?.let { savedStateHandle ->
-                    savedStateHandle.getLiveData<T?>(key)
-                        .asFlow()
-                        .filter { it != null }
-                        .onEach {
-                            // Nullify the result to avoid resubmitting it
-                            savedStateHandle.set(key, null)
-                        }
-                } ?: emptyFlow()
+    override fun <T: Any> observeResult(
+        key: String,
+        route: String?,
+        onEach: (T) -> Unit
+    ): Closeable {
+        val scope = CoroutineScope(Dispatchers.Main)
+        navigationResults.receiveAsFlow()
+            .filter { it.key == key }
+            .onEach {
+                (it.value as? T)?.let(onEach)
             }
+            .launchIn(scope)
+
+        return Closeable { scope.cancel() }
     }
 
     private fun NavController.handleNavigationCommand(navigationCommand: NavigationCommand) {
@@ -88,12 +93,11 @@ class AndroidNavigationManager : NavigationManager {
                 navigationCommand.inclusive
             )
             is NavigationCommand.NavigateUpWithResult<*> -> {
-                val backStackEntry =
-                    navigationCommand.destination?.let { getBackStackEntry(it) }
-                        ?: previousBackStackEntry
-                backStackEntry?.savedStateHandle?.set(
-                    navigationCommand.key,
-                    navigationCommand.result
+                navigationResults.trySend(
+                    NavigationResult(
+                        navigationCommand.key,
+                        navigationCommand.result
+                    )
                 )
 
                 navigationCommand.destination?.let {
@@ -104,6 +108,8 @@ class AndroidNavigationManager : NavigationManager {
             }
         }
     }
+
+    private data class NavigationResult(val key: String, val value: Any)
 }
 
 sealed class NavigationCommand {
@@ -111,7 +117,7 @@ sealed class NavigationCommand {
     data class NavigateToRoute(val route: String, val options: NavOptions? = null) :
         NavigationCommand()
 
-    data class NavigateUpWithResult<T>(
+    data class NavigateUpWithResult<T: Any>(
         val key: String,
         val result: T,
         val destination: String? = null

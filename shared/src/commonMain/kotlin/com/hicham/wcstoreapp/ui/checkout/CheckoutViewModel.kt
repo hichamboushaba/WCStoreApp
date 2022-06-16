@@ -6,10 +6,7 @@ import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.models.PaymentMethod
-import com.hicham.wcstoreapp.ui.BaseViewModel
-import com.hicham.wcstoreapp.ui.CurrencyFormatter
-import com.hicham.wcstoreapp.ui.NavigationManager
-import com.hicham.wcstoreapp.ui.ShowSnackbar
+import com.hicham.wcstoreapp.ui.*
 import com.hicham.wcstoreapp.ui.checkout.address.AddAddressViewModel
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import kotlinx.coroutines.flow.*
@@ -59,7 +56,7 @@ class CheckoutViewModel constructor(
 
     private fun observeShippingAddress() {
         // Observe Added Address
-        navigationManager.observeResult<Address>(AddAddressViewModel.ADDRESS_RESULT)
+        navigationManager.observeResultAsFlow<Address>(AddAddressViewModel.ADDRESS_RESULT)
             .onEach {
                 addressRepository.setPrimaryShippingAddress(it)
             }.launchIn(viewModelScope)

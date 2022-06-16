@@ -8,9 +8,7 @@ import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.StoreCurrencyFormatProvider
 import com.hicham.wcstoreapp.di.AppCoroutineScopeQualifier
 import com.hicham.wcstoreapp.ui.NavigationManager
-import kotlinx.coroutines.GlobalScope
 import org.koin.dsl.module
-import org.koin.dsl.single
 
 val appModule = module {
     single<NavigationManager> { get<AndroidNavigationManager>() }
