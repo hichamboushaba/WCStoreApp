@@ -20,14 +20,14 @@ class NetworkPaymentHandler(private val stripe: Stripe) : PaymentHandler {
             return@withContext when (paymentMethod) {
                 PaymentMethod.CASH, PaymentMethod.WIRE -> JsonNull
                 is PaymentMethod.WCPayCard -> {
-                    val paymentData = paymentMethod.data
+                    val paymentCard = paymentMethod.card
                     val paymentId = stripe.createPaymentMethodSynchronous(
                         paymentMethodCreateParams = PaymentMethodCreateParams.create(
                             card = PaymentMethodCreateParams.Card(
-                                number = paymentData.card.number,
-                                expiryMonth = paymentData.card.expiryMonth,
-                                expiryYear = paymentData.card.expiryYear,
-                                cvc = paymentData.card.cvc
+                                number = paymentCard.number,
+                                expiryMonth = paymentCard.expiryMonth,
+                                expiryYear = paymentCard.expiryYear,
+                                cvc = paymentCard.cvc
                             ),
                             billingDetails = StripePaymentMethod.BillingDetails(
                                 address = StripeAddress(

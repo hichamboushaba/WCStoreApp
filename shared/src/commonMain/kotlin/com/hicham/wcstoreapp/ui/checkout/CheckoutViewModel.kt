@@ -26,7 +26,7 @@ class CheckoutViewModel constructor(
 
     private val selectedPaymentMethod = MutableStateFlow<PaymentMethod>(
         PaymentMethod.WCPayCard(
-            data = CardPaymentData(
+            card = CardPaymentData(
                 card = Card(
                     "4242424242424242",
                     expiryMonth = 12,
