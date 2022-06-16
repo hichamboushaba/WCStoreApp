@@ -45,7 +45,6 @@ logcat = "com.squareup.logcat:logcat:0.1"
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 slf4j-android = "org.slf4j:slf4j-android:1.7.36"
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
-stripe-android = "com.stripe:stripe-android:20.5.0"
 
 ### iOS libraries
 ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }

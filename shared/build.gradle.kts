@@ -56,7 +56,6 @@ kotlin {
                 implementation(libs.lifecycle.viewmodel)
                 implementation(libs.sqldelight.android)
                 implementation(libs.logcat)
-                implementation(libs.stripe.android)
             }
         }
         val androidTest by getting

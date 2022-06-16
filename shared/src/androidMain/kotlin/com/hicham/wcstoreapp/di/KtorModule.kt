@@ -5,7 +5,6 @@ import com.hicham.wcstoreapp.BuildKonfig
 import com.hicham.wcstoreapp.util.KtorDataStorCookiesStorage
 import com.hicham.wcstoreapp.util.KtorNetworkException
 import com.hicham.wcstoreapp.util.NonceKtorPlugin
-import com.stripe.android.core.networking.HEADER_AUTHORIZATION
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.cookies.*
@@ -15,7 +14,6 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import org.koin.core.module.Module
-import java.net.URL
 
 actual fun Module.ktor() {
     single(WooStoreApiClientQualifier) {

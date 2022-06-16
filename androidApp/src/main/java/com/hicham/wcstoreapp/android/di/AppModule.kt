@@ -3,15 +3,11 @@ package com.hicham.wcstoreapp.android.di
 import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.hicham.wcstoreapp.BuildKonfig
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.currencyformat.StoreCurrencyFormatProvider
-import com.hicham.wcstoreapp.data.payment.NetworkPaymentHandler
-import com.hicham.wcstoreapp.data.payment.PaymentHandler
 import com.hicham.wcstoreapp.di.AppCoroutineScopeQualifier
 import com.hicham.wcstoreapp.ui.NavigationManager
-import com.stripe.android.Stripe
 import org.koin.dsl.module
 
 val appModule = module {
