@@ -1,1 +1,5 @@
-WC_URL="site-url"
+WC_URL=site-url
+SUPPORTS_WC_PAY=false
+# Provide the following if the above property is true
+WC_PAY_STRIPE_PUBLISHABLE_KEY=publishable-key
+WC_PAY_STRIPE_ACCOUNT_ID=account-id
