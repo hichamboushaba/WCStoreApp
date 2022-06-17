@@ -80,7 +80,6 @@ private fun CheckoutScreen(
     ModalBottomSheetLayout(
         sheetContent = {
             PaymentMethodSelector(
-                isShown = state.isShowingPaymentMethodSelector,
                 availablePaymentMethods = state.availablePaymentMethods,
                 selectedPaymentMethod = state.selectedPaymentMethod,
                 onAddPaymentMethod = onAddPaymentMethod,
@@ -261,16 +260,15 @@ private fun CheckoutScreenContent(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun PaymentMethodSelector(
-    isShown: Boolean,
     availablePaymentMethods: List<PaymentMethod>,
     selectedPaymentMethod: PaymentMethod?,
     onAddPaymentMethod: (PaymentMethod) -> Unit,
     onPaymentMethodSelected: (PaymentMethod) -> Unit
 ) {
-    var isCreditCardFormShown by remember(isShown) {
+    var isCreditCardFormShown by remember {
         mutableStateOf(false)
     }
-    var selectedRadioButton by rememberSaveable {
+    var selectedRadioButton by remember(selectedPaymentMethod) {
         mutableStateOf(selectedPaymentMethod)
     }
     if (!isCreditCardFormShown) {
@@ -289,8 +287,10 @@ private fun PaymentMethodSelector(
                     .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    RadioButton(selected = it == selectedRadioButton,
-                        onClick = { selectedRadioButton = it })
+                    RadioButton(
+                        selected = it == selectedRadioButton,
+                        onClick = { selectedRadioButton = it }
+                    )
                     Text(
                         text = it.title,
                         style = MaterialTheme.typography.subtitle1,
@@ -311,7 +311,12 @@ private fun PaymentMethodSelector(
             }
         }
     } else {
-        CreditCardForm(onAddPaymentMethod) { isCreditCardFormShown = false }
+        CreditCardForm(onAddPaymentMethod = {
+            isCreditCardFormShown = false
+            onAddPaymentMethod(it)
+        }, onCancel = {
+            isCreditCardFormShown = false
+        })
     }
 }
 
