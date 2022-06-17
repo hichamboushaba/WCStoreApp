@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.ui.checkout
 
+import com.hicham.wcstoreapp.BuildKonfig
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.address.AddressRepository
 import com.hicham.wcstoreapp.data.checkout.CheckoutRepository
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class CheckoutViewModel constructor(
     private val cartRepository: CartRepository,
-    private val currencyFormatProvider: CurrencyFormatProvider,
+    currencyFormatProvider: CurrencyFormatProvider,
     private val addressRepository: AddressRepository,
     private val navigationManager: NavigationManager,
     private val checkoutRepository: CheckoutRepository
@@ -24,7 +25,7 @@ class CheckoutViewModel constructor(
 
     //TODO fetch selected payment method on launch
     private val availablePaymentMethods =
-        MutableStateFlow<List<PaymentMethod>>(listOf(PaymentMethod.CASH, PaymentMethod.WIRE))
+        MutableStateFlow(listOf(PaymentMethod.CASH, PaymentMethod.WIRE))
     private val selectedPaymentMethod = MutableStateFlow<PaymentMethod>(PaymentMethod.CASH)
 
     private val _retryTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
@@ -133,6 +134,7 @@ class CheckoutViewModel constructor(
     }
 
     data class UiState(
+        val supportsCreditCardPayments: Boolean = BuildKonfig.SUPPORTS_WC_PAY,
         val isLoading: Boolean = false,
         val loadingFailed: Boolean = false,
         val isShowingPaymentMethodSelector: Boolean = false,

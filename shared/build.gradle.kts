@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 // Remove this when https://youtrack.jetbrains.com/issue/KTIJ-19369 gets fixed
@@ -102,6 +103,11 @@ buildkonfig {
             STRING,
             "WC_URL",
             gradleLocalProperties(rootDir).getProperty("WC_URL", "")
+        )
+        buildConfigField(
+            BOOLEAN,
+            "SUPPORTS_WC_PAY",
+            gradleLocalProperties(rootDir).getProperty("SUPPORTS_WC_PAY", "false")
         )
         buildConfigField(
             STRING,
