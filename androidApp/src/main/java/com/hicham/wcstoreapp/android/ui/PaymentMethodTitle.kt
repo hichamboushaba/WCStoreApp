@@ -6,5 +6,5 @@ val PaymentMethod.title: String
     get() = when (this) {
         PaymentMethod.WIRE -> "Direct Bank Transfer (BACS)"
         PaymentMethod.CASH -> "Cash on Delivery"
-        is PaymentMethod.WCPayCard -> "Credit Card"
+        is PaymentMethod.WCPayCard -> "Card ending in ${card.number.takeLast(4)} (expires ${card.expiryMonth}/${card.expiryYear})"
     }

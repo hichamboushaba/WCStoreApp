@@ -1,16 +1,23 @@
 package com.hicham.wcstoreapp.android.ui.checkout
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hicham.wcstoreapp.android.ui.common.components.CartTotals
@@ -40,6 +47,7 @@ fun CheckoutScreen(viewModel: CheckoutViewModel, scaffoldState: ScaffoldState) {
         onRetry = viewModel::onRetryClicked,
         onEditShippingAddress = viewModel::onEditShippingAddressClicked,
         onChangePayment = viewModel::onChangePaymentMethodClicked,
+        onAddPaymentMethod = viewModel::onAddPaymentMethod,
         onPaymentMethodSelected = viewModel::onPaymentMethodSelected,
         onPlaceOrder = viewModel::onPlacedOrderClicked
     )
@@ -52,8 +60,52 @@ private fun CheckoutScreen(
     onRetry: () -> Unit = {},
     onEditShippingAddress: () -> Unit = {},
     onChangePayment: () -> Unit = {},
+    onAddPaymentMethod: (PaymentMethod) -> Unit = {},
     onPaymentMethodSelected: (PaymentMethod) -> Unit = {},
     onPlaceOrder: () -> Unit = {},
+) {
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmStateChange = { false }
+    )
+
+    LaunchedEffect(key1 = state.isShowingPaymentMethodSelector) {
+        if (state.isShowingPaymentMethodSelector) {
+            bottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
+        } else {
+            bottomSheetState.animateTo(ModalBottomSheetValue.Hidden)
+        }
+    }
+
+    ModalBottomSheetLayout(
+        sheetContent = {
+            PaymentMethodSelector(
+                isShown = state.isShowingPaymentMethodSelector,
+                availablePaymentMethods = state.availablePaymentMethods,
+                selectedPaymentMethod = state.selectedPaymentMethod,
+                onAddPaymentMethod = onAddPaymentMethod,
+                onPaymentMethodSelected = onPaymentMethodSelected
+            )
+        },
+        sheetState = bottomSheetState
+    ) {
+        CheckoutScreenContent(
+            state = state,
+            onRetry,
+            onEditShippingAddress,
+            onChangePayment,
+            onPlaceOrder
+        )
+    }
+}
+
+@Composable
+private fun CheckoutScreenContent(
+    state: CheckoutViewModel.UiState,
+    onRetry: () -> Unit = {},
+    onEditShippingAddress: () -> Unit = {},
+    onChangePayment: () -> Unit = {},
+    onPlaceOrder: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
 
@@ -203,10 +255,63 @@ private fun CheckoutScreen(
         if (state.isLoading) {
             IndeterminateLoadingDialog()
         }
+    }
+}
 
-        if (state.isShowingPaymentMethodSelector) {
-            PaymentMethodSelector(onPaymentMethodSelected = onPaymentMethodSelected)
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun PaymentMethodSelector(
+    isShown: Boolean,
+    availablePaymentMethods: List<PaymentMethod>,
+    selectedPaymentMethod: PaymentMethod?,
+    onAddPaymentMethod: (PaymentMethod) -> Unit,
+    onPaymentMethodSelected: (PaymentMethod) -> Unit
+) {
+    var isCreditCardFormShown by remember(isShown) {
+        mutableStateOf(false)
+    }
+    var selectedRadioButton by rememberSaveable {
+        mutableStateOf(selectedPaymentMethod)
+    }
+    if (!isCreditCardFormShown) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Please select your payment method:",
+                style = MaterialTheme.typography.h6
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            availablePaymentMethods.forEach {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        selectedRadioButton = it
+                    }
+                    .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(selected = it == selectedRadioButton,
+                        onClick = { selectedRadioButton = it })
+                    Text(
+                        text = it.title,
+                        style = MaterialTheme.typography.subtitle1,
+                    )
+                }
+            }
+
+            Row(modifier = Modifier.align(Alignment.End)) {
+                TextButton(onClick = { isCreditCardFormShown = true }) {
+                    Text(text = "Add Credit Card")
+                }
+                TextButton(
+                    onClick = { onPaymentMethodSelected(selectedRadioButton!!) },
+                    enabled = selectedRadioButton != null
+                ) {
+                    Text(text = "Done")
+                }
+            }
         }
+    } else {
+        CreditCardForm(onAddPaymentMethod) { isCreditCardFormShown = false }
     }
 }
 
