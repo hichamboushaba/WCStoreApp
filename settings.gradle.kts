@@ -1,4 +1,4 @@
-enableFeaturePreview('VERSION_CATALOGS')
+enableFeaturePreview("VERSION_CATALOGS")
 
 dependencyResolutionManagement {
     repositories {
@@ -7,5 +7,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "WCStoreApp"
-include ':androidApp'
-include ':shared'
+include(":androidApp")
+include(":shared")

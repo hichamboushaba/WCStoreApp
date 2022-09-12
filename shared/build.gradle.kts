@@ -10,7 +10,7 @@ plugins {
     id("kotlin-kapt")
     id("com.android.library")
     id("kotlin-parcelize")
-    id("com.rickclephas.kmp.nativecoroutines") version ("0.11.3")
+    alias(libs.plugins.nativecoroutines)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.buildkonfig)
     alias(libs.plugins.sqldelight)
@@ -57,6 +57,8 @@ kotlin {
                 implementation(libs.lifecycle.viewmodel)
                 implementation(libs.sqldelight.android)
                 implementation(libs.logcat)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.slf4j.android)
             }
         }
         val androidTest by getting

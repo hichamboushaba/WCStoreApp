@@ -63,3 +63,5 @@ paging = ["paging-runtime", "paging-compose"]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version = "0.11.0" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+nativecoroutines = { id = "com.rickclephas.kmp.nativecoroutines", version = "0.11.3"}
+gradleversions = { id = "com.github.ben-manes.versions", version = "0.42.0"}
