@@ -1,7 +1,7 @@
 [versions]
-kotlin = "1.6.10"
-coroutines = "1.6.1-native-mt"
-compose = "1.1.0"
+kotlin = "1.6.21"
+coroutines = "1.6.3-native-mt"
+compose = "1.2.0-rc02"
 accompanist = "0.19.0"
 ktor = "1.6.7"
 koin = "3.1.5"
