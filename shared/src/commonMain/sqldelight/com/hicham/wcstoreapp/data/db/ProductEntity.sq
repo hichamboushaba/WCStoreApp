@@ -25,6 +25,6 @@ WHERE id = ?;
 deleteAll:
 DELETE FROM ProductEntity;
 
-insert:
-INSERT INTO ProductEntity(id, name, images, price, regularPrice, salePrice, shortDescription, description)
+upsert:
+INSERT OR REPLACE INTO ProductEntity(id, name, images, price, regularPrice, salePrice, shortDescription, description)
 VALUES ?;

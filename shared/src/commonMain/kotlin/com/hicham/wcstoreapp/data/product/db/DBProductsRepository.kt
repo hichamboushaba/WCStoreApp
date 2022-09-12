@@ -99,7 +99,7 @@ class DBProductsRepository(
             if (currentOffset == 0 && currentQuery.value.isNullOrEmpty() && currentCategory.value == null) {
                 productDao.deleteAll()
             }
-            productDao.insertProducts(*products.map { it.toEntity() }.toTypedArray())
+            productDao.upsertProducts(*products.map { it.toEntity() }.toTypedArray())
         }
     }
 
