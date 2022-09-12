@@ -20,7 +20,6 @@ fun Flow<ProductsListState>.mapToUiModel(
         cartRepository.items,
         currencyFormatProvider.formatSettings.map { CurrencyFormatter(it) }
     ) { listState, cartItems, formatter ->
-        // logcat { "combine" }
         ProductsUiListState(
             products = listState.products.map { product ->
                 ProductUiModel(

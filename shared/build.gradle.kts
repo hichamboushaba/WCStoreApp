@@ -56,7 +56,6 @@ kotlin {
                 implementation(libs.datastore)
                 implementation(libs.lifecycle.viewmodel)
                 implementation(libs.sqldelight.android)
-                implementation(libs.logcat)
                 implementation(libs.ktor.client.cio)
                 implementation(libs.slf4j.android)
             }

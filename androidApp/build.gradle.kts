@@ -82,7 +82,6 @@ dependencies {
 
     implementation(libs.datastore)
 
-    implementation(libs.logcat)
     implementation(libs.bignum)
 
     testImplementation(libs.junit)

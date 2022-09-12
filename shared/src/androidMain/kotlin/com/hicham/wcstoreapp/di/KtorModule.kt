@@ -5,6 +5,7 @@ import com.hicham.wcstoreapp.BuildKonfig
 import com.hicham.wcstoreapp.util.KtorDataStorCookiesStorage
 import com.hicham.wcstoreapp.util.KtorNetworkException
 import com.hicham.wcstoreapp.util.NonceKtorPlugin
+import com.hicham.wcstoreapp.util.log
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.cookies.*
@@ -27,6 +28,11 @@ actual fun Module.ktor() {
             }
             install(Logging) {
                 level = if (BuildConfig.DEBUG) LogLevel.ALL else LogLevel.NONE
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        log("HttpClient") { message }
+                    }
+                }
             }
             install(JsonFeature) {
                 serializer = KotlinxSerializer(get())

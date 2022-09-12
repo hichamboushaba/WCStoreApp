@@ -1,6 +1,7 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.BuildKonfig
+import com.hicham.wcstoreapp.util.log
 import io.ktor.client.*
 import io.ktor.client.engine.ios.*
 import io.ktor.client.features.*
@@ -10,6 +11,12 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import org.koin.core.module.Module
+
+private val ktorLogger = object : Logger {
+    override fun log(message: String) {
+        log("HttpClient") { message }
+    }
+}
 
 actual fun Module.ktor() {
     single(WooStoreApiClientQualifier) {
@@ -31,11 +38,8 @@ actual fun Module.ktor() {
             }
             if (Platform.isDebugBinary) install(Logging) {
                 level = LogLevel.ALL
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        // TODO
-                    }
-                }
+
+                logger = ktorLogger
             }
         }
     }
@@ -61,11 +65,7 @@ actual fun Module.ktor() {
             }
             if (Platform.isDebugBinary) install(Logging) {
                 level = LogLevel.ALL
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        // TODO
-                    }
-                }
+                logger = ktorLogger
             }
         }
     }

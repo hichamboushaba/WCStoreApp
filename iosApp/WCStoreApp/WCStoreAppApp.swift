@@ -14,6 +14,10 @@ struct WCStoreAppApp: App {
     @ObservedObject var navigationStack: NavigationStack
     private var navigationManager: IOSNavigationManager
     init() {
+        #if DEBUG
+        LoggerCompanion.shared.installLogger(logger: IOSLogger(minLogPriority: LogPriority.debug))
+        #endif
+        
         let navigationStack = NavigationStack()
         self.navigationStack = navigationStack
         navigationManager = IOSNavigationManager(navigationStack: navigationStack)

@@ -8,6 +8,8 @@ import com.hicham.wcstoreapp.data.storeApi.NetworkFormattable
 import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
 import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.models.CurrencyFormatSettings
+import com.hicham.wcstoreapp.util.LogPriority
+import com.hicham.wcstoreapp.util.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -16,9 +18,6 @@ import kotlinx.coroutines.plus
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import logcat.LogPriority
-import logcat.asLog
-import logcat.logcat
 
 class StoreCurrencyFormatProvider(
     private val coroutineScope: CoroutineScope,
@@ -42,7 +41,11 @@ class StoreCurrencyFormatProvider(
             // Refresh the format settings when the flow is restarted
             fetchFormatSettings()
         }
-        .shareIn(coroutineScope + Dispatchers.Main, SharingStarted.WhileSubscribed(60000L), replay = 1)
+        .shareIn(
+            coroutineScope + Dispatchers.Main,
+            SharingStarted.WhileSubscribed(60000L),
+            replay = 1
+        )
 
     private fun fetchFormatSettings() {
         coroutineScope.launch {
@@ -52,8 +55,8 @@ class StoreCurrencyFormatProvider(
                     it[stringPreferencesKey(SETTINGS_KEY)] = json.encodeToString(newSettings)
                 }
             } catch (e: Exception) {
-                logcat(LogPriority.WARN) {
-                    e.asLog()
+                log(priority = LogPriority.WARN) {
+                    e.stackTraceToString()
                 }
             }
         }
