@@ -13,6 +13,7 @@ import com.hicham.wcstoreapp.android.ui.products.ProductsList
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.products.ProductsUiListState
+import com.hicham.wcstoreapp.ui.search.SearchViewModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Search
 import compose.icons.tablericons.X

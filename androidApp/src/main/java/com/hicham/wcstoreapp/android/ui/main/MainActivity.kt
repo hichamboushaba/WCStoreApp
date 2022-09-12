@@ -29,6 +29,7 @@ import com.google.accompanist.insets.ui.BottomNavigation
 import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.android.ui.navigation.MainNavGraph
 import com.hicham.wcstoreapp.android.ui.theme.WCStoreAppTheme
+import com.hicham.wcstoreapp.ui.main.MainViewModel
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import compose.icons.TablerIcons
 import compose.icons.tablericons.LayoutGrid

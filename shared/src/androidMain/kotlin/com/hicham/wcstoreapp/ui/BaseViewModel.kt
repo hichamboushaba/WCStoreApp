@@ -1,8 +1,8 @@
 package com.hicham.wcstoreapp.ui
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import com.hicham.wcstoreapp.ui.main.MainViewModel
+import kotlinx.coroutines.flow.*
 import androidx.lifecycle.viewModelScope as archViewModelScope
 
 actual open class BaseViewModel : ViewModel() {
@@ -15,4 +15,10 @@ actual open class BaseViewModel : ViewModel() {
     actual fun triggerEffect(effect: Effect) {
         _effects.tryEmit(effect)
     }
+
+    actual fun <T> Flow<T>.toStateFlow(initialValue: T) = stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = initialValue
+    )
 }

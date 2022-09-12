@@ -1,11 +1,11 @@
-package com.hicham.wcstoreapp.android.ui.search
+package com.hicham.wcstoreapp.ui.search
 
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
-import com.hicham.wcstoreapp.android.ui.navigation.AndroidNavigationManager
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
 import com.hicham.wcstoreapp.data.product.ProductsRepository
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
+import com.hicham.wcstoreapp.ui.NavigationManager
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class SearchViewModel(
     private val repository: ProductsRepository,
     private val cartRepository: CartRepository,
-    private val navigationManager: AndroidNavigationManager,
+    private val navigationManager: NavigationManager,
     currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
     private val _searchQuery = MutableStateFlow("")

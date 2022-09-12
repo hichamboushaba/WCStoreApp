@@ -1,7 +1,8 @@
 package com.hicham.wcstoreapp.ui
 
+import com.hicham.wcstoreapp.ui.main.MainViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.*
 
 expect open class BaseViewModel constructor() {
     val viewModelScope: CoroutineScope
@@ -10,6 +11,8 @@ expect open class BaseViewModel constructor() {
     val effects: SharedFlow<Effect>
 
     fun triggerEffect(effect: Effect)
+
+    fun <T> Flow<T>.toStateFlow(initialValue: T): StateFlow<T>
 }
 
 open class Effect
