@@ -12,11 +12,12 @@ import NavigationStack
 @main
 struct WCStoreAppApp: App {
     @ObservedObject var navigationStack: NavigationStack
+    
     private var navigationManager: IOSNavigationManager
     init() {
-        #if DEBUG
+#if DEBUG
         LoggerCompanion.shared.installLogger(logger: IOSLogger(minLogPriority: LogPriority.debug))
-        #endif
+#endif
         
         let navigationStack = NavigationStack()
         self.navigationStack = navigationStack
@@ -33,13 +34,13 @@ struct WCStoreAppApp: App {
                 .toolbar(content: {
                     ToolbarItem(id: "BackButton", placement: .navigationBarLeading, showsByDefault: true) {
                         if (navigationStack.depth > 0) {
-                        Button(action: {
-                            navigationManager.navigateUp()
-                        }, label: {
-                            Image(systemName: "chevron.left")
-                        }) } else {
-                            EmptyView()
-                        }
+                            Button(action: {
+                                navigationManager.navigateUp()
+                            }, label: {
+                                Image(systemName: "chevron.left")
+                            }) } else {
+                                EmptyView()
+                            }
                     }
                 })
             }

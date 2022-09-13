@@ -10,6 +10,8 @@ import NavigationStack
 import WCStoreAppKmm
 import SwiftUI
 
+typealias KMMScreen = WCStoreAppKmm.Screen
+
 class IOSNavigationManager: NavigationManager, ObservableObject {
     private let navigationStack: NavigationStack
     
@@ -68,7 +70,7 @@ extension String {
         return self
     }
     
-    func getArguments(screen: Screen) -> Dictionary<String, String> {
+    func getArguments(screen: KMMScreen) -> Dictionary<String, String> {
         if (screen.navArguments.isEmpty) {
             return [:]
         }
@@ -93,12 +95,12 @@ enum IOSScreen: String, CaseIterable {
     case Home
     case Product
     
-    var kmmScreen: Screen {
+    var kmmScreen: KMMScreen {
         switch self {
         case .Home:
-            return Screen.Home.shared
+            return KMMScreen.Home.shared
         case .Product:
-            return Screen.Product.shared
+            return KMMScreen.Product.shared
         }
     }
 }

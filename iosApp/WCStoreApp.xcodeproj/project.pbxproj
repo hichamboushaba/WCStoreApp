@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953AAE4627DD649400EBCACB /* ProductScreen.swift */; };
 		95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */; };
+		95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8B30F28D09D5A005231B9 /* SearchScreen.swift */; };
+		95A8B31328D0ACB4005231B9 /* ProductsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8B31228D0ACB4005231B9 /* ProductsList.swift */; };
+		95A8B31528D0BED8005231B9 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8B31428D0BED8005231B9 /* Screen.swift */; };
 		95B0331328CF8D000095CC6F /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B0331228CF8D000095CC6F /* MainScreen.swift */; };
 		95B0331628CF95EE0095CC6F /* FlowWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B0331528CF95EE0095CC6F /* FlowWrapper.swift */; };
 		95D2442027DAACEB00B5B5AD /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D2441F27DAACEB00B5B5AD /* HomeScreen.swift */; };
 		95E3376E27DA7B6B007F01A9 /* WCStoreAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E3376D27DA7B6B007F01A9 /* WCStoreAppApp.swift */; };
-		95E3377027DA7B6B007F01A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E3376F27DA7B6B007F01A9 /* ContentView.swift */; };
 		95E3377227DA7B6E007F01A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95E3377127DA7B6E007F01A9 /* Assets.xcassets */; };
 		95E3377527DA7B6E007F01A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95E3377427DA7B6E007F01A9 /* Preview Assets.xcassets */; };
 		ABF4CD76786B683D04208A5F /* Pods_WCStoreApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704B8430B72440FD0ABA88CE /* Pods_WCStoreApp.framework */; };
@@ -24,12 +26,14 @@
 		7CC653707D5DE508F41F3A55 /* Pods-WCStoreApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.debug.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.debug.xcconfig"; sourceTree = "<group>"; };
 		953AAE4627DD649400EBCACB /* ProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreen.swift; sourceTree = "<group>"; };
 		95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSNavigationManager.swift; sourceTree = "<group>"; };
+		95A8B30F28D09D5A005231B9 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
+		95A8B31228D0ACB4005231B9 /* ProductsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsList.swift; sourceTree = "<group>"; };
+		95A8B31428D0BED8005231B9 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		95B0331228CF8D000095CC6F /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		95B0331528CF95EE0095CC6F /* FlowWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowWrapper.swift; sourceTree = "<group>"; };
 		95D2441F27DAACEB00B5B5AD /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		95E3376A27DA7B6B007F01A9 /* WCStoreApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WCStoreApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95E3376D27DA7B6B007F01A9 /* WCStoreAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStoreAppApp.swift; sourceTree = "<group>"; };
-		95E3376F27DA7B6B007F01A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		95E3377127DA7B6E007F01A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95E3377427DA7B6E007F01A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DDF28F2A1714B61B418E906A /* Pods-WCStoreApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.release.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +76,23 @@
 			path = ProductDetails;
 			sourceTree = "<group>";
 		};
+		95A8B30E28D09D4A005231B9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				95A8B30F28D09D5A005231B9 /* SearchScreen.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		95A8B31128D0ACA4005231B9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				95A8B31228D0ACB4005231B9 /* ProductsList.swift */,
+				95A8B31428D0BED8005231B9 /* Screen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		95B0331028CF8CE30095CC6F /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +112,7 @@
 		95D2441B27DAA61700B5B5AD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				95A8B30E28D09D4A005231B9 /* Search */,
 				95B0331028CF8CE30095CC6F /* Main */,
 				953AAE4527DD648000EBCACB /* ProductDetails */,
 				95D2441C27DAA62200B5B5AD /* Home */,
@@ -127,10 +149,10 @@
 		95E3376C27DA7B6B007F01A9 /* WCStoreApp */ = {
 			isa = PBXGroup;
 			children = (
+				95A8B31128D0ACA4005231B9 /* Views */,
 				95B0331428CF95D70095CC6F /* Utils */,
 				95D2441B27DAA61700B5B5AD /* Features */,
 				95E3376D27DA7B6B007F01A9 /* WCStoreAppApp.swift */,
-				95E3376F27DA7B6B007F01A9 /* ContentView.swift */,
 				95E3377127DA7B6E007F01A9 /* Assets.xcassets */,
 				95E3377327DA7B6E007F01A9 /* Preview Content */,
 				95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */,
@@ -263,10 +285,12 @@
 				95B0331328CF8D000095CC6F /* MainScreen.swift in Sources */,
 				95B0331628CF95EE0095CC6F /* FlowWrapper.swift in Sources */,
 				95D2442027DAACEB00B5B5AD /* HomeScreen.swift in Sources */,
-				95E3377027DA7B6B007F01A9 /* ContentView.swift in Sources */,
+				95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */,
 				95E3376E27DA7B6B007F01A9 /* WCStoreAppApp.swift in Sources */,
+				95A8B31528D0BED8005231B9 /* Screen.swift in Sources */,
 				953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */,
 				95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */,
+				95A8B31328D0ACB4005231B9 /* ProductsList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

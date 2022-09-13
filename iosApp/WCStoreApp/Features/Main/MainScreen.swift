@@ -19,22 +19,17 @@ struct MainScreen: View {
     }
     
     var body: some View {
-        TabView {
-            HomeScreen()
-                .tabItem {
-                    Label("Home", systemImage: "list.dash")
-                }
-            
-            HomeScreen()
-                .tabItem {
-                    Label("Home 2", systemImage: "square.and.pencil")
-                }
+        Screen(hasNavigationBar: false) {
+            TabView {
+                HomeScreen()
+                    .tabItem {
+                        Label("Home", systemImage: "list.dash")
+                    }
+                HomeScreen()
+                    .tabItem {
+                        Label("Home 2", systemImage: "square.and.pencil")
+                    }
+            }
         }
-    }
-}
-
-struct MainScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        MainScreen()
     }
 }
