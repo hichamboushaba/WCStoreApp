@@ -25,7 +25,7 @@ struct SearchScreen: View {
     
     
     var body: some View {
-        Screen(hasNavigationBar: false) {
+        Screen(hasNavigationBar: false, viewModel: viewModel) {
             VStack {
                 SearchBar(searchText: Binding(
                     get: { searchQuery },

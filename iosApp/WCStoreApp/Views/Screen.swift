@@ -6,16 +6,22 @@
 //
 
 import SwiftUI
+import WCStoreAppKmm
 
-struct Screen<Content>: View where Content: View {
-    let hasNavigationBar: Bool
+struct Screen<Content, ViewModel>: View where Content: View, ViewModel: closeable {
+    private(set) var hasNavigationBar: Bool = true
+    let viewModel: BaseViewModel
+    
     @ViewBuilder let content: () -> Content
-
+    
     var body: some View {
         content()
             .navigationBarHidden(!hasNavigationBar)
             .navigationBarBackButtonHidden(!hasNavigationBar)
             .setTitleIfNecessary(hasNavigationBar: hasNavigationBar)
+            .onDisappear {
+                viewModel.close()
+            }
     }
 }
 

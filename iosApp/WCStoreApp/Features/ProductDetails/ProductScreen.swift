@@ -19,7 +19,7 @@ struct ProductScreen: View {
     }
     
     var body: some View {
-        Screen(hasNavigationBar: true) {
+        Screen(viewModel: viewModel) {
             if (uiState is ProductViewModel.UiStateLoadingState) {
                 ProgressView()
             } else if (uiState is ProductViewModel.UiStateSuccessState) {

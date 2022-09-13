@@ -23,7 +23,7 @@ struct MainScreen: View {
     }
     
     var body: some View {
-        Screen(hasNavigationBar: false) {
+        Screen(hasNavigationBar: false, viewModel: viewModel) {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     switch (selectedTab) {

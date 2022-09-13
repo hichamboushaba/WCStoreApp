@@ -23,9 +23,8 @@ struct HomeScreen: View {
 
     
     var body: some View {
-        Screen(hasNavigationBar: false) {
+        Screen(hasNavigationBar: false, viewModel: viewModel) {
             ProductsList(productsState: productsState, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
-                .onDisappear(perform: { viewModel.close() })
         }
     }
 }
