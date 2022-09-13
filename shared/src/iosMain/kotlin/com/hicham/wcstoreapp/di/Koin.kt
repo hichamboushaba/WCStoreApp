@@ -10,7 +10,7 @@ import org.koin.core.qualifier.Qualifier
 import org.koin.dsl.module
 
 fun initKoin(navigationManager: NavigationManager) {
-    initKoin(appModule, module {
+    initKoin(appModule, viewModels, module {
         single { navigationManager }
     })
 }

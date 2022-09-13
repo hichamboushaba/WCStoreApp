@@ -28,7 +28,7 @@ struct WCStoreAppApp: App {
         WindowGroup {
             NavigationView {
                 NavigationStackView(navigationStack: navigationStack) {
-                    HomeScreen()
+                    MainScreen()
                 }
                 .toolbar(content: {
                     ToolbarItem(id: "BackButton", placement: .navigationBarLeading, showsByDefault: true) {

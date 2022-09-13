@@ -10,37 +10,32 @@ import Combine
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
-class HomeViewModelProxy: ObservableObject {
+struct HomeScreen: View {
     let viewModel = KoinKt.get(objCClass: HomeViewModel.self) as! HomeViewModel
-    
-    @Published private(set) var productsState: ProductsUiListState = ProductsUiListState.init(products: [], hasNext: true, state: LoadingState.loading)
+    @FlowWrapper var productsState: ProductsUiListState
     
     init() {
-        createPublisher(for: viewModel.productsNative)
-            .assertNoFailure()
-            .receive(on: RunLoop.main)
-            .assign(to: &$productsState)
+        _productsState = FlowWrapper(
+            viewModel.productsNative,
+            initialValue: ProductsUiListState.init(products: [], hasNext: true, state: LoadingState.loading)
+        )
     }
-}
 
-
-struct HomeScreen: View {
-    @StateObject private var viewModelProxy = HomeViewModelProxy()
     
     var body: some View {
         List {
-            ForEach(viewModelProxy.productsState.products, id: \.product.id) { productUiModel in
+            ForEach(productsState.products, id: \.product.id) { productUiModel in
                 ProductsListRowView(uiModel: productUiModel, onClick: {
-                    viewModelProxy.viewModel.onProductClicked(product: productUiModel.product)
+                    viewModel.onProductClicked(product: productUiModel.product)
                 })
             }
-            if viewModelProxy.productsState.hasNext {
+            if productsState.hasNext {
                 nextPageView
             }
         }
         .navigationTitle("Products")
         .onDisappear(perform: {
-            viewModelProxy.viewModel.close()
+            viewModel.close()
         })
     }
     
@@ -53,7 +48,7 @@ struct HomeScreen: View {
             Spacer()
         }
         .onAppear(perform: {
-            viewModelProxy.viewModel.loadNext()
+            viewModel.loadNext()
         })
     }
 }

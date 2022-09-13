@@ -2,15 +2,12 @@ package com.hicham.wcstoreapp.ui
 
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutineScope
 import io.ktor.utils.io.core.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 actual open class BaseViewModel : Closeable {
     @NativeCoroutineScope
-    actual val viewModelScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    actual val viewModelScope = MainScope()
 
     private val _effects = MutableSharedFlow<Effect>(extraBufferCapacity = Int.MAX_VALUE)
     actual val effects = _effects.asSharedFlow()

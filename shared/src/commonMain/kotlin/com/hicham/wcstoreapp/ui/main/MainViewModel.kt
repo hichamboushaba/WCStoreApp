@@ -11,7 +11,6 @@ class MainViewModel(cartRepository: CartRepository) : BaseViewModel() {
         .map { list ->
             UiState(countOfItemsInCart = list.sumOf { it.quantity })
         }
-        .flowOn(Dispatchers.Default)
         .toStateFlow(UiState(0))
 
     data class UiState(
