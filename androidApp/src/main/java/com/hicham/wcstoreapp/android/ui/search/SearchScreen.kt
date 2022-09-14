@@ -1,6 +1,7 @@
 package com.hicham.wcstoreapp.android.ui.search
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,8 +39,6 @@ fun SearchScreen(viewModel: SearchViewModel, scaffoldState: ScaffoldState) {
         searchQuery = searchQuery,
         scaffoldState = scaffoldState,
         onQueryChanged = viewModel::onQueryChanged,
-        addItemToCart = viewModel::addItemToCart,
-        removeItemFromCart = viewModel::deleteItemFromCart,
         loadNext = viewModel::loadNext,
         openProduct = viewModel::onProductClicked
     )
@@ -98,15 +97,13 @@ fun SearchScreen(
             )
         }
     }) {
-
         ProductsList(
             productsUiListState = products,
-            addItemToCart = addItemToCart,
-            removeItemFromCart = removeItemFromCart,
             onProductClicked = openProduct,
             retry = retry,
             loadNext = loadNext,
-            scaffoldState = scaffoldState
+            scaffoldState = scaffoldState,
+            modifier = Modifier.padding(it)
         )
     }
 }

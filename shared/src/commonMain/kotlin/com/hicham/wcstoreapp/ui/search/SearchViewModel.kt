@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val repository: ProductsRepository,
-    private val cartRepository: CartRepository,
+    cartRepository: CartRepository,
     private val navigationManager: NavigationManager,
     currencyFormatProvider: CurrencyFormatProvider
 ) : BaseViewModel() {
@@ -23,7 +23,7 @@ class SearchViewModel(
     val searchQuery = _searchQuery.asStateFlow()
 
     val products = repository.products
-        .mapToUiModel(currencyFormatProvider, cartRepository)
+        .mapToUiModel(this, currencyFormatProvider, cartRepository)
         .flowOn(Dispatchers.Default)
 
     init {
@@ -37,25 +37,9 @@ class SearchViewModel(
         _searchQuery.value = query
     }
 
-    fun addItemToCart(product: Product) {
-        viewModelScope.launch {
-            cartRepository.addItem(product).onFailure {
-                triggerEffect(ShowSnackbar("Error while updating your cart"))
-            }
-        }
-    }
-
     fun loadNext() {
         viewModelScope.launch {
             repository.loadNext()
-        }
-    }
-
-    fun deleteItemFromCart(product: Product) {
-        viewModelScope.launch {
-            cartRepository.deleteItem(product).onFailure {
-                triggerEffect(ShowSnackbar("Error while updating your cart"))
-            }
         }
     }
 

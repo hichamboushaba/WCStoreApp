@@ -46,8 +46,6 @@ fun HomeScreen(
     HomeScreen(
         products = products,
         categories = categories,
-        addItemToCart = viewModel::addItemToCart,
-        deleteItemFromCart = viewModel::deleteItemFromCart,
         onProductClicked = viewModel::onProductClicked,
         onCategorySelected = viewModel::onCategorySelected,
         loadNext = viewModel::loadNext,
@@ -59,8 +57,6 @@ fun HomeScreen(
 private fun HomeScreen(
     products: ProductsUiListState,
     categories: List<CategoryUiModel>,
-    addItemToCart: (Product) -> Unit = {},
-    deleteItemFromCart: (Product) -> Unit = {},
     onProductClicked: (Product) -> Unit = {},
     onCategorySelected: (Category) -> Unit = {},
     retry: () -> Unit = {},
@@ -82,8 +78,6 @@ private fun HomeScreen(
         }
         ProductsList(
             productsUiListState = products,
-            addItemToCart = addItemToCart,
-            removeItemFromCart = deleteItemFromCart,
             onProductClicked = onProductClicked,
             scaffoldState = scaffoldState,
             retry = retry,

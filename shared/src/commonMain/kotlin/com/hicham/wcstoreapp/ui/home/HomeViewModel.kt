@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel constructor(
     private val repository: ProductsRepository,
-    private val cartRepository: CartRepository,
+    cartRepository: CartRepository,
     private val categoryRepository: CategoryRepository,
     private val navigationManager: NavigationManager,
     currencyFormatProvider: CurrencyFormatProvider
@@ -29,7 +29,7 @@ class HomeViewModel constructor(
     private val selectedCategory = MutableStateFlow(ALL_CATEGORY)
 
     val products = repository.products
-        .mapToUiModel(currencyFormatProvider, cartRepository)
+        .mapToUiModel(this, currencyFormatProvider, cartRepository)
         .flowOn(Dispatchers.Default)
 
     private val _categories = categoryRepository.categories.map { list ->
@@ -51,24 +51,7 @@ class HomeViewModel constructor(
             .launchIn(viewModelScope)
     }
 
-    fun addItemToCart(product: Product) {
-        viewModelScope.launch {
-            cartRepository.addItem(product).onFailure {
-                triggerEffect(ShowSnackbar("Error while updating your cart"))
-            }
-        }
-    }
-
-    fun deleteItemFromCart(product: Product) {
-        viewModelScope.launch {
-            cartRepository.deleteItem(product).onFailure {
-                triggerEffect(ShowSnackbar("Error while updating your cart"))
-            }
-        }
-    }
-
     fun loadNext() {
-        println("loadNext")
         viewModelScope.launch {
             repository.loadNext()
         }

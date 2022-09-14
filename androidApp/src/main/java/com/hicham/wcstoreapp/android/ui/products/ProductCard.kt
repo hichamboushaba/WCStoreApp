@@ -34,8 +34,6 @@ import com.hicham.wcstoreapp.ui.products.ProductUiModel
 @Composable
 fun ProductCard(
     uiModel: ProductUiModel,
-    addItemToCart: (Product) -> Unit,
-    removeItemFromCart: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -99,7 +97,7 @@ fun ProductCard(
             if (uiModel.quantityInCart > 0) {
                 ImageButton(
                     vectorResourceId = R.drawable.ic_minus,
-                    onClicked = { removeItemFromCart(uiModel.product) },
+                    onClicked = uiModel.deleteFromCart,
                     modifier = Modifier
                         .constrainAs(minusButton) {
                             end.linkTo(parent.end)
@@ -130,7 +128,7 @@ fun ProductCard(
 
             ImageButton(
                 vectorResourceId = R.drawable.ic_add,
-                onClicked = { addItemToCart(uiModel.product) },
+                onClicked = uiModel.addToCart,
                 modifier = Modifier.constrainAs(addButton) {
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
@@ -166,10 +164,10 @@ fun DefaultCard() {
             uiModel = ProductUiModel(
                 product = Fakes.product,
                 priceFormatted = "20 USD",
-                quantityInCart = 1
+                quantityInCart = 1,
+                addToCart = {},
+                deleteFromCart = {}
             ),
-            addItemToCart = {},
-            removeItemFromCart = {},
             modifier = Modifier.size(160.dp)
         )
     }

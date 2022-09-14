@@ -25,18 +25,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProductsList(
     productsUiListState: ProductsUiListState,
-    addItemToCart: (Product) -> Unit,
-    removeItemFromCart: (Product) -> Unit,
     onProductClicked: (Product) -> Unit,
     retry: () -> Unit,
     loadNext: () -> Unit,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
 
     val minCardWidth = 160.dp
 
-    BoxWithConstraints {
+    BoxWithConstraints(modifier) {
         val nbColumns = (maxWidth / minCardWidth).toInt()
         val size = (maxWidth / nbColumns) - 16.dp
         val hasOfflineData = productsUiListState.products.isNotEmpty()
@@ -64,8 +63,6 @@ fun ProductsList(
 
                     renderList(
                         productsUiListState = productsUiListState,
-                        addItemToCart = addItemToCart,
-                        removeItemFromCart = removeItemFromCart,
                         onProductClick = onProductClicked,
                         loadNext = loadNext,
                         nbColumns = nbColumns,
@@ -130,8 +127,6 @@ private fun LazyListScope.handleLoadState(
 
 private fun LazyListScope.renderList(
     productsUiListState: ProductsUiListState,
-    addItemToCart: (Product) -> Unit,
-    removeItemFromCart: (Product) -> Unit,
     onProductClick: (Product) -> Unit,
     loadNext: () -> Unit,
     nbColumns: Int,
@@ -152,8 +147,6 @@ private fun LazyListScope.renderList(
                     products[itemIndex].let {
                         ProductCard(
                             uiModel = it,
-                            addItemToCart = addItemToCart,
-                            removeItemFromCart = removeItemFromCart,
                             modifier = Modifier
                                 .size(itemsSize)
                                 .clickable { onProductClick(it.product) }
