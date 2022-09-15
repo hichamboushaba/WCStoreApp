@@ -25,8 +25,19 @@ extension BaseViewModel : ObservableObject {
     
 }
 
-extension ViewModelProxy {
-    func assignToPublished<Output>(flowProperty: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, value: inout Published<Output>.Publisher, initialValue: Output? = nil) {
+extension ViewModelProxy where ViewModel: BaseViewModel {
+    func assignToPublished<Output>(from: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, to: inout Published<Output?>.Publisher, initialValue: Output? = nil) {
+        createFlowPublisher(from: from, initialValue: initialValue)
+            .map { $0 }
+            .assign(to: &to)
+    }
+    
+    func assignToPublished<Output>(from: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, to: inout Published<Output>.Publisher, initialValue: Output? = nil) {
+        createFlowPublisher(from: from, initialValue: initialValue)
+            .assign(to: &to)
+    }
+    
+    private func createFlowPublisher<Output>(from flowProperty: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, initialValue: Output? = nil) -> AnyPublisher<Output, Never> {
         let nativeFlow = viewModel[keyPath: flowProperty]
         let publisher = createPublisher(for: nativeFlow)
         let initialValuePublisher : AnyPublisher<Output, Never>
@@ -36,7 +47,7 @@ extension ViewModelProxy {
             initialValuePublisher = Empty().eraseToAnyPublisher()
         }
         
-        publisher
+        return publisher
             .catch { e -> AnyPublisher<Output, Error> in
                 // TODO find a better way for ignoring Kotlin's CancellationException here
                 if (e.localizedDescription == "Job was cancelled") {
@@ -50,6 +61,6 @@ extension ViewModelProxy {
             .assertNoFailure()
             .merge(with: initialValuePublisher)
             .receive(on: DispatchQueue.main)
-            .assign(to: &value)
+            .eraseToAnyPublisher()
     }
 }

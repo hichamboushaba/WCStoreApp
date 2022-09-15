@@ -15,7 +15,7 @@ class HomeViewModelProxy: ViewModelProxy<HomeViewModel> {
     
     override init() {
         super.init()
-        assignToPublished(flowProperty: \.productsNative, value: &$productsState)
+        assignToPublished(from:\.productsNative, to: &$productsState)
     }
 }
 
@@ -27,7 +27,7 @@ struct HomeScreen: View {
     }
     
     var body: some View {
-        Screen(hasNavigationBar: false, viewModel: viewModel) {
+        Screen(hasNavigationBar: false) {
             ProductsList(
                 productsState: viewModelProxy.productsState,
                 onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)

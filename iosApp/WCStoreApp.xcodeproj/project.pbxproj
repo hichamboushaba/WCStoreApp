@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		953401DE28D23DB100B75740 /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401DD28D23DB100B75740 /* Koin.swift */; };
+		953401E628D3460C00B75740 /* ViewModelProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401E528D3460C00B75740 /* ViewModelProxy.swift */; };
 		953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953AAE4627DD649400EBCACB /* ProductScreen.swift */; };
 		95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */; };
 		95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8B30F28D09D5A005231B9 /* SearchScreen.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		704B8430B72440FD0ABA88CE /* Pods_WCStoreApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WCStoreApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CC653707D5DE508F41F3A55 /* Pods-WCStoreApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.debug.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.debug.xcconfig"; sourceTree = "<group>"; };
+		953401DD28D23DB100B75740 /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
+		953401E528D3460C00B75740 /* ViewModelProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelProxy.swift; sourceTree = "<group>"; };
 		953AAE4627DD649400EBCACB /* ProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreen.swift; sourceTree = "<group>"; };
 		95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSNavigationManager.swift; sourceTree = "<group>"; };
 		95A8B30F28D09D5A005231B9 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
@@ -104,7 +108,9 @@
 		95B0331428CF95D70095CC6F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				953401E528D3460C00B75740 /* ViewModelProxy.swift */,
 				95B0331528CF95EE0095CC6F /* FlowWrapper.swift */,
+				953401DD28D23DB100B75740 /* Koin.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -283,12 +289,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				95B0331328CF8D000095CC6F /* MainScreen.swift in Sources */,
+				953401DE28D23DB100B75740 /* Koin.swift in Sources */,
 				95B0331628CF95EE0095CC6F /* FlowWrapper.swift in Sources */,
 				95D2442027DAACEB00B5B5AD /* HomeScreen.swift in Sources */,
 				95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */,
 				95E3376E27DA7B6B007F01A9 /* WCStoreAppApp.swift in Sources */,
 				95A8B31528D0BED8005231B9 /* Screen.swift in Sources */,
 				953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */,
+				953401E628D3460C00B75740 /* ViewModelProxy.swift in Sources */,
 				95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */,
 				95A8B31328D0ACB4005231B9 /* ProductsList.swift in Sources */,
 			);

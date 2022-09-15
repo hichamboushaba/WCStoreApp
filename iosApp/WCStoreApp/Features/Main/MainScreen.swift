@@ -9,21 +9,26 @@ import SwiftUI
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
+class MainViewModelProxy: ViewModelProxy<MainViewModel> {
+    @Published var uiState: MainViewModel.UiState!
+
+    override init() {
+        super.init()
+        uiState = viewModel.uiStateNativeValue
+        assignToPublished(from:\.uiStateNative, to: &$uiState)
+    }
+}
 
 struct MainScreen: View {
-    private let viewModel = KoinKt.get(objCClass: MainViewModel.self) as! MainViewModel
-    @FlowWrapper private var uiState: MainViewModel.UiState
-    @State private var selectedTab = 0
+    @StateObject private var viewModelProxy = MainViewModelProxy()
+    @State private var selectedTab: Int = 0
     
-    init() {
-        let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithDefaultBackground()
-        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-        _uiState = FlowWrapper(viewModel.uiStateNative, initialValue: viewModel.uiStateNativeValue)
+    private var viewModel: MainViewModel {
+        return viewModelProxy.viewModel
     }
     
     var body: some View {
-        Screen(hasNavigationBar: false, viewModel: viewModel) {
+        Screen(hasNavigationBar: false) {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     switch (selectedTab) {
@@ -42,7 +47,7 @@ struct MainScreen: View {
                         ) {
                             selectedTab = 0
                         }
-                        CartButton(countOfItemsInCart: uiState.countOfItemsInCart, size: geo.size.width / 7) {
+                        CartButton(countOfItemsInCart: viewModelProxy.uiState.countOfItemsInCart, size: geo.size.width / 7) {
                             viewModel.onCartButtonClick()
                         }
                         .offset(y: -geo.size.height/12/2)

@@ -8,31 +8,36 @@
 import SwiftUI
 import WCStoreAppKmm
 
+class SearchViewModelProxy: ViewModelProxy<SearchViewModel> {
+    @Published var products: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
+    @Published var searchQuery: String!
+    
+    override init() {
+        super.init()
+        assignToPublished(from:\.productsNative, to: &$products)
+        searchQuery = viewModel.searchQueryNativeValue
+        assignToPublished(from:\.searchQueryNative, to: &$searchQuery)
+    }
+}
+
 struct SearchScreen: View {
-    private let viewModel = KoinKt.get(objCClass: SearchViewModel.self) as! SearchViewModel
-    @FlowWrapper private var products: ProductsUiListState
-    @FlowWrapper private var searchQuery: String
+    @StateObject private var viewModelProxy = SearchViewModelProxy()
     
     @State private var isEditing = false
     
-    init() {
-        _products = FlowWrapper(
-            viewModel.productsNative,
-            initialValue: ProductsUiListState.init(products: [], hasNext: true, state: LoadingState.loading)
-        )
-        _searchQuery = FlowWrapper(viewModel.searchQueryNative, initialValue: viewModel.searchQueryNativeValue)
+    private var viewModel: SearchViewModel {
+        return viewModelProxy.viewModel
     }
     
-    
     var body: some View {
-        Screen(hasNavigationBar: false, viewModel: viewModel) {
+        Screen(hasNavigationBar: false) {
             VStack {
                 SearchBar(searchText: Binding(
-                    get: { searchQuery },
+                    get: { viewModelProxy.searchQuery },
                     set: {
                         viewModel.onQueryChanged(query: $0)
                     }))
-                ProductsList(productsState: products, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
+                ProductsList(productsState: viewModelProxy.products, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
             }
         }
     }

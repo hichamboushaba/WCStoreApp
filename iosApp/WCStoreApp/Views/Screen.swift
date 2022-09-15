@@ -8,9 +8,8 @@
 import SwiftUI
 import WCStoreAppKmm
 
-struct Screen<Content, ViewModel>: View where Content: View, ViewModel: closeable {
+struct Screen<Content>: View where Content: View {
     private(set) var hasNavigationBar: Bool = true
-    let viewModel: BaseViewModel
     
     @ViewBuilder let content: () -> Content
     
@@ -19,9 +18,6 @@ struct Screen<Content, ViewModel>: View where Content: View, ViewModel: closeabl
             .navigationBarHidden(!hasNavigationBar)
             .navigationBarBackButtonHidden(!hasNavigationBar)
             .setTitleIfNecessary(hasNavigationBar: hasNavigationBar)
-            .onDisappear {
-                viewModel.close()
-            }
     }
 }
 
