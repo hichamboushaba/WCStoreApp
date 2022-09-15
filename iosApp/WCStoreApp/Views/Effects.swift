@@ -9,60 +9,57 @@ import Foundation
 import SwiftUI
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
-import ExytePopupView
+import SystemNotification
 
 struct EffectsModifier: ViewModifier {
     let viewModel: BaseViewModel
     let unhandledEffect: (Effect) -> Void
     
-    @State private var currentToast: Toast? = nil
-    @State private var toastMessage = ""
-    @State private var showActionToast = false
+    @StateObject private var notification = SystemNotificationContext()
     
     func body(content: Content) -> some View {
         content
-            .popup(
-                isPresented: Binding(
-                    get: { currentToast != nil },
-                    set: { if (!$0) {currentToast = nil} }
-                ),
-                type: .floater(),
-                position: .bottom,
-                animation: .easeInOut(duration: 0.2),
-                autohideIn: 2
-            ) {
-                switch(currentToast) {
-                case let .Simple(message: message):
-                    Text(message)
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.black)
-                        .cornerRadius(8.0)
-                        .shadow(radius: 4.0)
-                        .padding()
-                default:
-                    let _ = print("TODO handle toast $currentToast")
-                }
-            }.onReceive(
+            .systemNotification(notification)
+            .onReceive(
                 createPublisher(for: viewModel.effectsNative)
                     .assertNoFailure()
             ) { effect in
                 switch(effect) {
                 case let snackbar as ShowSnackbar:
-                    currentToast = Toast.Simple(message: snackbar.message)
+                    showSimpleToast(message: snackbar.message)
                 case let actionSnackBar as ShowActionSnackbar:
-                    currentToast = Toast.ActionToast(message: actionSnackBar.message, actionText: actionSnackBar.actionText, action: actionSnackBar.action)
+                    showActionToast(message: actionSnackBar.message, actionText: actionSnackBar.actionText, action: actionSnackBar.action)
                 default: unhandledEffect(effect)
                 }
             }
     }
-}
-
-private enum Toast {
-    case Simple (message: String)
-    case ActionToast (message: String, actionText: String, action: () -> Void)
+    
+    private func showSimpleToast(message: String) {
+        notification.present(configuration: .init(backgroundColor: Color.black, cornerRadius: 8.0, edge: .bottom)) {
+            Text(message)
+                .bold()
+                .foregroundColor(.white)
+                .padding()
+        }
+    }
+    
+    private func showActionToast(message: String, actionText: String, action: @escaping () -> Void) {
+        notification.present(configuration: .init(backgroundColor: Color.black, cornerRadius: 8.0, duration: 3, edge: .bottom)) {
+            HStack {
+                Text(message)
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding()
+                Spacer()
+                Button(action: {
+                    action()
+                    notification.dismiss()
+                }) {
+                    Text(actionText)
+                }
+            }.padding()
+        }
+    }
 }
 
 extension View {

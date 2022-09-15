@@ -1,35 +1,35 @@
 PODS:
-  - ExytePopupView (1.1.6)
   - KMPNativeCoroutinesCombine (0.12.2):
     - KMPNativeCoroutinesCore (= 0.12.2)
   - KMPNativeCoroutinesCore (0.12.2)
   - NavigationStack (1.0.4)
   - shared (1.0)
+  - SystemNotification (0.5.3)
 
 DEPENDENCIES:
-  - ExytePopupView
   - KMPNativeCoroutinesCombine (= 0.12.2)
   - NavigationStack
   - shared (from `../shared`)
+  - SystemNotification
 
 SPEC REPOS:
   trunk:
-    - ExytePopupView
     - KMPNativeCoroutinesCombine
     - KMPNativeCoroutinesCore
     - NavigationStack
+    - SystemNotification
 
 EXTERNAL SOURCES:
   shared:
     :path: "../shared"
 
 SPEC CHECKSUMS:
-  ExytePopupView: da827797316240e93b67d7ca57b01bb693a28b01
   KMPNativeCoroutinesCombine: d4d37076a8209deadf52e49c1cd0d40a6c9f85ed
   KMPNativeCoroutinesCore: 86877671a38880e692580fab31273fe38fa6f54a
   NavigationStack: c2fb4c71b89659481e8e0dfb20e533681dce084f
   shared: 5ba66a76a9a7a921153a8569aab8f3530ad590a0
+  SystemNotification: 55e5ac0d370a89d1a735e446ec96457f09cfac73
 
-PODFILE CHECKSUM: 4fe7be5d48a78016ed8100cc3412a656e4a1a7ee
+PODFILE CHECKSUM: 986a78ab24d76b25061b7807d9d2d72236234cd7
 
 COCOAPODS: 1.11.3

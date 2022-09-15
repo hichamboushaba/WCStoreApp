@@ -9,6 +9,6 @@ target 'WCStoreApp' do
   pod 'shared', :path => '../shared'
   pod 'KMPNativeCoroutinesCombine', '0.12.2'
   pod 'NavigationStack'
-  pod 'ExytePopupView'
+  pod 'SystemNotification'
 
 end
