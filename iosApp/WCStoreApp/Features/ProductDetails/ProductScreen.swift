@@ -20,16 +20,46 @@ struct ProductScreen: View {
     
     var body: some View {
         Screen() {
-            if (uiState is ProductViewModel.UiStateLoadingState) {
+            switch(uiState) {
+            case is ProductViewModel.UiStateLoadingState:
                 ProgressView()
-            } else if (uiState is ProductViewModel.UiStateSuccessState) {
-                let state = uiState as! ProductViewModel.UiStateSuccessState
-                Text(state.product.name)
-                    .navigationTitle(state.product.name)
-            } else {
+            case let successState as ProductViewModel.UiStateSuccessState:
+                let product = successState.product
+                VStack(alignment: .leading) {
+                    if let image = product.images.first,
+                       let url = URL(string: image) {
+                        AsyncImage(url: url) { image in
+                            image.resizable()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .aspectRatio(1, contentMode: ContentMode.fit)
+                        .frame(maxWidth: .infinity)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding()
+                    } else {
+                        RoundedRectangle(cornerRadius: 8)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                    Text(product.name)
+                        .font(.system(.headline))
+                        .padding(.horizontal)
+                    Text(product.shortDescription)
+                        .padding(.horizontal)
+                    Spacer()
+                    Button(action: { viewModel.onAddToCartClicked() }) {
+                        Text("Add to Cart")
+                    }
+                    .frame(maxWidth:.infinity, alignment: .center)
+                    .padding()
+                }.frame(maxWidth:.infinity, maxHeight: .infinity)
+            default:
                 EmptyView()
             }
         }
+        .effects(viewModel: viewModel)
     }
 }
 
