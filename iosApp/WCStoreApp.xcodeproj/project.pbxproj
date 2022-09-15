@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		953401DE28D23DB100B75740 /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401DD28D23DB100B75740 /* Koin.swift */; };
 		953401E628D3460C00B75740 /* ViewModelProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401E528D3460C00B75740 /* ViewModelProxy.swift */; };
+		953401E828D362E400B75740 /* CartStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401E728D362E400B75740 /* CartStepper.swift */; };
 		953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953AAE4627DD649400EBCACB /* ProductScreen.swift */; };
 		95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */; };
 		95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8B30F28D09D5A005231B9 /* SearchScreen.swift */; };
@@ -28,6 +29,7 @@
 		7CC653707D5DE508F41F3A55 /* Pods-WCStoreApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.debug.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.debug.xcconfig"; sourceTree = "<group>"; };
 		953401DD28D23DB100B75740 /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
 		953401E528D3460C00B75740 /* ViewModelProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelProxy.swift; sourceTree = "<group>"; };
+		953401E728D362E400B75740 /* CartStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartStepper.swift; sourceTree = "<group>"; };
 		953AAE4627DD649400EBCACB /* ProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreen.swift; sourceTree = "<group>"; };
 		95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSNavigationManager.swift; sourceTree = "<group>"; };
 		95A8B30F28D09D5A005231B9 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		95A8B31128D0ACA4005231B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				953401E728D362E400B75740 /* CartStepper.swift */,
 				95A8B31228D0ACB4005231B9 /* ProductsList.swift */,
 				95A8B31428D0BED8005231B9 /* Screen.swift */,
 			);
@@ -289,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95B0331328CF8D000095CC6F /* MainScreen.swift in Sources */,
+				953401E828D362E400B75740 /* CartStepper.swift in Sources */,
 				953401DE28D23DB100B75740 /* Koin.swift in Sources */,
 				95B0331628CF95EE0095CC6F /* FlowWrapper.swift in Sources */,
 				95D2442027DAACEB00B5B5AD /* HomeScreen.swift in Sources */,

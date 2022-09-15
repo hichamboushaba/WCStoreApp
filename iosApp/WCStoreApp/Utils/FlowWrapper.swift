@@ -30,7 +30,7 @@ public struct FlowWrapper<Value>: DynamicProperty {
     public var wrappedValue: Value { observableFlow.value }
 }
 
-internal class ObservableFlow<Value>: ObservableObject {
+class ObservableFlow<Value>: ObservableObject {
     @Published private(set) var value: Value
     
     init<Failure: Error, Unit>(

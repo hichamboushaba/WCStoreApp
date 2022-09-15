@@ -9,9 +9,9 @@ import SwiftUI
 import WCStoreAppKmm
 
 struct ProductsList: View {
-    var productsState: ProductsUiListState
-    var onProductClick: (Product) -> Void
-    var loadNext: () -> Void
+    let productsState: ProductsUiListState
+    let onProductClick: (Product) -> Void
+    let loadNext: () -> Void
     
     var body: some View {
         List {
@@ -19,6 +19,7 @@ struct ProductsList: View {
                 ProductsListRowView(uiModel: productUiModel, onClick: {
                     onProductClick(productUiModel.product)
                 })
+                .buttonStyle(BorderlessButtonStyle())
             }
             if productsState.hasNext {
                 nextPageView
@@ -68,6 +69,17 @@ private struct ProductsListRowView: View {
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
+            .frame(maxWidth:.infinity, alignment: .leading)
+            
+            CartStepper(
+                count: Int(uiModel.quantityInCart),
+                addClick: {
+                    uiModel.addToCart()
+                },
+                deleteClick: {
+                    uiModel.deleteFromCart()
+                }
+            )
         }
         .onTapGesture(perform: onClick)
     }
