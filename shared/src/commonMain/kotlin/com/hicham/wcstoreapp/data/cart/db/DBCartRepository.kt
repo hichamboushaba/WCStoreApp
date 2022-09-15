@@ -36,7 +36,11 @@ class DBCartRepository constructor(
             fetchCart()
         }
         .distinctUntilChanged()
-        .shareIn(appCoroutineScope + Dispatchers.Main, started = SharingStarted.WhileSubscribed(60000), replay = 1)
+        .shareIn(
+            appCoroutineScope + Dispatchers.Main,
+            started = SharingStarted.WhileSubscribed(60000),
+            replay = 1
+        )
 
     private fun fetchCart() = appCoroutineScope.launch {
         runCatchingNetworkErrors {
@@ -60,7 +64,10 @@ class DBCartRepository constructor(
         val currentItem = deleteItemFromDb(product)
 
         return runActionWithOptimisticUpdate(
-            action = { wooCommerceApi.addItemToCart(product.id, quantity = -1) },
+            action = {
+                if (currentItem?.quantity == 1) wooCommerceApi.removeItemFromCart(currentItem.key)
+                else wooCommerceApi.addItemToCart(product.id, quantity = -1)
+            },
             revertAction = { addItemToDb(product, cartItemKey = currentItem?.key) }
         )
     }
