@@ -1,10 +1,13 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.BuildKonfig
+import com.hicham.wcstoreapp.util.KtorInMemoryCookiesStorage
+import com.hicham.wcstoreapp.util.KtorNoncePlugin
 import com.hicham.wcstoreapp.util.log
 import io.ktor.client.*
 import io.ktor.client.engine.ios.*
 import io.ktor.client.features.*
+import io.ktor.client.features.cookies.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
@@ -35,6 +38,10 @@ actual fun Module.ktor() {
             }
             install(JsonFeature) {
                 serializer = KotlinxSerializer(get())
+            }
+            install(KtorNoncePlugin())
+            install(HttpCookies) {
+                storage = KtorInMemoryCookiesStorage()
             }
             if (Platform.isDebugBinary) install(Logging) {
                 level = LogLevel.ALL
