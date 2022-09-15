@@ -10,21 +10,27 @@ import Combine
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
-struct HomeScreen: View {
-    private let viewModel = KoinKt.get(objCClass: HomeViewModel.self) as! HomeViewModel
-    @FlowWrapper private var productsState: ProductsUiListState
+class HomeViewModelProxy: ViewModelProxy<HomeViewModel> {
+    @Published var productsState: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
     
-    init() {
-        _productsState = FlowWrapper(
-            viewModel.productsNative,
-            initialValue: ProductsUiListState.init(products: [], hasNext: true, state: LoadingState.loading)
-        )
+    override init() {
+        super.init()
+        assignToPublished(flowProperty: \.productsNative, value: &$productsState)
     }
+}
 
+struct HomeScreen: View {
+    @StateObject private var viewModelProxy = HomeViewModelProxy()
+    
+    private var viewModel: HomeViewModel {
+        return viewModelProxy.viewModel
+    }
     
     var body: some View {
         Screen(hasNavigationBar: false, viewModel: viewModel) {
-            ProductsList(productsState: productsState, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
+            ProductsList(
+                productsState: viewModelProxy.productsState,
+                onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
         }
     }
 }
