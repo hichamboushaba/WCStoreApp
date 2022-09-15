@@ -10,6 +10,7 @@
 		953401DE28D23DB100B75740 /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401DD28D23DB100B75740 /* Koin.swift */; };
 		953401E628D3460C00B75740 /* ViewModelProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401E528D3460C00B75740 /* ViewModelProxy.swift */; };
 		953401E828D362E400B75740 /* CartStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401E728D362E400B75740 /* CartStepper.swift */; };
+		953401EA28D37DD400B75740 /* Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953401E928D37DD400B75740 /* Effects.swift */; };
 		953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953AAE4627DD649400EBCACB /* ProductScreen.swift */; };
 		95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */; };
 		95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8B30F28D09D5A005231B9 /* SearchScreen.swift */; };
@@ -30,6 +31,7 @@
 		953401DD28D23DB100B75740 /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
 		953401E528D3460C00B75740 /* ViewModelProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelProxy.swift; sourceTree = "<group>"; };
 		953401E728D362E400B75740 /* CartStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartStepper.swift; sourceTree = "<group>"; };
+		953401E928D37DD400B75740 /* Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
 		953AAE4627DD649400EBCACB /* ProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreen.swift; sourceTree = "<group>"; };
 		95969B9E27DF6174005C74F7 /* IOSNavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSNavigationManager.swift; sourceTree = "<group>"; };
 		95A8B30F28D09D5A005231B9 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				953401E728D362E400B75740 /* CartStepper.swift */,
 				95A8B31228D0ACB4005231B9 /* ProductsList.swift */,
 				95A8B31428D0BED8005231B9 /* Screen.swift */,
+				953401E928D37DD400B75740 /* Effects.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -195,6 +198,8 @@
 			dependencies = (
 			);
 			name = WCStoreApp;
+			packageProductDependencies = (
+			);
 			productName = WCStoreApp;
 			productReference = 95E3376A27DA7B6B007F01A9 /* WCStoreApp.app */;
 			productType = "com.apple.product-type.application";
@@ -223,6 +228,8 @@
 				Base,
 			);
 			mainGroup = 95E3376127DA7B6B007F01A9;
+			packageReferences = (
+			);
 			productRefGroup = 95E3376B27DA7B6B007F01A9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -291,6 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				953401EA28D37DD400B75740 /* Effects.swift in Sources */,
 				95B0331328CF8D000095CC6F /* MainScreen.swift in Sources */,
 				953401E828D362E400B75740 /* CartStepper.swift in Sources */,
 				953401DE28D23DB100B75740 /* Koin.swift in Sources */,

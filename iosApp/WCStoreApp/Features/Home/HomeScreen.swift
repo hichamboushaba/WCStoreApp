@@ -32,5 +32,6 @@ struct HomeScreen: View {
                 productsState: viewModelProxy.productsState,
                 onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
         }
+        .effects(viewModel: viewModel)
     }
 }
