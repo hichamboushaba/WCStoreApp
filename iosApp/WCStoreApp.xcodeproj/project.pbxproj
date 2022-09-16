@@ -26,6 +26,7 @@
 		95F5A4C128D46F0900FFA3FC /* CartTotals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C028D46F0900FFA3FC /* CartTotals.swift */; };
 		95F5A4C428D4780000FFA3FC /* CheckoutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C328D4780000FFA3FC /* CheckoutScreen.swift */; };
 		95F5A4C628D4792700FFA3FC /* AddressFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C528D4792700FFA3FC /* AddressFormatter.swift */; };
+		95F5A4C828D4D58200FFA3FC /* OrderPlacedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C728D4D58200FFA3FC /* OrderPlacedScreen.swift */; };
 		ABF4CD76786B683D04208A5F /* Pods_WCStoreApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704B8430B72440FD0ABA88CE /* Pods_WCStoreApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		95F5A4C028D46F0900FFA3FC /* CartTotals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTotals.swift; sourceTree = "<group>"; };
 		95F5A4C328D4780000FFA3FC /* CheckoutScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutScreen.swift; sourceTree = "<group>"; };
 		95F5A4C528D4792700FFA3FC /* AddressFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFormatter.swift; sourceTree = "<group>"; };
+		95F5A4C728D4D58200FFA3FC /* OrderPlacedScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPlacedScreen.swift; sourceTree = "<group>"; };
 		DDF28F2A1714B61B418E906A /* Pods-WCStoreApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.release.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				95F5A4C328D4780000FFA3FC /* CheckoutScreen.swift */,
+				95F5A4C728D4D58200FFA3FC /* OrderPlacedScreen.swift */,
 			);
 			path = Checkout;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				953401EA28D37DD400B75740 /* Effects.swift in Sources */,
+				95F5A4C828D4D58200FFA3FC /* OrderPlacedScreen.swift in Sources */,
 				95B0331328CF8D000095CC6F /* MainScreen.swift in Sources */,
 				953401E828D362E400B75740 /* CartStepper.swift in Sources */,
 				95F5A4C628D4792700FFA3FC /* AddressFormatter.swift in Sources */,

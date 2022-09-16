@@ -55,13 +55,17 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
     func getView(iOSScreen: IOSScreen, arguments: Dictionary<String, String>) -> some View {
         switch iOSScreen {
         case .Home:
-            HomeScreen()
+            MainScreen()
         case .Product:
-            ProductScreen(viewModelProxy: ProductViewModelProxy(productId: Int(arguments["productId"]!)!))
+            let argumentId = KMMScreen.Product.shared.navArguments.first!.name
+            ProductScreen(viewModelProxy: ProductViewModelProxy(productId: Int(arguments[argumentId]!)!))
         case .Cart:
             CartScreen()
         case .Checkout:
             CheckoutScreen()
+        case .OrderPlaced:
+            let argumentId = KMMScreen.OrderPlaced.shared.navArguments.first!.name
+            OrderPlacedScreen(orderId: arguments[argumentId]!)
         }
     }
 }
@@ -100,6 +104,7 @@ enum IOSScreen: String, CaseIterable {
     case Product
     case Cart
     case Checkout
+    case OrderPlaced
     
     var kmmScreen: KMMScreen {
         switch self {
@@ -111,6 +116,8 @@ enum IOSScreen: String, CaseIterable {
             return KMMScreen.Cart.shared
         case .Checkout:
             return KMMScreen.Checkout.shared
+        case .OrderPlaced:
+            return KMMScreen.OrderPlaced.shared
         }
     }
 }

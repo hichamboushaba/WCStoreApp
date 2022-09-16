@@ -29,7 +29,8 @@ struct WCStoreAppApp: App {
         WindowGroup {
             NavigationView {
                 NavigationStackView(navigationStack: navigationStack) {
-                    MainScreen()
+                    // Start with an empty view, to allow setting a destinationId to the Root view, check onAppear
+                    EmptyView()
                 }
                 .toolbar(content: {
                     ToolbarItem(id: "BackButton", placement: .navigationBarLeading, showsByDefault: true) {
@@ -43,6 +44,8 @@ struct WCStoreAppApp: App {
                             }
                     }
                 })
+            }.onAppear {
+                navigationStack.push(MainScreen(), withId: KMMScreen.Home.shared.route)
             }
         }
     }
