@@ -57,7 +57,7 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
         case .Home:
             HomeScreen()
         case .Product:
-            ProductScreen(productId: Int64(arguments["productId"]!)!)
+            ProductScreen(viewModelProxy: ProductViewModelProxy(productId: Int(arguments["productId"]!)!))
         }
     }
 }

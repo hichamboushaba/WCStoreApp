@@ -9,7 +9,7 @@ import Foundation
 import WCStoreAppKmm
 
 class Koin {
-    static func get<T: AnyObject>() -> T {
-        return KoinKt.get(objCClass: T.self) as! T
+    static func get<T: AnyObject>(parameters: [Any]? = nil) -> T {
+        return KoinKt.get(objCClass: T.self, parameters: parameters) as! T
     }
 }

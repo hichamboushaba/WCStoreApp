@@ -12,7 +12,7 @@ import KMPNativeCoroutinesCombine
 class MainViewModelProxy: ViewModelProxy<MainViewModel> {
     @Published var uiState: MainViewModel.UiState!
 
-    override init() {
+    init() {
         super.init()
         uiState = viewModel.uiStateNativeValue
         assignToPublished(from:\.uiStateNative, to: &$uiState)

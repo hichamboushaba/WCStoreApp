@@ -12,7 +12,7 @@ class SearchViewModelProxy: ViewModelProxy<SearchViewModel> {
     @Published var products: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
     @Published var searchQuery: String!
     
-    override init() {
+    init() {
         super.init()
         assignToPublished(from:\.productsNative, to: &$products)
         searchQuery = viewModel.searchQueryNativeValue

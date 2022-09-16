@@ -13,7 +13,15 @@ import Combine
 import SwiftUI
 
 class ViewModelProxy <ViewModel> : ObservableObject where ViewModel : BaseViewModel {
-    let viewModel :ViewModel = Koin.get()
+    let viewModel :ViewModel
+    
+    init (viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    init (parameters: [Any]? = nil) {
+        self.viewModel = Koin.get(parameters: parameters)
+    }
     
     deinit {
         viewModel.close()

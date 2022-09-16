@@ -9,18 +9,26 @@ import SwiftUI
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
-struct ProductScreen: View {
-    private let viewModel: ProductViewModel
-    @FlowWrapper private var uiState: ProductViewModel.UiState
+class ProductViewModelProxy : ViewModelProxy<ProductViewModel> {
+    @Published var uiState: ProductViewModel.UiState!
     
-    init(productId: Int64) {
-        viewModel = KoinKt.get(objCClass: ProductViewModel.self, parameters: [productId]) as! ProductViewModel
-        _uiState = FlowWrapper(viewModel.uiStateNative, initialValue: viewModel.uiStateNativeValue)
+    init(productId: Int) {
+        super.init(parameters: [productId])
+        uiState = viewModel.uiStateNativeValue
+        assignToPublished(from: \.uiStateNative, to: &$uiState)
+    }
+}
+
+struct ProductScreen: View {
+    @StateObject var viewModelProxy: ProductViewModelProxy
+    
+    private var viewModel: ProductViewModel {
+        return viewModelProxy.viewModel
     }
     
     var body: some View {
         Screen() {
-            switch(uiState) {
+            switch(viewModelProxy.uiState) {
             case is ProductViewModel.UiStateLoadingState:
                 ProgressView()
             case let successState as ProductViewModel.UiStateSuccessState:
@@ -60,11 +68,5 @@ struct ProductScreen: View {
             }
         }
         .effects(viewModel: viewModel)
-    }
-}
-
-struct ProductScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductScreen(productId: 0)
     }
 }

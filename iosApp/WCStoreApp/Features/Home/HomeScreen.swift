@@ -13,7 +13,7 @@ import KMPNativeCoroutinesCombine
 class HomeViewModelProxy: ViewModelProxy<HomeViewModel> {
     @Published var productsState: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
     
-    override init() {
+    init() {
         super.init()
         assignToPublished(from:\.productsNative, to: &$productsState)
     }
