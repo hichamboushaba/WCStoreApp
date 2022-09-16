@@ -15,7 +15,7 @@ class NetworkPaymentHandler(private val stripeApi: StripeApi) : PaymentHandler {
     ): JsonElement {
         return withContext(Dispatchers.Default) {
             return@withContext when (paymentMethod) {
-                PaymentMethod.CASH, PaymentMethod.WIRE -> JsonNull
+                PaymentMethod.CASH, PaymentMethod.WIRE -> JsonArray(emptyList())
                 is PaymentMethod.WCPayCard -> {
                     val paymentCard = paymentMethod.card
                     val paymentId = stripeApi.createPaymentMethod(
