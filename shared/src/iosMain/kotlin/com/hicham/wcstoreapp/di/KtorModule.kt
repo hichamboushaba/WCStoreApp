@@ -1,7 +1,7 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.BuildKonfig
-import com.hicham.wcstoreapp.util.KtorInMemoryCookiesStorage
+import com.hicham.wcstoreapp.util.KtorUserDefaultsCookiesStorage
 import com.hicham.wcstoreapp.util.KtorNoncePlugin
 import com.hicham.wcstoreapp.util.log
 import io.ktor.client.*
@@ -41,7 +41,7 @@ actual fun Module.ktor() {
             }
             install(KtorNoncePlugin())
             install(HttpCookies) {
-                storage = KtorInMemoryCookiesStorage()
+                storage = KtorUserDefaultsCookiesStorage()
             }
             if (Platform.isDebugBinary) install(Logging) {
                 level = LogLevel.ALL

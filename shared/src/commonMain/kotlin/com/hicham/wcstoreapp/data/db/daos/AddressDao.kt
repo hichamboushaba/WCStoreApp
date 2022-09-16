@@ -3,6 +3,7 @@ package com.hicham.wcstoreapp.data.db.daos
 import com.hicham.wcstoreapp.Database
 import com.hicham.wcstoreapp.data.storeApi.NetworkAddress
 import com.hicham.wcstoreapp.data.db.AddressEntity
+import com.hicham.wcstoreapp.util.DB
 import com.squareup.sqldelight.Transacter
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -22,7 +23,7 @@ class AddressDao(private val database: Database) : Transacter by database {
     fun deleteAddress(addressEntity: AddressEntity) = addressQueries.delete(addressEntity.id)
 
     suspend fun getMatchingAddress(networkAddress: NetworkAddress) =
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.DB) {
             with(networkAddress) {
                 addressQueries.getMatchingAddress(
                     firstName = firstName,
@@ -34,7 +35,7 @@ class AddressDao(private val database: Database) : Transacter by database {
                     state = state.orEmpty(),
                     country = country,
                     phone = phone
-                ).executeAsOneOrNull()
+                ).executeAsList().firstOrNull()
             }
         }
 }

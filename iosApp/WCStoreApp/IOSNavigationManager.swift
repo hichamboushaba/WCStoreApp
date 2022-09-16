@@ -60,6 +60,8 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
             ProductScreen(viewModelProxy: ProductViewModelProxy(productId: Int(arguments["productId"]!)!))
         case .Cart:
             CartScreen()
+        case .Checkout:
+            CheckoutScreen()
         }
     }
 }
@@ -97,6 +99,7 @@ enum IOSScreen: String, CaseIterable {
     case Home
     case Product
     case Cart
+    case Checkout
     
     var kmmScreen: KMMScreen {
         switch self {
@@ -106,6 +109,8 @@ enum IOSScreen: String, CaseIterable {
             return KMMScreen.Product.shared
         case .Cart:
             return KMMScreen.Cart.shared
+        case .Checkout:
+            return KMMScreen.Checkout.shared
         }
     }
 }

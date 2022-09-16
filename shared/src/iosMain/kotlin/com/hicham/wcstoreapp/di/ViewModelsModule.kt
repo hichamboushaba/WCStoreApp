@@ -1,6 +1,7 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.ui.cart.CartViewModel
+import com.hicham.wcstoreapp.ui.checkout.CheckoutViewModel
 import com.hicham.wcstoreapp.ui.home.HomeViewModel
 import com.hicham.wcstoreapp.ui.main.MainViewModel
 import com.hicham.wcstoreapp.ui.product.ProductViewModel
@@ -22,5 +23,8 @@ val viewModels = module {
     }
     factory {
         CartViewModel(get(), get(), get())
+    }
+    factory {
+        CheckoutViewModel(get(), get(), get(), get(), get())
     }
 }

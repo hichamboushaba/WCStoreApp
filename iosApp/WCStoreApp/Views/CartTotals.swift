@@ -47,7 +47,9 @@ struct CartTotals: View {
                 Text(buttonLabel)
             }
             .disabled(!buttonEnabled)
-        }.frame(maxWidth:.infinity)
-            .padding()
+        }
+        .frame(maxWidth:.infinity)
+        .padding()
+        .background(Color.white)
     }
 }
