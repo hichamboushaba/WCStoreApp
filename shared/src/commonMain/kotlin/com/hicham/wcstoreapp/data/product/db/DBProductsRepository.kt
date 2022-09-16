@@ -18,7 +18,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
-private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
+private const val DEFAULT_PRODUCT_PAGE_SIZE = 15
 
 class DBProductsRepository(
     private val wooCommerceApi: WooCommerceApi,
