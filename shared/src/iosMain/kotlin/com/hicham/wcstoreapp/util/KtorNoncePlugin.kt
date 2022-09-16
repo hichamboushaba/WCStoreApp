@@ -5,13 +5,18 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.util.*
+import platform.Foundation.NSUserDefaults
+import platform.Foundation.setValue
 
 private const val NONCE_HEADER = "X-WC-Store-API-Nonce"
 
 class KtorNoncePlugin() : HttpClientFeature<Unit, Unit> {
     override val key: AttributeKey<Unit> = AttributeKey("KtorNoncePlugin")
 
-    private var lastNonce: String? = null
+    private val userDefaults by lazy { NSUserDefaults() }
+    private var lastNonce: String?
+        get() = userDefaults.stringForKey(NONCE_HEADER)
+        set(value) = userDefaults.setValue(value, forKey = NONCE_HEADER)
 
     override fun install(feature: Unit, scope: HttpClient) {
         scope.sendPipeline.intercept(HttpSendPipeline.Before) {

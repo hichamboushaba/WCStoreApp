@@ -5,20 +5,38 @@ import io.ktor.http.*
 import io.ktor.util.date.*
 import kotlinx.atomicfu.AtomicLong
 import kotlinx.atomicfu.atomic
+import platform.Foundation.NSUserDefaults
+import platform.Foundation.setValue
 import kotlin.math.min
 
-class KtorInMemoryCookiesStorage() : CookiesStorage {
+const val COOKIES_STORAGE_KEY = "ktor-cookies"
+
+class KtorUserDefaultsCookiesStorage() : CookiesStorage {
+    private val userDefaults by lazy { NSUserDefaults() }
+
     private val oldestCookie: AtomicLong = atomic(0L)
-    private val cookies: MutableList<Cookie> = mutableListOf()
 
     override suspend fun get(requestUrl: Url): List<Cookie> {
         val date = GMTDate()
         if (date.timestamp >= oldestCookie.value) cleanup(date.timestamp)
 
-        return cookies.filter { it.matches(requestUrl) }
+        val cookies = userDefaults.stringForKey(COOKIES_STORAGE_KEY)
+            ?.takeIf { it.isNotBlank() }
+            ?.split("|")
+            ?.map { parseServerSetCookieHeader(it) }
+            ?.filter { it.matches(requestUrl) }
+            ?: emptyList()
+
+		return cookies
     }
 
     override suspend fun addCookie(requestUrl: Url, cookie: Cookie): Unit {
+        val cookies = (userDefaults.stringForKey(COOKIES_STORAGE_KEY)
+            ?.takeIf { it.isNotBlank() }
+            ?.split("|")
+            ?.map { parseServerSetCookieHeader(it) }
+            ?: emptyList()).toMutableList()
+
         cookies.removeAll { it.name == cookie.name && it.matches(requestUrl) }
         cookies.add(cookie.fillDefaults(requestUrl))
 
@@ -27,12 +45,20 @@ class KtorInMemoryCookiesStorage() : CookiesStorage {
                 oldestCookie.lazySet(expires)
             }
         }
+
+        userDefaults.setValue(
+            cookies.joinToString("|") { renderSetCookieHeader(it) },
+            forKey = COOKIES_STORAGE_KEY
+        )
     }
 
-    override fun close() {
-    }
+    private fun cleanup(timestamp: Long) {
+        val cookies = (userDefaults.stringForKey(COOKIES_STORAGE_KEY)
+            ?.takeIf { it.isNotBlank() }
+            ?.split("|")
+            ?.map { parseServerSetCookieHeader(it) }
+            ?: emptyList()).toMutableList()
 
-    private suspend fun cleanup(timestamp: Long) {
         cookies.removeAll { cookie ->
             val expires = cookie.expires?.timestamp ?: return@removeAll false
             expires < timestamp
@@ -43,6 +69,11 @@ class KtorInMemoryCookiesStorage() : CookiesStorage {
         }
 
         oldestCookie.lazySet(newOldest)
+
+        userDefaults.setValue(
+            cookies.joinToString("|") { renderSetCookieHeader(it) },
+            forKey = COOKIES_STORAGE_KEY
+        )
     }
 
     private fun Cookie.matches(requestUrl: Url): Boolean {
@@ -84,5 +115,9 @@ class KtorInMemoryCookiesStorage() : CookiesStorage {
         }
 
         return result
+    }
+
+    override fun close() {
+
     }
 }
