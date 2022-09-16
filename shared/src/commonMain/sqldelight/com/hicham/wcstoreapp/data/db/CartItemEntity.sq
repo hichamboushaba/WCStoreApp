@@ -34,4 +34,5 @@ SELECT
   CartItemEntity.*,
   ProductEntity.*
 FROM CartItemEntity
-JOIN ProductEntity ON ProductEntity.id = CartItemEntity.productId;
+JOIN ProductEntity ON ProductEntity.id = CartItemEntity.productId
+ORDER BY ProductEntity.name;
