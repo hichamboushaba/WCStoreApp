@@ -49,8 +49,8 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
             
         }
     }
-
-            
+    
+    
     @ViewBuilder
     func getView(iOSScreen: IOSScreen, arguments: Dictionary<String, String>) -> some View {
         switch iOSScreen {
@@ -58,6 +58,8 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
             HomeScreen()
         case .Product:
             ProductScreen(viewModelProxy: ProductViewModelProxy(productId: Int(arguments["productId"]!)!))
+        case .Cart:
+            CartScreen()
         }
     }
 }
@@ -94,6 +96,7 @@ extension String {
 enum IOSScreen: String, CaseIterable {
     case Home
     case Product
+    case Cart
     
     var kmmScreen: KMMScreen {
         switch self {
@@ -101,6 +104,8 @@ enum IOSScreen: String, CaseIterable {
             return KMMScreen.Home.shared
         case .Product:
             return KMMScreen.Product.shared
+        case .Cart:
+            return KMMScreen.Cart.shared
         }
     }
 }

@@ -22,6 +22,8 @@
 		95E3376E27DA7B6B007F01A9 /* WCStoreAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E3376D27DA7B6B007F01A9 /* WCStoreAppApp.swift */; };
 		95E3377227DA7B6E007F01A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95E3377127DA7B6E007F01A9 /* Assets.xcassets */; };
 		95E3377527DA7B6E007F01A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95E3377427DA7B6E007F01A9 /* Preview Assets.xcassets */; };
+		95F5A4BF28D466EC00FFA3FC /* CartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4BE28D466EC00FFA3FC /* CartScreen.swift */; };
+		95F5A4C128D46F0900FFA3FC /* CartTotals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C028D46F0900FFA3FC /* CartTotals.swift */; };
 		ABF4CD76786B683D04208A5F /* Pods_WCStoreApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704B8430B72440FD0ABA88CE /* Pods_WCStoreApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +46,8 @@
 		95E3376D27DA7B6B007F01A9 /* WCStoreAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStoreAppApp.swift; sourceTree = "<group>"; };
 		95E3377127DA7B6E007F01A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		95E3377427DA7B6E007F01A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		95F5A4BE28D466EC00FFA3FC /* CartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreen.swift; sourceTree = "<group>"; };
+		95F5A4C028D46F0900FFA3FC /* CartTotals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTotals.swift; sourceTree = "<group>"; };
 		DDF28F2A1714B61B418E906A /* Pods-WCStoreApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.release.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +103,7 @@
 				95A8B31228D0ACB4005231B9 /* ProductsList.swift */,
 				95A8B31428D0BED8005231B9 /* Screen.swift */,
 				953401E928D37DD400B75740 /* Effects.swift */,
+				95F5A4C028D46F0900FFA3FC /* CartTotals.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -124,6 +129,7 @@
 		95D2441B27DAA61700B5B5AD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				95F5A4BD28D466DD00FFA3FC /* Cart */,
 				95A8B30E28D09D4A005231B9 /* Search */,
 				95B0331028CF8CE30095CC6F /* Main */,
 				953AAE4527DD648000EBCACB /* ProductDetails */,
@@ -178,6 +184,14 @@
 				95E3377427DA7B6E007F01A9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		95F5A4BD28D466DD00FFA3FC /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				95F5A4BE28D466EC00FFA3FC /* CartScreen.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,11 +318,13 @@
 				953401DE28D23DB100B75740 /* Koin.swift in Sources */,
 				95B0331628CF95EE0095CC6F /* FlowWrapper.swift in Sources */,
 				95D2442027DAACEB00B5B5AD /* HomeScreen.swift in Sources */,
+				95F5A4C128D46F0900FFA3FC /* CartTotals.swift in Sources */,
 				95A8B31028D09D5A005231B9 /* SearchScreen.swift in Sources */,
 				95E3376E27DA7B6B007F01A9 /* WCStoreAppApp.swift in Sources */,
 				95A8B31528D0BED8005231B9 /* Screen.swift in Sources */,
 				953AAE4727DD649400EBCACB /* ProductScreen.swift in Sources */,
 				953401E628D3460C00B75740 /* ViewModelProxy.swift in Sources */,
+				95F5A4BF28D466EC00FFA3FC /* CartScreen.swift in Sources */,
 				95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */,
 				95A8B31328D0ACB4005231B9 /* ProductsList.swift in Sources */,
 			);
