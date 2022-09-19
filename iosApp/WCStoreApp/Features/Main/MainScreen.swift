@@ -62,7 +62,7 @@ struct MainScreen: View {
                         }
                     }
                     .frame(width: geo.size.width, height: geo.size.height/12)
-                    .background(Color("TabBarBackground").shadow(radius: 2))
+                    .background(Color.white.shadow(radius: 2))
                 }
                 .frame(
                     maxWidth: .infinity,
