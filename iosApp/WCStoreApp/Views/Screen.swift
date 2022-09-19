@@ -16,17 +16,5 @@ struct Screen<Content>: View where Content: View {
     var body: some View {
         content()
             .navigationBarHidden(!hasNavigationBar)
-            .navigationBarBackButtonHidden(!hasNavigationBar)
-            .setTitleIfNecessary(hasNavigationBar: hasNavigationBar)
-    }
-}
-
-private extension View {
-    @ViewBuilder func setTitleIfNecessary(hasNavigationBar: Bool) -> some View {
-        if !hasNavigationBar {
-            self.navigationTitle("")
-        } else {
-            self
-        }
     }
 }

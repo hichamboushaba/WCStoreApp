@@ -35,7 +35,7 @@ struct WCStoreAppApp: App {
                 }
                 .toolbar(content: {
                     ToolbarItem(id: "BackButton", placement: .navigationBarLeading, showsByDefault: true) {
-                        if (navigationStack.depth > 0) {
+                        if (navigationStack.depth > 1) {
                             Button(action: {
                                 navigationManager.navigateUp()
                             }, label: {
@@ -45,6 +45,7 @@ struct WCStoreAppApp: App {
                             }
                     }
                 })
+                .navigationBarHidden(navigationStack.depth == 1)
             }.onAppear {
                 navigationStack.push(MainScreen(), withId: KMMScreen.Home.shared.route)
             }
