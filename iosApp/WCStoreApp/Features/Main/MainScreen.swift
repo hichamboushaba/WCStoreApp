@@ -9,7 +9,7 @@ import SwiftUI
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
-class MainViewModelProxy: ViewModelProxy<MainViewModel> {
+class MainViewModelWrapper: ViewModelWrapper<MainViewModel> {
     @Published var uiState: MainViewModel.UiState!
 
     init() {
@@ -20,11 +20,11 @@ class MainViewModelProxy: ViewModelProxy<MainViewModel> {
 }
 
 struct MainScreen: View {
-    @StateObject private var viewModelProxy = MainViewModelProxy()
+    @StateObject private var viewModelWrapper = MainViewModelWrapper()
     @State private var selectedTab: Int = 0
     
     private var viewModel: MainViewModel {
-        return viewModelProxy.viewModel
+        return viewModelWrapper.viewModel
     }
     
     var body: some View {
@@ -47,7 +47,7 @@ struct MainScreen: View {
                         ) {
                             selectedTab = 0
                         }
-                        CartButton(countOfItemsInCart: viewModelProxy.uiState.countOfItemsInCart, size: geo.size.width / 7) {
+                        CartButton(countOfItemsInCart: viewModelWrapper.uiState.countOfItemsInCart, size: geo.size.width / 7) {
                             viewModel.onCartButtonClick()
                         }
                         .offset(y: -geo.size.height/12/2)

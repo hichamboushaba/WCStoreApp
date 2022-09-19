@@ -8,7 +8,7 @@
 import SwiftUI
 import WCStoreAppKmm
 
-class SearchViewModelProxy: ViewModelProxy<SearchViewModel> {
+class SearchViewModelWrapper: ViewModelWrapper<SearchViewModel> {
     @Published var products: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
     @Published var searchQuery: String!
     
@@ -21,23 +21,23 @@ class SearchViewModelProxy: ViewModelProxy<SearchViewModel> {
 }
 
 struct SearchScreen: View {
-    @StateObject private var viewModelProxy = SearchViewModelProxy()
+    @StateObject private var viewModelWrapper = SearchViewModelWrapper()
     
     @State private var isEditing = false
     
     private var viewModel: SearchViewModel {
-        return viewModelProxy.viewModel
+        return viewModelWrapper.viewModel
     }
     
     var body: some View {
         Screen(hasNavigationBar: false) {
             VStack {
                 SearchBar(searchText: Binding(
-                    get: { viewModelProxy.searchQuery },
+                    get: { viewModelWrapper.searchQuery },
                     set: {
                         viewModel.onQueryChanged(query: $0)
                     }))
-                ProductsList(productsState: viewModelProxy.products, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
+                ProductsList(productsState: viewModelWrapper.products, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
             }
         }
     }

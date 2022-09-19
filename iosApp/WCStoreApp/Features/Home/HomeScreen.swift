@@ -10,7 +10,7 @@ import Combine
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
-class HomeViewModelProxy: ViewModelProxy<HomeViewModel> {
+class HomeViewModelWrapper: ViewModelWrapper<HomeViewModel> {
     @Published var productsState: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
     
     init() {
@@ -20,16 +20,16 @@ class HomeViewModelProxy: ViewModelProxy<HomeViewModel> {
 }
 
 struct HomeScreen: View {
-    @StateObject private var viewModelProxy = HomeViewModelProxy()
+    @StateObject private var viewModelWrapper = HomeViewModelWrapper()
     
     private var viewModel: HomeViewModel {
-        return viewModelProxy.viewModel
+        return viewModelWrapper.viewModel
     }
     
     var body: some View {
         Screen(hasNavigationBar: false) {
             ProductsList(
-                productsState: viewModelProxy.productsState,
+                productsState: viewModelWrapper.productsState,
                 onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
         }
         .effects(viewModel: viewModel)

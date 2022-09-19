@@ -8,7 +8,7 @@
 import SwiftUI
 import WCStoreAppKmm
 
-class CartViewModelProxy : ViewModelProxy<CartViewModel> {
+class CartViewModelWrapper : ViewModelWrapper<CartViewModel> {
     @Published var uiState: CartViewModel.CartUiState!
     
     init() {
@@ -19,15 +19,15 @@ class CartViewModelProxy : ViewModelProxy<CartViewModel> {
 }
 
 struct CartScreen: View {
-    @StateObject private var viewModelProxy: CartViewModelProxy = CartViewModelProxy()
+    @StateObject private var viewModelWrapper: CartViewModelWrapper = CartViewModelWrapper()
     
     private var viewModel: CartViewModel {
-        return viewModelProxy.viewModel
+        return viewModelWrapper.viewModel
     }
     
     var body: some View {
         Screen() {
-            let uiState = viewModelProxy.uiState!
+            let uiState = viewModelWrapper.uiState!
             if uiState.cartItems.isEmpty {
                 Text("Cart is empty")
             } else {

@@ -1,5 +1,5 @@
 //
-//  ViewModelProxy.swift
+//  ViewModelWrapper.swift
 //  WCStoreApp
 //
 //  Created by Hicham on 14/9/2022.
@@ -12,7 +12,7 @@ import KMPNativeCoroutinesCombine
 import Combine
 import SwiftUI
 
-class ViewModelProxy <ViewModel> : ObservableObject where ViewModel : BaseViewModel {
+class ViewModelWrapper <ViewModel> : ObservableObject where ViewModel : BaseViewModel {
     let viewModel :ViewModel
     
     init (viewModel: ViewModel) {
@@ -33,7 +33,7 @@ extension BaseViewModel : ObservableObject {
     
 }
 
-extension ViewModelProxy where ViewModel: BaseViewModel {
+extension ViewModelWrapper where ViewModel: BaseViewModel {
     func assignToPublished<Output>(from: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, to: inout Published<Output?>.Publisher, initialValue: Output? = nil) {
         createFlowPublisher(from: from, initialValue: initialValue)
             .map { $0 }

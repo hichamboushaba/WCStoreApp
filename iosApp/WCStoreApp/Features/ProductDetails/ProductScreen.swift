@@ -9,7 +9,7 @@ import SwiftUI
 import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
-class ProductViewModelProxy : ViewModelProxy<ProductViewModel> {
+class ProductViewModelWrapper : ViewModelWrapper<ProductViewModel> {
     @Published var uiState: ProductViewModel.UiState!
     
     init(productId: Int) {
@@ -20,15 +20,15 @@ class ProductViewModelProxy : ViewModelProxy<ProductViewModel> {
 }
 
 struct ProductScreen: View {
-    @StateObject var viewModelProxy: ProductViewModelProxy
+    @StateObject var viewModelWrapper: ProductViewModelWrapper
     
     private var viewModel: ProductViewModel {
-        return viewModelProxy.viewModel
+        return viewModelWrapper.viewModel
     }
     
     var body: some View {
         Screen() {
-            switch(viewModelProxy.uiState) {
+            switch(viewModelWrapper.uiState) {
             case is ProductViewModel.UiStateLoadingState:
                 ProgressView()
             case let successState as ProductViewModel.UiStateSuccessState:

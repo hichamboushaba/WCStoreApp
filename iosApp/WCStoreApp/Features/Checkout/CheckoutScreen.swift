@@ -8,7 +8,7 @@
 import SwiftUI
 import WCStoreAppKmm
 
-class CheckoutViewModelProxy : ViewModelProxy<CheckoutViewModel> {
+class CheckoutViewModelWrapper : ViewModelWrapper<CheckoutViewModel> {
     @Published var uiState: CheckoutViewModel.UiState!
     
     @MainActor
@@ -21,14 +21,14 @@ class CheckoutViewModelProxy : ViewModelProxy<CheckoutViewModel> {
 
 
 struct CheckoutScreen: View {
-    @StateObject var viewModelProxy = CheckoutViewModelProxy()
+    @StateObject var viewModelWrapper = CheckoutViewModelWrapper()
     
     private var viewModel: CheckoutViewModel {
-        return viewModelProxy.viewModel
+        return viewModelWrapper.viewModel
     }
     
     var body: some View {
-        let uiState = viewModelProxy.uiState!
+        let uiState = viewModelWrapper.uiState!
         Screen {
             ZStack {
                 VStack {
