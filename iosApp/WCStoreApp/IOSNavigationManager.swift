@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import NavigationStack
+import class NavigationStack.NavigationStack
+import enum NavigationStack.PopDestination
 import WCStoreAppKmm
 import SwiftUI
 
@@ -58,7 +59,7 @@ class IOSNavigationManager: NavigationManager, ObservableObject {
             MainScreen()
         case .Product:
             let argumentId = KMMScreen.Product.shared.navArguments.first!.name
-            ProductScreen(viewModelProxy: ProductViewModelProxy(productId: Int(arguments[argumentId]!)!))
+            ProductScreen(viewModelWrapper: ProductViewModelWrapper(productId: Int(arguments[argumentId]!)!))
         case .Cart:
             CartScreen()
         case .Checkout:

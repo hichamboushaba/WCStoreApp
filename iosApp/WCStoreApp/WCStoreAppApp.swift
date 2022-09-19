@@ -7,7 +7,8 @@
 
 import SwiftUI
 import WCStoreAppKmm
-import NavigationStack
+import class NavigationStack.NavigationStack
+import struct NavigationStack.NavigationStackView
 
 @main
 struct WCStoreAppApp: App {
