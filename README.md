@@ -7,7 +7,11 @@ The project is a work-in-progress.
 
 ## Demo
 
-![Demo](./screenshots/demo.gif)
+| Android | iOS |
+| ---- | --- |
+| <img width=360 src="./screenshots/demo.gif" /> | <img width=360 src="./screenshots/demo-ios.gif" /> |
+
+The platforms didn't reach feature parity yet, and the design is not the same, but the business logic is the same.
 
 ## Features
 
