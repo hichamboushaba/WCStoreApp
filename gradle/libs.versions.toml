@@ -46,7 +46,7 @@ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 slf4j-android = "org.slf4j:slf4j-android:1.7.36"
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 android-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "android-paging" }
-android-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha17"
+android-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 
 ### iOS libraries
 ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
