@@ -1,5 +1,6 @@
 package com.hicham.wcstoreapp.ui.home
 
+import app.cash.paging.cachedIn
 import com.hicham.wcstoreapp.android.data.cart.CartRepository
 import com.hicham.wcstoreapp.data.category.CategoryRepository
 import com.hicham.wcstoreapp.data.currencyformat.CurrencyFormatProvider
@@ -8,7 +9,6 @@ import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.BaseViewModel
 import com.hicham.wcstoreapp.ui.NavigationManager
-import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.navigation.Screen
 import com.hicham.wcstoreapp.ui.products.mapToUiModel
 import kotlinx.coroutines.Dispatchers
@@ -28,9 +28,15 @@ class HomeViewModel constructor(
 
     private val selectedCategory = MutableStateFlow(ALL_CATEGORY)
 
-    val products = repository.products
+    val products = selectedCategory
+        .flatMapLatest { category ->
+            repository.getProductList(category = category.takeIf { it != ALL_CATEGORY })
+        }
+        .cachedIn(viewModelScope)
         .mapToUiModel(this, currencyFormatProvider, cartRepository)
+        .cachedIn(viewModelScope)
         .flowOn(Dispatchers.Default)
+
 
     private val _categories = categoryRepository.categories.map { list ->
         list.toMutableList().apply { add(0, ALL_CATEGORY) }
@@ -44,16 +50,6 @@ class HomeViewModel constructor(
     init {
         viewModelScope.launch {
             categoryRepository.refresh()
-        }
-
-        selectedCategory
-            .onEach { repository.fetch(category = it.takeIf { it != ALL_CATEGORY }) }
-            .launchIn(viewModelScope)
-    }
-
-    fun loadNext() {
-        viewModelScope.launch {
-            repository.loadNext()
         }
     }
 

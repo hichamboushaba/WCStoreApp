@@ -10,21 +10,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
-import com.hicham.wcstoreapp.android.ui.products.ProductsList
+import androidx.paging.PagingData
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.ShowSnackbar
-import com.hicham.wcstoreapp.ui.products.ProductsUiListState
+import com.hicham.wcstoreapp.ui.products.ProductUiModel
+import com.hicham.wcstoreapp.ui.products.ProductsList
 import com.hicham.wcstoreapp.ui.search.SearchViewModel
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Search
 import compose.icons.tablericons.X
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel, scaffoldState: ScaffoldState) {
     val searchQuery by viewModel.searchQuery.collectAsState()
-    val products by viewModel.products.collectAsState(
-        initial = ProductsUiListState()
-    )
 
     LaunchedEffect("effects") {
         viewModel.effects.collect { effect ->
@@ -35,23 +35,20 @@ fun SearchScreen(viewModel: SearchViewModel, scaffoldState: ScaffoldState) {
     }
 
     SearchScreen(
-        products = products,
+        products = viewModel.products,
         searchQuery = searchQuery,
         scaffoldState = scaffoldState,
         onQueryChanged = viewModel::onQueryChanged,
-        loadNext = viewModel::loadNext,
         openProduct = viewModel::onProductClicked
     )
 }
 
 @Composable
 fun SearchScreen(
-    products: ProductsUiListState,
+    products: Flow<PagingData<ProductUiModel>>,
     searchQuery: String,
     scaffoldState: ScaffoldState,
     onQueryChanged: (String) -> Unit = {},
-    addItemToCart: (Product) -> Unit = {},
-    removeItemFromCart: (Product) -> Unit = {},
     openProduct: (Product) -> Unit = {},
     retry: () -> Unit = {},
     loadNext: () -> Unit = {},
@@ -98,10 +95,8 @@ fun SearchScreen(
         }
     }) {
         ProductsList(
-            productsUiListState = products,
+            productsFlow = products,
             onProductClicked = openProduct,
-            retry = retry,
-            loadNext = loadNext,
             scaffoldState = scaffoldState,
             modifier = Modifier.padding(it)
         )
@@ -112,7 +107,7 @@ fun SearchScreen(
 @Preview
 private fun SearchPreview() {
     SearchScreen(
-        products = ProductsUiListState(),
+        products = flowOf(PagingData.empty()),
         searchQuery = "test",
         scaffoldState = rememberScaffoldState()
     )

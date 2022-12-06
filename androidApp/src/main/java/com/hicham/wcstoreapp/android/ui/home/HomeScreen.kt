@@ -12,15 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.PagingData
 import com.hicham.wcstoreapp.android.ui.common.components.CategoryChip
-import com.hicham.wcstoreapp.android.ui.products.ProductsList
 import com.hicham.wcstoreapp.data.category.fake.FakeCategoryRepository
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.home.CategoryUiModel
 import com.hicham.wcstoreapp.ui.home.HomeViewModel
-import com.hicham.wcstoreapp.ui.products.ProductsUiListState
+import com.hicham.wcstoreapp.ui.products.ProductUiModel
+import com.hicham.wcstoreapp.ui.products.ProductsList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -31,9 +33,6 @@ fun HomeScreen(
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val categories by viewModel.categories.collectAsState(initial = emptyList())
-    val products by viewModel.products.collectAsState(
-        initial = ProductsUiListState()
-    )
 
     LaunchedEffect("effects") {
         viewModel.effects.collect { effect ->
@@ -44,23 +43,20 @@ fun HomeScreen(
     }
 
     HomeScreen(
-        products = products,
+        products = viewModel.products,
         categories = categories,
         onProductClicked = viewModel::onProductClicked,
         onCategorySelected = viewModel::onCategorySelected,
-        loadNext = viewModel::loadNext,
         scaffoldState = scaffoldState
     )
 }
 
 @Composable
 private fun HomeScreen(
-    products: ProductsUiListState,
+    products: Flow<PagingData<ProductUiModel>>,
     categories: List<CategoryUiModel>,
     onProductClicked: (Product) -> Unit = {},
     onCategorySelected: (Category) -> Unit = {},
-    retry: () -> Unit = {},
-    loadNext: () -> Unit = {},
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -77,11 +73,9 @@ private fun HomeScreen(
             }
         }
         ProductsList(
-            productsUiListState = products,
+            productsFlow = products,
             onProductClicked = onProductClicked,
-            scaffoldState = scaffoldState,
-            retry = retry,
-            loadNext = loadNext
+            scaffoldState = scaffoldState
         )
     }
 }

@@ -34,9 +34,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.hicham.wcstoreapp.android.R
-import com.hicham.wcstoreapp.android.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.android.ui.common.components.ErrorView
 import com.hicham.wcstoreapp.android.ui.common.components.WCTopAppBar
+import com.hicham.wcstoreapp.data.product.fake.FakeProductsRepository
 import com.hicham.wcstoreapp.ui.ShowActionSnackbar
 import com.hicham.wcstoreapp.ui.ShowSnackbar
 import com.hicham.wcstoreapp.ui.product.ProductViewModel
