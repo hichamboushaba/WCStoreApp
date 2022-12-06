@@ -68,7 +68,8 @@ dependencies {
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material)
-    implementation(libs.bundles.paging)
+    implementation(libs.android.paging.runtime)
+    implementation(libs.android.paging.compose)
 
     implementation(libs.bundles.compose)
     implementation(libs.navigation.compose)

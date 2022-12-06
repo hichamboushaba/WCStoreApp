@@ -44,6 +44,7 @@ kotlin {
                 implementation(libs.bignum)
                 api(libs.koin.core)
                 implementation(libs.sqldelight.coroutines)
+                implementation(libs.multiplatform.paging.common)
             }
         }
         val commonTest by getting {
@@ -72,6 +73,7 @@ kotlin {
             dependencies {
                 implementation(libs.ktor.client.ios)
                 implementation(libs.sqldelight.native)
+                implementation(libs.multiplatform.paging.ios.runtime)
             }
         }
         val iosX64Test by getting
