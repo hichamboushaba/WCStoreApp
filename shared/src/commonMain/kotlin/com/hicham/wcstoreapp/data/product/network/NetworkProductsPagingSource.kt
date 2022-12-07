@@ -8,8 +8,7 @@ import com.hicham.wcstoreapp.data.storeApi.toDomainModel
 import com.hicham.wcstoreapp.models.Category
 import com.hicham.wcstoreapp.models.Product
 import com.hicham.wcstoreapp.util.DB
-import com.hicham.wcstoreapp.util.LogPriority
-import com.hicham.wcstoreapp.util.log
+import com.hicham.wcstoreapp.util.runCatchingNetworkErrors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -22,7 +21,7 @@ class NetworkProductsPagingSource(
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? = null
 
     override suspend fun load(params: PagingSourceLoadParams<Int>): PagingSourceLoadResult<Int, Product> {
-        return try {
+        return runCatchingNetworkErrors {
             // Start refresh at offset 0 if undefined.
             val offset = params.key ?: 0
             val response = api.getProducts(
@@ -41,12 +40,14 @@ class NetworkProductsPagingSource(
                 prevKey = null, // Only paging forward.
                 nextKey = if (response.size < params.loadSize) null else offset + response.size
             )
-        } catch (e: Exception) {
-            log(priority = LogPriority.WARN) {
-                e.toString()
+        }.fold(
+            onSuccess = {
+                it
+            },
+            onFailure = {
+                PagingSourceLoadResultError(it)
             }
-            PagingSourceLoadResultError(e)
-        }
+        )
     }
 
     private suspend fun cacheProducts(products: List<Product>) = withContext(Dispatchers.DB) {
