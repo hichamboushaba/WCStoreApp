@@ -1,7 +1,6 @@
 package com.hicham.wcstoreapp.di
 
 import com.hicham.wcstoreapp.data.address.AddressRepository
-import com.hicham.wcstoreapp.data.storeApi.WooCommerceApi
 import com.hicham.wcstoreapp.models.Address
 import com.hicham.wcstoreapp.ui.NavigationManager
 import kotlinx.cinterop.ObjCClass
@@ -22,10 +21,6 @@ fun initKoin(navigationManager: NavigationManager) {
     })
 
     GlobalScope.launch(Dispatchers.Main) {
-        // Refresh nonce
-        val api: WooCommerceApi = koin.get()
-        api.getCart()
-
         val addressRepository: AddressRepository = koin.get()
         val currentAddress = addressRepository.primaryBillingAddress.first()
 
