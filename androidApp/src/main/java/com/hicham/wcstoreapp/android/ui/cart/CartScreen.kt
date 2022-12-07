@@ -195,6 +195,7 @@ private fun CartPreview() {
     )
 }
 
+@Suppress("JSON_FORMAT_REDUNDANT")
 @Preview
 @Composable
 private fun CartUpdatingPreview() {

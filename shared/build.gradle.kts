@@ -34,6 +34,10 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("androidx.paging.ExperimentalPagingApi")
+        }
+
         val commonMain by getting {
             dependencies {
                 api(libs.kotlinx.coroutines.core)

@@ -17,6 +17,13 @@ SELECT *
 FROM ProductEntity
 ORDER BY name ASC;
 
+selectAllWithOffset:
+SELECT *
+FROM ProductEntity
+ORDER BY name ASC
+LIMIT :limit
+OFFSET :offset;
+
 selectProduct:
 SELECT *
 FROM ProductEntity
@@ -28,3 +35,7 @@ DELETE FROM ProductEntity;
 upsert:
 INSERT OR REPLACE INTO ProductEntity(id, name, images, price, regularPrice, salePrice, shortDescription, description)
 VALUES ?;
+
+count:
+SELECT count(*)
+FROM ProductEntity;
