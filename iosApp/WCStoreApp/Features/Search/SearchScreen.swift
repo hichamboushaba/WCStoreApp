@@ -9,13 +9,14 @@ import SwiftUI
 import WCStoreAppKmm
 
 class SearchViewModelWrapper: ViewModelWrapper<SearchViewModel> {
-    @Published var products: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
     @Published var searchQuery: String!
-    
+    var productsPagingObservable: PagingObservable<ProductUiModel>!
+
     init() {
         super.init()
-        assignToPublished(from:\.productsNative, to: &$products)
         searchQuery = viewModel.searchQueryNativeValue
+        productsPagingObservable = PagingObservable(flow: viewModel.products)
+
         assignToPublished(from:\.searchQueryNative, to: &$searchQuery)
     }
 }
@@ -26,7 +27,7 @@ struct SearchScreen: View {
     @State private var isEditing = false
     
     private var viewModel: SearchViewModel {
-        return viewModelWrapper.viewModel
+        viewModelWrapper.viewModel
     }
     
     var body: some View {
@@ -37,7 +38,10 @@ struct SearchScreen: View {
                     set: {
                         viewModel.onQueryChanged(query: $0)
                     }))
-                ProductsList(productsState: viewModelWrapper.products, onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
+                ProductsList(
+                        productsPagingObservable: viewModelWrapper.productsPagingObservable,
+                        onProductClick: viewModel.onProductClicked
+                )
             }
         }
     }

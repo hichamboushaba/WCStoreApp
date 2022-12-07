@@ -28,6 +28,8 @@
 		95F5A4C628D4792700FFA3FC /* AddressFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C528D4792700FFA3FC /* AddressFormatter.swift */; };
 		95F5A4C828D4D58200FFA3FC /* OrderPlacedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5A4C728D4D58200FFA3FC /* OrderPlacedScreen.swift */; };
 		ABF4CD76786B683D04208A5F /* Pods_WCStoreApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704B8430B72440FD0ABA88CE /* Pods_WCStoreApp.framework */; };
+		B76E387EEB7329F43200EA4A /* NativeFlowToPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76E35A1D90A6BEA9A53B04F /* NativeFlowToPublisher.swift */; };
+		B76E3DEAAF774C5435B1A66D /* PagingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76E3B2F867B3BFAF3BB2152 /* PagingObservable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		95F5A4C328D4780000FFA3FC /* CheckoutScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutScreen.swift; sourceTree = "<group>"; };
 		95F5A4C528D4792700FFA3FC /* AddressFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFormatter.swift; sourceTree = "<group>"; };
 		95F5A4C728D4D58200FFA3FC /* OrderPlacedScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPlacedScreen.swift; sourceTree = "<group>"; };
+		B76E35A1D90A6BEA9A53B04F /* NativeFlowToPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeFlowToPublisher.swift; sourceTree = "<group>"; };
+		B76E3B2F867B3BFAF3BB2152 /* PagingObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingObservable.swift; sourceTree = "<group>"; };
 		DDF28F2A1714B61B418E906A /* Pods-WCStoreApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WCStoreApp.release.xcconfig"; path = "Target Support Files/Pods-WCStoreApp/Pods-WCStoreApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +133,8 @@
 				95B0331528CF95EE0095CC6F /* FlowWrapper.swift */,
 				953401DD28D23DB100B75740 /* Koin.swift */,
 				95F5A4C528D4792700FFA3FC /* AddressFormatter.swift */,
+				B76E3B2F867B3BFAF3BB2152 /* PagingObservable.swift */,
+				B76E35A1D90A6BEA9A53B04F /* NativeFlowToPublisher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -347,6 +353,8 @@
 				95F5A4BF28D466EC00FFA3FC /* CartScreen.swift in Sources */,
 				95969B9F27DF6174005C74F7 /* IOSNavigationManager.swift in Sources */,
 				95A8B31328D0ACB4005231B9 /* ProductsList.swift in Sources */,
+				B76E3DEAAF774C5435B1A66D /* PagingObservable.swift in Sources */,
+				B76E387EEB7329F43200EA4A /* NativeFlowToPublisher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

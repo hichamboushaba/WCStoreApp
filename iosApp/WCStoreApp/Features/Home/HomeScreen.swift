@@ -11,11 +11,11 @@ import WCStoreAppKmm
 import KMPNativeCoroutinesCombine
 
 class HomeViewModelWrapper: ViewModelWrapper<HomeViewModel> {
-    @Published var productsState: ProductsUiListState = ProductsUiListState(products: [], hasNext: true, state: LoadingState.loading)
-    
+    var productsPagingObservable: PagingObservable<ProductUiModel>!
+
     init() {
         super.init()
-        assignToPublished(from:\.productsNative, to: &$productsState)
+        productsPagingObservable = PagingObservable(flow: viewModel.products)
     }
 }
 
@@ -23,14 +23,15 @@ struct HomeScreen: View {
     @StateObject private var viewModelWrapper = HomeViewModelWrapper()
     
     private var viewModel: HomeViewModel {
-        return viewModelWrapper.viewModel
+        viewModelWrapper.viewModel
     }
     
     var body: some View {
         Screen(hasNavigationBar: false) {
             ProductsList(
-                productsState: viewModelWrapper.productsState,
-                onProductClick: viewModel.onProductClicked, loadNext: viewModel.loadNext)
+                productsPagingObservable: viewModelWrapper.productsPagingObservable,
+                onProductClick: viewModel.onProductClicked
+            )
         }
         .effects(viewModel: viewModel)
     }

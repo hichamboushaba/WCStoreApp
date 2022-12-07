@@ -35,40 +35,13 @@ extension BaseViewModel : ObservableObject {
 
 extension ViewModelWrapper where ViewModel: BaseViewModel {
     func assignToPublished<Output>(from: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, to: inout Published<Output?>.Publisher, initialValue: Output? = nil) {
-        createFlowPublisher(from: from, initialValue: initialValue)
+        createFlowPublisher(from: viewModel[keyPath: from], initialValue: initialValue)
             .map { $0 }
             .assign(to: &to)
     }
     
-    func assignToPublished<Output>(from: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, to: inout Published<Output>.Publisher, initialValue: Output? = nil) {
-        createFlowPublisher(from: from, initialValue: initialValue)
-            .assign(to: &to)
-    }
-    
-    private func createFlowPublisher<Output>(from flowProperty: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, initialValue: Output? = nil) -> AnyPublisher<Output, Never> {
-        let nativeFlow = viewModel[keyPath: flowProperty]
-        let publisher = createPublisher(for: nativeFlow)
-        let initialValuePublisher : AnyPublisher<Output, Never>
-        if (initialValue != nil) {
-            initialValuePublisher = Just(initialValue!).eraseToAnyPublisher()
-        } else {
-            initialValuePublisher = Empty().eraseToAnyPublisher()
-        }
-        
-        return publisher
-            .catch { e -> AnyPublisher<Output, Error> in
-                // TODO find a better way for ignoring Kotlin's CancellationException here
-                if (e.localizedDescription == "Job was cancelled") {
-                    return Empty(completeImmediately: false)
-                        .eraseToAnyPublisher()
-                } else {
-                    return Fail(error: e)
-                        .eraseToAnyPublisher()
-                }
-            }
-            .assertNoFailure()
-            .merge(with: initialValuePublisher)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
+//    func assignToPublished<Output>(from: KeyPath<ViewModel, NativeFlow<Output, Error, KotlinUnit>>, to: inout Published<Output>.Publisher, initialValue: Output? = nil) {
+//        createFlowPublisher(from: viewModel[keyPath: from], initialValue: initialValue)
+//            .assign(to: &to)
+//    }
 }
