@@ -138,7 +138,8 @@ private fun LazyListScope.renderList(
     val rowsCount =
         kotlin.math.ceil(lazyProductList.itemCount.toDouble() / nbColumns).toInt()
 
-    items(count = rowsCount, key = { lazyProductList[it]?.product?.id ?: 0L }) { row ->
+    // TODO: pass a key that works with the grid implementation
+    items(count = rowsCount) { row ->
         val firstIndex = row * nbColumns
         Row(
             modifier = Modifier.fillMaxWidth(),
