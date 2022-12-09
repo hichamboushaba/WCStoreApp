@@ -15,12 +15,12 @@ CREATE TABLE ProductEntity(
 selectAll:
 SELECT *
 FROM ProductEntity
-ORDER BY name ASC;
+ORDER BY name COLLATE NOCASE ASC;
 
 selectAllWithOffset:
 SELECT *
 FROM ProductEntity
-ORDER BY name ASC
+ORDER BY name COLLATE NOCASE ASC
 LIMIT :limit
 OFFSET :offset;
 
