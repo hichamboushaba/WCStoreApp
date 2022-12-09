@@ -13,9 +13,16 @@ struct ProductsList: View {
     let onProductClick: (Product) -> Void
 
     var body: some View {
-        List {
-            ForEach(Array(0..<productsPagingObservable.count), id: \.self) { i in
-                let productUiModel = productsPagingObservable.get(position: i)
+    let array = (0..<productsPagingObservable.count).map { index in
+        productsPagingObservable.peek(position: index)
+    }.filter{ item in item != nil }
+
+    let arrayIndexed = array.enumerated().map({ $0 })
+
+    ScrollView {
+        LazyVStack {
+            ForEach(arrayIndexed, id: \.element?.product.id) { index, _ in
+                let productUiModel = productsPagingObservable.get(position: index)
                 if (productUiModel != nil) {
                     ProductsListRowView(
                             uiModel: productUiModel!,
@@ -24,12 +31,16 @@ struct ProductsList: View {
                             }
                     )
                             .buttonStyle(BorderlessButtonStyle())
+                            .padding([.leading, .trailing])
+                    Divider()
                 }
             }
-            if !productsPagingObservable.loadStates.append.endOfPaginationReached {
-                nextPageView
-            }
         }
+        if !productsPagingObservable.loadStates.append.endOfPaginationReached {
+            nextPageView
+        }
+        }
+                .padding(.top)
     }
 
     private var nextPageView: some View {
