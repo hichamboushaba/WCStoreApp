@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-private const val DEFAULT_PRODUCT_PAGE_SIZE = 5
+private const val DEFAULT_PRODUCT_PAGE_SIZE = 10
 
 class DBProductsRepository(
     private val wooCommerceApi: WooCommerceApi,
@@ -29,7 +29,7 @@ class DBProductsRepository(
     override fun getProductList(query: String?, category: Category?): Flow<PagingData<Product>> {
         if (query == null && category == null) {
             return Pager(
-                config = PagingConfig(DEFAULT_PRODUCT_PAGE_SIZE),
+                config = PagingConfig(DEFAULT_PRODUCT_PAGE_SIZE, maxSize = 3*DEFAULT_PRODUCT_PAGE_SIZE),
                 remoteMediator = ProductRemoteMediator(productDao, wooCommerceApi)
             ) { pagingSource() }
                 .flow
